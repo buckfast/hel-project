@@ -10,7 +10,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 @Dao
-public interface NoteDap {
+public interface NoteDao {
     @Insert
     void insert(Note note);
 
