@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">hel-project</string>
+    <string name="chatbox">type here, itll show up at socket.io/demos/chat/</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

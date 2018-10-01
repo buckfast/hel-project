@@ -9,7 +9,6 @@
 
     <fragment
         class="bobby.hobby.hel.hel_project.ChatFragment"
-        android:name="bobby.hobby.hel.hel_project.ChatFragment"
         android:id="@+id/chat_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

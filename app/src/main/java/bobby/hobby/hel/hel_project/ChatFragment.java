@@ -207,6 +207,7 @@ public class ChatFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     JSONObject data = (JSONObject) args[0];
                     String username;
                     String message;
@@ -214,10 +215,11 @@ public class ChatFragment extends Fragment {
                         username = data.getString("username");
                         message = data.getString("message");
                     } catch (JSONException e) {
-                        Log.e("messageyo", e.getMessage());
+                        Log.e("onnewmessage", e.getMessage());
                         return;
                     }
 
+                    Toast.makeText(getActivity().getApplicationContext(), username +" says: "+message, Toast.LENGTH_SHORT).show();
                     //removeTyping(username);
                     //addMessage(username, message);
                 }

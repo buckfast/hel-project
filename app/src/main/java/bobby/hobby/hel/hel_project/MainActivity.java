@@ -12,13 +12,12 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         ChatFragment fragment = new ChatFragment();
         fragmentTransaction.add(R.id.chat_fragment_container, fragment);
         fragmentTransaction.commit();
-        */
     }
 
 
