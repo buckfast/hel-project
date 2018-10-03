@@ -1,40 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".chat.ChatFragment">
 
-    tools:context=".ChatFragment"
-    android:orientation="vertical" android:layout_height="wrap_content" android:layout_width="wrap_content">
-
-
-
-    <LinearLayout
+    <LinearLayout android:background="@color/lightgray"
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
+        <Button android:text="namespace 1"
+            android:height="20dp"
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="button1"/>
+            android:layout_height="wrap_content" />
         <Button
+            android:id="@+id/button2"
+            android:text="namespace 2"
+            android:height="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="button2"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-
-    <EditText
-
-        android:id="@+id/message_input"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"/>
+    <LinearLayout
+        android:background="@color/lightgray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionSend"
-        android:imeActionId="555"
-        android:inputType="text"
-        android:hint="@string/chatbox"
-        android:textColorHint="@color/gray"
-        android:background="@color/black"
-        android:textColor="@color/white"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        />
+        <EditText
+            android:id="@+id/message_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:imeActionId="@+id/send"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"/>
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"
+         />
+
+    </LinearLayout>
 
 </LinearLayout>

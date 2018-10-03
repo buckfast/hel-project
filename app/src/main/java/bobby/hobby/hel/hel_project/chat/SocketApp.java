@@ -1,16 +1,20 @@
-package bobby.hobby.hel.hel_project;
+package bobby.hobby.hel.hel_project.chat;
 
 import android.app.Application;
 
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
+
 import java.net.URISyntaxException;
 
-public class ChatApp extends Application {
+import bobby.hobby.hel.hel_project.Constants;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+
+public class SocketApp extends Application {
+
     private Socket socket;
     {
         try {
-            socket = IO.socket("https://socket-io-chat.now.sh/");
+            socket = IO.socket(Constants.CHAT_SERVER);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

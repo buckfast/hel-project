@@ -8,7 +8,7 @@
 
 
     <fragment
-        class="bobby.hobby.hel.hel_project.ChatFragment"
+        class="bobby.hobby.hel.hel_project.chat.ChatFragment"
         android:id="@+id/chat_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
