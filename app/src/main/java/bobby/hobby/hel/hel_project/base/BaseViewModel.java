@@ -8,4 +8,6 @@ public abstract class BaseViewModel extends AndroidViewModel {
     public BaseViewModel(@NonNull Application application) {
         super(application);
     }
+
+    public abstract <T extends BaseViewModel>T returnViewModel();
 }
