@@ -1,4 +1,4 @@
-package bobby.hobby.hel.hel_project.base;
+package bobby.hobby.hel.hel_project.base.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.base.ui.viewmodel.BaseViewModel;
 
 public abstract class BaseDrawerActivity<T extends BaseViewModel> extends BaseActivity<T> {
 

@@ -1,8 +1,10 @@
-package bobby.hobby.hel.hel_project.base;
+package bobby.hobby.hel.hel_project.base.ui.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import bobby.hobby.hel.hel_project.base.ui.viewmodel.BaseViewModel;
 
 public abstract class BaseTabChildFragment<T extends BaseViewModel> extends BaseFragment<T> {
     protected T mTabViewModel;

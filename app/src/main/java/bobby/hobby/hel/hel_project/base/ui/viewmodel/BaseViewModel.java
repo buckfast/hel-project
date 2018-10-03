@@ -1,4 +1,4 @@
-package bobby.hobby.hel.hel_project.base;
+package bobby.hobby.hel.hel_project.base.ui.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

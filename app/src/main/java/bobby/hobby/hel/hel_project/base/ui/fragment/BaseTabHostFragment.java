@@ -1,4 +1,4 @@
-package bobby.hobby.hel.hel_project.base;
+package bobby.hobby.hel.hel_project.base.ui.fragment;
 
 
 import android.arch.lifecycle.ViewModelProviders;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.base.ui.viewmodel.BaseViewModel;
 
 public abstract class BaseTabHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseFragment<V> {
     protected T mTabViewModel;
