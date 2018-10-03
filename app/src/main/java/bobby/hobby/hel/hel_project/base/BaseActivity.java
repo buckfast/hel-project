@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 public abstract class BaseActivity<T extends BaseViewModel> extends AppCompatActivity {
     protected T mViewModel;
 
-    public Class<T> returnViewModel() {
+    protected Class<T> returnViewModel() {
         return null;
     }
 

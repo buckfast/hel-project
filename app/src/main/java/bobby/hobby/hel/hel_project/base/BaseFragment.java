@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import java.util.Objects;
+
 
 public abstract class BaseFragment<T extends BaseViewModel> extends Fragment {
     protected T mViewModel;
 
-    public Class<T> returnViewModel() {
+    protected Class<T> returnViewModel() {
         return null;
     }
 
@@ -17,7 +19,7 @@ public abstract class BaseFragment<T extends BaseViewModel> extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (returnViewModel() != null) {
-            mViewModel = ViewModelProviders.of(this).get(returnViewModel());
+            mViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(returnViewModel());
         }
     }
 }
