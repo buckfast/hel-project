@@ -1,0 +1,6 @@
+package bobby.hobby.hel.hel_project.base;
+
+import android.support.v4.app.Fragment;
+
+public abstract class BaseFragment extends Fragment {
+}
