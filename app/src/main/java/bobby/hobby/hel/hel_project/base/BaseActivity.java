@@ -8,12 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 public abstract class BaseActivity<T extends BaseViewModel> extends AppCompatActivity {
     protected T mViewModel;
 
-    public abstract Class<T> returnViewModel();
+    public Class<T> returnViewModel() {
+        return null;
+    }
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(returnViewModel());
+        if (returnViewModel() != null) {
+            mViewModel = ViewModelProviders.of(this).get(returnViewModel());
+        }
     }
 }
