@@ -9,5 +9,4 @@ public abstract class BaseViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public abstract <T extends BaseViewModel>T returnViewModel();
 }

@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-public abstract class BaseFragment extends Fragment {
-    protected BaseViewModel mViewModel;
+import java.util.Objects;
+
+public abstract class BaseFragment<T extends BaseViewModel> extends Fragment {
+    protected T mViewModel;
+
+    public abstract Class<T> returnViewModel();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(mViewModel.returnViewModel().getClass());
+        mViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(returnViewModel());
     }
 }
