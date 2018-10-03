@@ -54,6 +54,9 @@ public class ChatFragment extends Fragment {
     private Socket socket;
     private Boolean isConnected = true;
 
+    private Button button1;
+    private Button button2;
+
     public ChatFragment() {
         super();
     }
@@ -112,6 +115,21 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        button1 = view.findViewById(R.id.button1);
+        button2 = view.findViewById(R.id.button2);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinRoom(1);
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                joinRoom(2);
+            }
+        });
 
         messagesView = (RecyclerView) view.findViewById(R.id.messages);
         messagesView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -222,6 +240,10 @@ public class ChatFragment extends Fragment {
         addMessage(nickname, message, true);
 
         socket.emit("new message", message);
+    }
+
+    private void joinRoom(int room) {
+        socket.emit("join room", room);
     }
 
     private void joinChat() {
