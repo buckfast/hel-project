@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 
-public class TestChildFragment2 extends BaseTabChildFragment<TestViewModel> {
+public class TestChildFragment2 extends BaseTabChildFragment<FragmentToActivityViewModel> {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class TestChildFragment2 extends BaseTabChildFragment<TestViewModel> {
     }
 
     @Override
-    protected Class<TestViewModel> returnFragmentsViewModel() {
-        return TestViewModel.class;
+    protected Class<FragmentToActivityViewModel> returnFragmentsViewModel() {
+        return FragmentToActivityViewModel.class;
     }
 }

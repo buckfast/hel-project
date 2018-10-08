@@ -6,9 +6,9 @@ import android.support.annotation.NonNull;
 
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
-public class TestViewModel2 extends BaseViewModel {
+public class FragmentToActivityViewModel extends BaseViewModel {
     public MutableLiveData<String> data = new MutableLiveData<>();
-    public TestViewModel2(@NonNull Application application) {
+    public FragmentToActivityViewModel(@NonNull Application application) {
         super(application);
         data.setValue("YOYO");
     }

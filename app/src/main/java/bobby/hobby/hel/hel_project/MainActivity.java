@@ -8,9 +8,8 @@ import android.widget.Toast;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
-import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 
-public class MainActivity extends BaseDrawerActivity<TestViewModel2> {
+public class MainActivity extends BaseDrawerActivity<FragmentToActivityViewModel> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,8 +21,8 @@ public class MainActivity extends BaseDrawerActivity<TestViewModel2> {
     }
 
     @Override
-    protected Class<TestViewModel2> returnViewModel() {
-        return TestViewModel2.class;
+    protected Class<FragmentToActivityViewModel> returnViewModel() {
+        return FragmentToActivityViewModel.class;
     }
 
     @Override
@@ -41,8 +40,8 @@ public class MainActivity extends BaseDrawerActivity<TestViewModel2> {
     }
 
     @Override
-    protected BaseFragment returnNavViewFragment() {
-        return null;
+    protected NavigationDrawerLayout returnNavViewLayout() {
+        return new DrawerLayoutFragment();
     }
 
     @Override

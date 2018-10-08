@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
 
-public class TestFragment extends BaseTabHostFragment<TestViewModel, TestViewModel2> {
+public class TestFragment extends BaseTabHostFragment<FragmentToFragmentViewModel, FragmentToActivityViewModel> {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,12 +27,12 @@ public class TestFragment extends BaseTabHostFragment<TestViewModel, TestViewMod
     }
 
     @Override
-    protected Class<TestViewModel> returnFragmentsViewModel() {
-        return TestViewModel.class;
+    protected Class<FragmentToFragmentViewModel> returnFragmentsViewModel() {
+        return FragmentToFragmentViewModel.class;
     }
 
     @Override
-    protected Class<TestViewModel2> returnViewModel() {
-        return TestViewModel2.class;
+    protected Class<FragmentToActivityViewModel> returnViewModel() {
+        return FragmentToActivityViewModel.class;
     }
 }
