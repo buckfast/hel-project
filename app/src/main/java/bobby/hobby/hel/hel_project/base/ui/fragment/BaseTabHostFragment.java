@@ -20,22 +20,8 @@ import java.util.List;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.ui.viewmodel.BaseViewModel;
 
-public abstract class BaseTabHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseFragment<V> {
-    protected T mTabViewModel;
-
-    protected Class<T> returnTabViewModel() {
-        return null;
-    }
-
+public abstract class BaseTabHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseHostFragment<T, V> {
     protected abstract void setUpAdater(Adapter adater);
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (returnTabViewModel() != null) {
-            mTabViewModel = ViewModelProviders.of(this).get(returnTabViewModel());
-        }
-    }
 
     @Nullable
     @Override
