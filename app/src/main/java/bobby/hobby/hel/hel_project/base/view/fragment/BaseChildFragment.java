@@ -12,12 +12,17 @@ public abstract class BaseChildFragment<T extends BaseViewModel> extends BaseFra
 
     protected Class<T> returnFragmentsViewModel(){return null;}
 
+    @Override
+    protected final Class<T> returnViewModel() {
+        return null;
+    }
+
     public void returnHostFragment(BaseHostFragment fragment) { mHostFragment = fragment; }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (returnFragmentsViewModel() != null) {
+        if (returnFragmentsViewModel() != null && mHostFragment != null) {
             mFragmentsViewModel = ViewModelProviders.of(mHostFragment).get(returnFragmentsViewModel());
         }
     }

@@ -23,7 +23,7 @@ public abstract class BaseDrawerActivity<T extends BaseViewModel> extends BaseAc
 
     protected abstract void accountButtonClicked();
 
-    protected abstract BaseFragment returnNavViewFragment();
+    protected abstract NavigationDrawerLayout returnNavViewLayout();
 
     protected abstract int drawerDirection();
 
@@ -36,6 +36,8 @@ public abstract class BaseDrawerActivity<T extends BaseViewModel> extends BaseAc
 
         setUpToolbar(toolbar);
         setUpNavigationView();
+
+        mViewModel.getClickReaction().observe(this, v -> closeDrawer());
     }
 
     @Override
@@ -49,8 +51,8 @@ public abstract class BaseDrawerActivity<T extends BaseViewModel> extends BaseAc
     }
 
     private void setUpNavigationView() {
-        if (returnNavViewFragment() != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_view_container, returnNavViewFragment()).commit();
+        if (returnNavViewLayout() != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_view_container, returnNavViewLayout().returnFragment()).commit();
         }
     }
 
@@ -71,11 +73,15 @@ public abstract class BaseDrawerActivity<T extends BaseViewModel> extends BaseAc
         });
     }
 
-    protected void openDrawer() {
+    public void openDrawer() {
         mDrawerLayout.openDrawer(drawerDirection());
     }
 
-    protected void closeDrawer() {
+    public void closeDrawer() {
         mDrawerLayout.closeDrawer(drawerDirection());
+    }
+
+    public interface NavigationDrawerLayout {
+        BaseFragment returnFragment();
     }
 }
