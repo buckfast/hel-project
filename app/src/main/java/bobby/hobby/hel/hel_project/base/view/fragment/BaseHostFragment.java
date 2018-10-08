@@ -1,10 +1,10 @@
-package bobby.hobby.hel.hel_project.base.ui.fragment;
+package bobby.hobby.hel.hel_project.base.view.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import bobby.hobby.hel.hel_project.base.ui.viewmodel.BaseViewModel;
+import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
 public abstract class BaseHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseFragment<V> {
     protected T mFragmentsViewModel;

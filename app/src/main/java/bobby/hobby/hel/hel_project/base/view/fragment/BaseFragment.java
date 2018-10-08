@@ -1,4 +1,4 @@
-package bobby.hobby.hel.hel_project.base.ui.fragment;
+package bobby.hobby.hel.hel_project.base.view.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 
 import java.util.Objects;
 
-import bobby.hobby.hel.hel_project.base.ui.viewmodel.BaseViewModel;
+import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
 
 public abstract class BaseFragment<T extends BaseViewModel> extends Fragment {

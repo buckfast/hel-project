@@ -1,7 +1,6 @@
-package bobby.hobby.hel.hel_project.base.ui.fragment;
+package bobby.hobby.hel.hel_project.base.view.fragment.master;
 
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
-import bobby.hobby.hel.hel_project.base.ui.viewmodel.BaseViewModel;
+import bobby.hobby.hel.hel_project.base.view.fragment.BaseHostFragment;
+import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
+import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
 public abstract class BaseTabHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseHostFragment<T, V> {
     protected abstract void setUpAdater(Adapter adater);
