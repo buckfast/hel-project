@@ -5,10 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseChildFragment;
@@ -17,8 +14,6 @@ import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> extends BaseChildFragment<T>{
 
     protected abstract BaseAdapter setUpAdapter();
-
-    protected abstract boolean isCloseable();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -48,9 +43,6 @@ public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> exte
 
         @Override
         public void onClick(View view) {
-            if (isCloseable()) {
-                mFragmentsViewModel.setClickReaction();
-            }
             if (mListener != null) {
                 mListener.onClick(view, getAdapterPosition());
             }

@@ -10,10 +10,7 @@ import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 public abstract class BaseActivity<T extends BaseViewModel> extends AppCompatActivity {
     protected T mViewModel;
 
-    protected Class<T> returnViewModel() {
-        return null;
-    }
-
+    protected abstract Class<T> returnViewModel();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
