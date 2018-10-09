@@ -20,6 +20,7 @@ public abstract class BaseNavViewListHostFragment<T extends BaseViewModel, V ext
 
     protected abstract BaseNavViewListChildFragment returnLeftChild();
     protected abstract BaseNavViewListChildFragment returnRightChild();
+    protected abstract int returnDrawerHostLayout();
 
     protected float getGuidelineSplitPercentage () {
         return 0.3f;
@@ -28,7 +29,7 @@ public abstract class BaseNavViewListHostFragment<T extends BaseViewModel, V ext
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_base_navview_list, container, false);
+        return inflater.inflate(returnDrawerHostLayout(), container, false);
     }
 
     @Override

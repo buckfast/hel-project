@@ -10,7 +10,7 @@ public abstract class BaseChildFragment<T extends BaseViewModel> extends BaseFra
     protected T mFragmentsViewModel;
     private BaseHostFragment mHostFragment;
 
-    protected Class<T> returnFragmentsViewModel(){return null;}
+    protected abstract Class<T> returnFragmentsViewModel();
 
     @Override
     protected final Class<T> returnViewModel() {

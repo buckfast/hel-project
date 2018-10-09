@@ -68,9 +68,7 @@ public abstract class BaseDrawerActivity<T extends BaseViewModel> extends BaseAc
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         ImageView accountButton = findViewById(R.id.account_button);
-        accountButton.setOnClickListener(v -> {
-            accountButtonClicked();
-        });
+        accountButton.setOnClickListener(v -> accountButtonClicked());
     }
 
     public void openDrawer() {

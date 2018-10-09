@@ -13,9 +13,7 @@ import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 public abstract class BaseFragment<T extends BaseViewModel> extends Fragment {
     protected T mViewModel;
 
-    protected Class<T> returnViewModel() {
-        return null;
-    }
+    protected abstract Class<T> returnViewModel();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
