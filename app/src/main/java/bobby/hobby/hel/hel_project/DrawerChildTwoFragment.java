@@ -28,16 +28,13 @@ public class DrawerChildTwoFragment extends BaseNavViewListChildFragment<Fragmen
         return null;
     }
 
-    @Override
-    protected boolean isCloseable() {
-        return true;
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView textView = view.findViewById(R.id.result);
         textView.setOnClickListener(v-> {
+//            Intentionally ask to close the drawer when click, no more isCloseable(), then this, too much repetitive
             mFragmentsViewModel.setClickReaction();
         });
         mFragmentsViewModel.position.observe(this, position -> {

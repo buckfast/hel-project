@@ -36,13 +36,11 @@ public class DrawerChildOneFragment extends BaseNavViewListChildFragment<Fragmen
             mFragmentsViewModel.data.observe(this, data->{
                 Toast.makeText(getContext(), Objects.requireNonNull(data).get(position), Toast.LENGTH_SHORT).show();
                 mFragmentsViewModel.position.setValue(position);
+//                No need for seperate isCloseable() anymore, if you want to close the drawer, just call this on the view listener, if not,
+//                clicking on views would not close the drawer by default
+//                mFragmentsViewModel.setClickReaction();
             });
         }, this);
-    }
-
-    @Override
-    protected boolean isCloseable() {
-        return false;
     }
 
     @Override

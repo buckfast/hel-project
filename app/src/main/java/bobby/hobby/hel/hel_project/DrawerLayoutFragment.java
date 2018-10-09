@@ -30,6 +30,13 @@ public class DrawerLayoutFragment extends BaseNavViewListHostFragment<FragmentTo
         return fragment;
     }
 
+    //Enforce user (that mean you) to give a layout that must have 3 ids: "left_child_drawer",
+    // "right_child_drawer" and "guideline", refer to BaseNavViewListHostFragment for more details
+    @Override
+    protected int returnDrawerHostLayout() {
+        return R.layout.fragment_navview_list;
+    }
+
     @Override
     public BaseFragment returnFragment() {
         return this;
