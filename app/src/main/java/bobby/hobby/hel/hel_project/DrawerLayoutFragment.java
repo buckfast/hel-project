@@ -18,16 +18,12 @@ public class DrawerLayoutFragment extends BaseNavViewListHostFragment<FragmentTo
 
     @Override
     protected BaseNavViewListChildFragment returnLeftChild() {
-        DrawerChildOneFragment fragment = new DrawerChildOneFragment();
-        fragment.returnHostFragment(this);
-        return fragment;
+        return new DrawerChildOneFragment();
     }
 
     @Override
     protected BaseNavViewListChildFragment returnRightChild() {
-        DrawerChildTwoFragment fragment = new DrawerChildTwoFragment();
-        fragment.returnHostFragment(this);
-        return fragment;
+        return new DrawerChildTwoFragment();
     }
 
     //Enforce user (that mean you) to give a layout that must have 3 ids: "left_child_drawer",

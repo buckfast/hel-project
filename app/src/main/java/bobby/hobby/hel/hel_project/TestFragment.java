@@ -20,8 +20,6 @@ public class TestFragment extends BaseTabHostFragment<FragmentToFragmentViewMode
     protected void setUpAdater(Adapter adater) {
         TestChildFragment fragment1 = new TestChildFragment();
         TestChildFragment2 fragment2 = new TestChildFragment2();
-        fragment1.returnHostFragment(this);
-        fragment2.returnHostFragment(this);
         adater.addFragment(fragment1, "Chat");
         adater.addFragment(fragment2, "Events");
     }
