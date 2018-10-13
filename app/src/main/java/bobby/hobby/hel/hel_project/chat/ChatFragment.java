@@ -35,9 +35,7 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 
-/**
- * A chat fragment containing messages view and input form.
- */
+
 public class ChatFragment extends Fragment {
 
     private static final String TAG = "CHAT";
@@ -110,6 +108,8 @@ public class ChatFragment extends Fragment {
         socket.off("user left", onUserLeft);
         socket.off("typing", onTyping);
         socket.off("stop typing", onStopTyping);
+
+        leave();
     }
 
     @Override
@@ -282,13 +282,20 @@ public class ChatFragment extends Fragment {
         public void call(Object... args) {
             JSONObject data = (JSONObject) args[0];
 
-            int userAmount;
+            final int userAmount;
             try {
                 userAmount = data.getInt("numUsers");
             } catch (JSONException e) {
                 return;
             }
-            addToList("users now: "+userAmount);
+
+            getActivity().runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    addToList("users now: "+userAmount);
+                }
+            });
 
 
         }
