@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 
-public class TestChildFragment2 extends BaseTabChildFragment<FragmentToActivityViewModel> {
+public class TestChildFragment2 extends BaseTabChildFragment<FragmentToFragmentTabViewModel> {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,18 +26,17 @@ public class TestChildFragment2 extends BaseTabChildFragment<FragmentToActivityV
         Button btn = view.findViewById(R.id.button2);
         TextView txt = view.findViewById(R.id.result2);
         btn.setOnClickListener(v -> {
-            if (Objects.equals(mFragmentsViewModel.data.getValue(), "Hello")) {
-                mFragmentsViewModel.data.setValue("World!");
+            if (Objects.equals(mFragmentsViewModel.tabData.getValue(), "Hello")) {
+                mFragmentsViewModel.tabData.setValue("world!");
             } else {
-                mFragmentsViewModel.data.setValue("Hello");
+                mFragmentsViewModel.tabData.setValue("Hello");
             }
         });
-
-        mFragmentsViewModel.data.observe(this, txt::setText);
+        mFragmentsViewModel.tabData.observe(this, txt::setText);
     }
 
     @Override
-    protected Class<FragmentToActivityViewModel> returnFragmentsViewModel() {
-        return FragmentToActivityViewModel.class;
+    protected Class<FragmentToFragmentTabViewModel> returnFragmentsViewModel() {
+        return FragmentToFragmentTabViewModel.class;
     }
 }

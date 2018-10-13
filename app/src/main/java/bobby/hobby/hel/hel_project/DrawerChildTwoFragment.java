@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 
-public class DrawerChildTwoFragment extends BaseNavViewListChildFragment<FragmentToFragmentViewModel> {
+public class DrawerChildTwoFragment extends BaseNavViewListChildFragment<FragmentToFragmentDrawerViewModel> {
 
     @Nullable
     @Override
@@ -19,8 +21,8 @@ public class DrawerChildTwoFragment extends BaseNavViewListChildFragment<Fragmen
     }
 
     @Override
-    protected Class<FragmentToFragmentViewModel> returnFragmentsViewModel() {
-        return FragmentToFragmentViewModel.class;
+    protected Class<FragmentToFragmentDrawerViewModel> returnFragmentsViewModel() {
+        return FragmentToFragmentDrawerViewModel.class;
     }
 
     @Override
@@ -36,9 +38,11 @@ public class DrawerChildTwoFragment extends BaseNavViewListChildFragment<Fragmen
         textView.setOnClickListener(v-> {
 //            Intentionally ask to close the drawer when click, no more isCloseable(), then this, too much repetitive
             mFragmentsViewModel.setClickReaction();
+            mFragmentsViewModel.dataAccross.setValue(textView.getText().toString());
         });
         mFragmentsViewModel.position.observe(this, position -> {
-            textView.setText(Integer.toString(position));
+            String data = Objects.requireNonNull(mFragmentsViewModel.drawerList.getValue()).get(position);
+            textView.setText(data);
         });
     }
 }

@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 
-public class TestChildFragment extends BaseTabChildFragment<FragmentToActivityViewModel> {
+public class TestChildFragment extends BaseTabChildFragment<FragmentToFragmentTabViewModel> {
 
     @Nullable
     @Override
@@ -28,18 +29,22 @@ public class TestChildFragment extends BaseTabChildFragment<FragmentToActivityVi
         TextView txt = view.findViewById(R.id.result1);
 
         btn.setOnClickListener(v -> {
-            if (Objects.equals(mFragmentsViewModel.data.getValue(), "Hello")) {
-                mFragmentsViewModel.data.setValue("World!");
+            if (Objects.equals(mFragmentsViewModel.tabData.getValue(), "Hello")) {
+                mFragmentsViewModel.tabData.setValue("world!");
             } else {
-                mFragmentsViewModel.data.setValue("Hello");
+                mFragmentsViewModel.tabData.setValue("Hello");
             }
         });
 
-        mFragmentsViewModel.data.observe(this, txt::setText);
+        mFragmentsViewModel.tabData.observe(this, txt::setText);
+
+        mFragmentsViewModel.dataAccross.observe(this, data -> {
+            Toast.makeText(getContext(), "This is from TestChildFragment, the data is: "+data, Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
-    protected Class<FragmentToActivityViewModel> returnFragmentsViewModel() {
-        return FragmentToActivityViewModel.class;
+    protected Class<FragmentToFragmentTabViewModel> returnFragmentsViewModel() {
+        return FragmentToFragmentTabViewModel.class;
     }
 }

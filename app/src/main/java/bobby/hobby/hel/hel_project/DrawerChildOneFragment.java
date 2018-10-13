@@ -17,7 +17,7 @@ import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 
-public class DrawerChildOneFragment extends BaseNavViewListChildFragment<FragmentToFragmentViewModel> {
+public class DrawerChildOneFragment extends BaseNavViewListChildFragment<FragmentToFragmentDrawerViewModel> {
 
     @Nullable
     @Override
@@ -26,20 +26,14 @@ public class DrawerChildOneFragment extends BaseNavViewListChildFragment<Fragmen
     }
 
     @Override
-    protected Class<FragmentToFragmentViewModel> returnFragmentsViewModel() {
-        return FragmentToFragmentViewModel.class;
+    protected Class<FragmentToFragmentDrawerViewModel> returnFragmentsViewModel() {
+        return FragmentToFragmentDrawerViewModel.class;
     }
 
     @Override
     protected BaseAdapter setUpAdapter() {
         return new DrawerChildOneAdapter((v, position) -> {
-            mFragmentsViewModel.data.observe(this, data->{
-                Toast.makeText(getContext(), Objects.requireNonNull(data).get(position), Toast.LENGTH_SHORT).show();
-                mFragmentsViewModel.position.setValue(position);
-//                No need for seperate isCloseable() anymore, if you want to close the drawer, just call this on the view listener, if not,
-//                clicking on views would not close the drawer by default
-//                mFragmentsViewModel.setClickReaction();
-            });
+            mFragmentsViewModel.position.setValue(position);
         }, this);
     }
 
@@ -101,7 +95,7 @@ public class DrawerChildOneFragment extends BaseNavViewListChildFragment<Fragmen
         example.add("nihao");
         example.add("ciao");
         example.add("howdy");
-        mFragmentsViewModel.data.setValue(example);
+        mFragmentsViewModel.drawerList.setValue(example);
     }
 
     private class DrawerChildOneViewHolder extends BaseAdapterViewHolder {
@@ -119,7 +113,7 @@ public class DrawerChildOneFragment extends BaseNavViewListChildFragment<Fragmen
         DrawerChildOneAdapter(OnAdapterItemClickListener listener, Fragment context) {
             super(listener);
             mData = new ArrayList<>();
-            mFragmentsViewModel.data.observe(context, this::refreshData);
+            mFragmentsViewModel.drawerList.observe(context, this::refreshData);
         }
 
         private void refreshData(List<String> data) {

@@ -1,18 +1,25 @@
 package bobby.hobby.hel.hel_project;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.Toast;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
 
-public class TestFragment extends BaseTabHostFragment<FragmentToFragmentViewModel, FragmentToActivityViewModel> {
+public class TestFragment extends BaseTabHostFragment<FragmentToFragmentTabViewModel, FragmentToActivityViewModel> {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel.data.observe(this, s -> {
-            Toast.makeText(getActivity(), "From fragment: "+s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mViewModel.dataAccross.observe(this, data -> {
+            mFragmentsViewModel.dataAccross.setValue(data);
         });
     }
 
@@ -25,8 +32,8 @@ public class TestFragment extends BaseTabHostFragment<FragmentToFragmentViewMode
     }
 
     @Override
-    protected Class<FragmentToFragmentViewModel> returnFragmentsViewModel() {
-        return FragmentToFragmentViewModel.class;
+    protected Class<FragmentToFragmentTabViewModel> returnFragmentsViewModel() {
+        return FragmentToFragmentTabViewModel.class;
     }
 
     @Override

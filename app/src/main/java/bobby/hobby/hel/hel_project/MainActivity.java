@@ -15,9 +15,6 @@ public class MainActivity extends BaseDrawerActivity<FragmentToActivityViewModel
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new TestFragment()).commit();
-        mViewModel.data.observe(this, data -> {
-            Toast.makeText(this, data, Toast.LENGTH_LONG).show();
-        });
     }
 
     @Override
@@ -32,11 +29,7 @@ public class MainActivity extends BaseDrawerActivity<FragmentToActivityViewModel
 
     @Override
     protected void accountButtonClicked() {
-        if (Objects.equals(mViewModel.data.getValue(), "YOYO")) {
-            mViewModel.data.setValue("YAYA");
-        } else {
-            mViewModel.data.setValue("YOYO");
-        }
+
     }
 
     @Override
