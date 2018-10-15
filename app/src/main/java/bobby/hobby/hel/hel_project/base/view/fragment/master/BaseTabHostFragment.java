@@ -12,6 +12,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragmen
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
 public abstract class BaseTabHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseHostFragment<T, V> {
+    private ViewPager mViewPager;
     protected abstract void setUpAdater(Adapter adater);
 
     @Nullable
@@ -33,16 +36,27 @@ public abstract class BaseTabHostFragment<T extends BaseViewModel, V extends Bas
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ViewPager viewPager = view.findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+        mViewPager = view.findViewById(R.id.viewpager);
+        setupViewPager();
         TabLayout tabs = view.findViewById(R.id.result_tabs);
-        tabs.setupWithViewPager(viewPager);
+        tabs.setupWithViewPager(mViewPager);
+        mViewPager.setCurrentItem(mFragmentsViewModel.getCurrentPosition());
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager() {
         Adapter adapter = new Adapter(getChildFragmentManager());
         setUpAdater(adapter);
-        viewPager.setAdapter(adapter);
+        mViewPager.setAdapter(adapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {mFragmentsViewModel.setCurrentPosition(position);}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
     }
 
     public static class Adapter<V extends BaseTabChildFragment> extends FragmentPagerAdapter {
