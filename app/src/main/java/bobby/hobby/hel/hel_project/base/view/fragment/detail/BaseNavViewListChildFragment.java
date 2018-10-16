@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
@@ -28,7 +29,18 @@ public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> exte
             BaseAdapter adapter = setUpAdapter();
             if (adapter != null) {
                 recyclerView.setAdapter(adapter);
-                //recyclerView.scrollToPosition(mFragmentsViewModel.getCurrentPositionDrawer());
+
+                //the only working solution to keep selected item selected after orientation change
+                //*programmatically click the item*
+                recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        recyclerView.findViewHolderForAdapterPosition(mFragmentsViewModel.getCurrentPositionDrawer()).itemView.performClick();
+                        recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        return true;
+                    }
+                });
+
             }
         }
     }

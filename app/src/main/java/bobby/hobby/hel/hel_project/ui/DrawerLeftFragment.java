@@ -49,6 +49,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         array.add(new DrawerListItem("kekkonen", "@drawable/ic_launcher_foreground"));
         mFragmentsViewModel.drawerList.setValue(array);
 
+
         /*if (mFragmentsViewModel.lastView.getValue() != null) {
             Log.d("asd", "hehhe");
             Util.changeBgColor(getContext(), mFragmentsViewModel.lastView.getValue(), R.color.colorAccent);
@@ -60,6 +61,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
     protected BaseAdapter setUpAdapter() {
         return new DrawerLeftAdapter((v, position) -> {
             mFragmentsViewModel.listPosition.setValue(position);
+            mFragmentsViewModel.setCurrentPositionDrawer(position);
 
             Util.changeBgColor(getContext(), v, R.color.colorAccent);
             Util.changeBgColor(getContext(), v.findViewById(R.id.list_item_margin_line), R.color.colorAccentDarker);
