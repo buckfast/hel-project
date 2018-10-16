@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 
 public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentViewModel> {
@@ -41,7 +42,9 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         super.onViewCreated(view, savedInstanceState);
         List<DrawerListItem> array = new ArrayList<>();
         array.add(new DrawerListItem("asd", "@mipmap/ic_launcher_round"));
-        array.add(new DrawerListItem("gddf", "@drawable/ic_launcher_foreground"));
+        array.add(new DrawerListItem("gddf_aaaa", "@drawable/ic_launcher_foreground"));
+        array.add(new DrawerListItem("asdedd", "@mipmap/ic_launcher_round"));
+        array.add(new DrawerListItem("kekkonen", "@drawable/ic_launcher_foreground"));
         mFragmentsViewModel.drawerList.setValue(array);
 
     }
@@ -50,12 +53,19 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
     protected BaseAdapter setUpAdapter() {
         return new DrawerLeftAdapter((v, position) -> {
             mFragmentsViewModel.listPosition.setValue(position);
-            v.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
-            if (mFragmentsViewModel.lastView.getValue() == null) {
+
+            Util.changeBgColor(getContext(), v, R.color.colorAccent);
+            Util.changeBgColor(getContext(), v.findViewById(R.id.list_item_margin_line), R.color.colorAccentDarker);
+
+            View lv = mFragmentsViewModel.lastView.getValue();
+            if (lv == null) {
                 mFragmentsViewModel.lastView.setValue(v);
             } else {
-                mFragmentsViewModel.lastView.getValue().setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorAccentDark, null));
-                mFragmentsViewModel.lastView.setValue(v);
+                if (lv != v) {
+                    Util.changeBgColor(getContext(), lv, R.color.colorAccentDark);
+                    Util.changeBgColor(getContext(), lv.findViewById(R.id.list_item_margin_line), R.color.colorAccentDark);
+                    mFragmentsViewModel.lastView.setValue(v);
+                }
             }
         }, this);
     }
