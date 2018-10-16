@@ -1,6 +1,7 @@
 package bobby.hobby.hel.hel_project;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +13,11 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
+import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
+import bobby.hobby.hel.hel_project.repository.Repository;
+import bobby.hobby.hel.hel_project.repository.internal.model.User;
+import okhttp3.ResponseBody;
 
 public class TestChildFragment extends BaseTabChildFragment<FragmentToFragmentTabViewModel> {
 
@@ -34,6 +39,27 @@ public class TestChildFragment extends BaseTabChildFragment<FragmentToFragmentTa
             } else {
                 mFragmentsViewModel.tabData.setValue("Hello");
             }
+
+            User newUser = new User();
+            newUser.setEmail("hoangl@mail.com");
+            newUser.setPassword("hoangl@gmail.com");
+            mFragmentsViewModel.login(newUser);
+//            Repository repo = Repository.getInstance(getActivity().getApplication());
+//            repo.login(newUser, new BaseClient.Handler<User>() {
+//                @Override
+//                public void onSuccess(@NonNull User response, int code) {
+//                    Toast.makeText(getContext(), response.getToken(), Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onError(@Nullable ResponseBody body, int code) {
+//                    Toast.makeText(getContext(), body.toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+        });
+
+        mFragmentsViewModel.user.observe(this, user -> {
+            Toast.makeText(getContext(), Objects.requireNonNull(user).getToken(), Toast.LENGTH_SHORT).show();
         });
 
         mFragmentsViewModel.tabData.observe(this, txt::setText);
