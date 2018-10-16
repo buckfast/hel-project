@@ -4,6 +4,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.util.Objects;
+
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
 public abstract class BaseHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseFragment<V> {
@@ -15,7 +17,7 @@ public abstract class BaseHostFragment<T extends BaseViewModel, V extends BaseVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (returnFragmentsViewModel() != null) {
-            mFragmentsViewModel = ViewModelProviders.of(this).get(returnFragmentsViewModel());
+            mFragmentsViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(returnFragmentsViewModel());
         }
     }
 }

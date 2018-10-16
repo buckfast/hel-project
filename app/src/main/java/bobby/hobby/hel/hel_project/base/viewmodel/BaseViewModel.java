@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 public abstract class BaseViewModel extends AndroidViewModel {
     private boolean mCurrentState = false;
     private MutableLiveData<Boolean> mReaction;
+    private int mCurrentPosition;
     public BaseViewModel(@NonNull Application application) {
         super(application);
     }
@@ -17,11 +18,20 @@ public abstract class BaseViewModel extends AndroidViewModel {
         if (mReaction == null) {
             mReaction = new MutableLiveData<>();
             mReaction.setValue(mCurrentState);
+            mCurrentPosition = 0;
         }
         return mReaction;
     }
 
     public final void setClickReaction() {
         mReaction.setValue(!mCurrentState);
+    }
+
+    public final int getCurrentPosition() {
+        return mCurrentPosition;
+    }
+
+    public final void setCurrentPosition(int mCurrentPosition) {
+        this.mCurrentPosition = mCurrentPosition;
     }
 }
