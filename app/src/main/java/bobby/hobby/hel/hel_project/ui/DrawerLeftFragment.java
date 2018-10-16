@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,22 +39,13 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         mFragmentsViewModel.drawerList.setValue(example);
     }
 
-    private class DrawerLeftChildViewHolder extends BaseAdapterViewHolder {
-        public TextView textView;
-
-        DrawerLeftChildViewHolder(View itemView, OnAdapterItemClickListener listener) {
-            super(itemView, listener);
-            textView = itemView.findViewById(R.id.item);
-        }
-    }
-
     @Override
     protected BaseAdapter setUpAdapter() {
-
         return new DrawerLeftAdapter((v, position) -> {
             mFragmentsViewModel.listPosition.setValue(position);
         }, this);
     }
+
 
     private class DrawerLeftAdapter extends BaseAdapter<DrawerLeftChildViewHolder> {
         private List<String> mData;
@@ -72,6 +65,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         @NonNull
         @Override
         public DrawerLeftChildViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_drawer_list_item, parent, false);
             return new DrawerLeftChildViewHolder(v, mListener);
         }
@@ -86,4 +80,15 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
             return mData.size();
         }
     }
+
+
+    private class DrawerLeftChildViewHolder extends BaseAdapterViewHolder {
+        public TextView textView;
+        DrawerLeftChildViewHolder(View itemView, OnAdapterItemClickListener listener) {
+            super(itemView, listener);
+            textView = itemView.findViewById(R.id.item);
+        }
+    }
+
+
 }

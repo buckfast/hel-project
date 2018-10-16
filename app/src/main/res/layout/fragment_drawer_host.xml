@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_dark"
         android:id="@+id/text"
-        android:height="@dimen/action_bar_height"
+        android:height="?android:attr/actionBarSize"
         android:text="aaaaa"/>
 
     <android.support.constraint.Guideline
