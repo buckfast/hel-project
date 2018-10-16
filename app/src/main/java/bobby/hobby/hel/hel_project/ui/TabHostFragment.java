@@ -14,11 +14,6 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
     }
 
     @Override
-    protected void setUpAdater(Adapter adater) {
-
-    }
-
-    @Override
     protected Class<FragmentViewModel> returnFragmentsViewModel() {
         return FragmentViewModel.class;
     }
@@ -26,5 +21,13 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
     @Override
     protected Class<ActivityViewModel> returnViewModel() {
         return ActivityViewModel.class;
+    }
+
+    @Override
+    protected void setUpAdater(Adapter adater) {
+        TabChatFragment chatFragment = new TabChatFragment();
+        TabEventsFragment eventsFragment = new TabEventsFragment();
+        adater.addFragment(chatFragment, "Chat");
+        adater.addFragment(eventsFragment, "Events");
     }
 }

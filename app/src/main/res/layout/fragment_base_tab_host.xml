@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:background="@android:color/white"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@android:color/black"
+                app:tabIndicatorColor="@color/colorAccent"
                 app:tabIndicatorHeight="4dp"
                 app:tabMode="fixed"
                 app:tabPaddingEnd="20dp"

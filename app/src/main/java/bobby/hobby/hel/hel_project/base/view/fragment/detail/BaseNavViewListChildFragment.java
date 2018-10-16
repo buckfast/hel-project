@@ -30,7 +30,7 @@ public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> exte
             if (adapter != null) {
                 recyclerView.setAdapter(adapter);
 
-                //the only working solution to keep selected item selected after orientation change
+                //the only working solution to keep selected item selected graphically after orientation change
                 //*programmatically click the item*
                 recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                     @Override
