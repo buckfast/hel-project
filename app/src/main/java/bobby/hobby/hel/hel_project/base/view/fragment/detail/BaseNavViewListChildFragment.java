@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import bobby.hobby.hel.hel_project.R;
@@ -18,8 +19,8 @@ public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> exte
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        RecyclerView recyclerView = null;
+       RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        //RecyclerView recyclerView = null;
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setHasFixedSize(true);

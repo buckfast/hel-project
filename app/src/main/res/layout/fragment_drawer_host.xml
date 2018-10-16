@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_dark"
         android:id="@+id/text"
-        android:text="YOYOYO"/>
+        android:height="@dimen/action_bar_height"
+        android:text="aaaaa"/>
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
         app:layout_constraintGuide_percent="0.3"/>
 
     <FrameLayout
+        android:background="@android:color/holo_green_dark"
         android:id="@+id/left_child_drawer"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -28,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text" />
 
     <FrameLayout
+        android:background="@android:color/holo_orange_dark"
         android:id="@+id/right_child_drawer"
         android:layout_width="0dp"
         android:layout_height="0dp"

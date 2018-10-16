@@ -31,6 +31,7 @@ dependencies {
     // optional - ReactiveStreams support for LiveData
     implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
     // optional - Test helpers for LiveData
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
