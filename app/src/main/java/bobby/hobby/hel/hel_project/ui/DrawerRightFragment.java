@@ -3,6 +3,7 @@ package bobby.hobby.hel.hel_project.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +37,15 @@ public class DrawerRightFragment extends BaseNavViewListChildFragment<FragmentVi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView textView = view.findViewById(R.id.result);
+        TextView textView = view.findViewById(R.id.texti);
         textView.setOnClickListener(v -> {
 //            Intentionally ask to close the drawer when click, no more isCloseable(), then this, too much repetitive
             mFragmentsViewModel.setClickReaction();
             //mFragmentsViewModel.dataAccross.setValue(textView.getText().toString());
         });
-        /*mFragmentsViewModel.position.observe(this, position -> {
-            String data = Objects.requireNonNull(mFragmentsViewModel.drawerList.getValue()).get(position);
-            textView.setText(data);
-        });*/
+        mFragmentsViewModel.listPosition.observe(this, position -> {
+            DrawerListItem data = Objects.requireNonNull(mFragmentsViewModel.drawerList.getValue().get(position));
+            textView.setText(data.tv);
+        });
     }
 }

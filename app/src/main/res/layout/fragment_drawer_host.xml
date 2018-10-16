@@ -7,35 +7,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_dark"
-        android:id="@+id/text"
+        android:background="@color/colorPrimary"
+        android:id="@+id/topBar"
         android:height="?android:attr/actionBarSize"
-        android:text="aaaaa"/>
+        />
 
     <android.support.constraint.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3"/>
+        app:layout_constraintGuide_percent="0.4" />
 
     <FrameLayout
         android:background="@android:color/holo_green_dark"
         android:id="@+id/left_child_drawer"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/list_item_size"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/text"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
+        app:layout_constraintTop_toBottomOf="@+id/topBar" />
 
     <FrameLayout
         android:background="@android:color/holo_orange_dark"
         android:id="@+id/right_child_drawer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/left_child_drawer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
+        app:layout_constraintTop_toBottomOf="@+id/topBar" />
 </android.support.constraint.ConstraintLayout>
