@@ -11,6 +11,7 @@ import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
 public class FragmentViewModel extends BaseViewModel {
     MutableLiveData<View> lastView = new MutableLiveData<>();
+    MutableLiveData<Integer> lastPosition = new MutableLiveData<>();
     MutableLiveData<Integer> listPosition = new MutableLiveData<>();
     MutableLiveData<List<DrawerListItem>> drawerList = new MutableLiveData<>();
 

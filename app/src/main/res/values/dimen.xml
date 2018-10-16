@@ -4,4 +4,5 @@
     <dimen name="list_item_size">92sp</dimen>
     <dimen name="list_item_padding">4dp</dimen>
     <dimen name="list_image_padding">0dp</dimen>
+    <dimen name="add_button_margin">10sp</dimen>
 </resources>

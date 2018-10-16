@@ -1,6 +1,7 @@
 package bobby.hobby.hel.hel_project.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_drawer_child_left, container, false);
+
     }
 
     @Override
@@ -47,6 +49,11 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         array.add(new DrawerListItem("kekkonen", "@drawable/ic_launcher_foreground"));
         mFragmentsViewModel.drawerList.setValue(array);
 
+        /*if (mFragmentsViewModel.lastView.getValue() != null) {
+            Log.d("asd", "hehhe");
+            Util.changeBgColor(getContext(), mFragmentsViewModel.lastView.getValue(), R.color.colorAccent);
+            Util.changeBgColor(getContext(), mFragmentsViewModel.lastView.getValue().findViewById(R.id.list_item_margin_line), R.color.colorAccentDarker);
+        }*/
     }
 
     @Override
@@ -99,7 +106,6 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         @NonNull
         @Override
         public DrawerLeftChildViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_drawer_list_item, parent, false);
             return new DrawerLeftChildViewHolder(v, mListener);
         }

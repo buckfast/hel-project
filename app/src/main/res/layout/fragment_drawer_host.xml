@@ -4,13 +4,32 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:id="@+id/topBar"
-        android:height="?android:attr/actionBarSize"
-        />
+        android:height="?android:attr/actionBarSize">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:layout_gravity="end"
+                android:background="@color/transparent"
+
+                android:foregroundGravity="right|center_vertical"
+                android:minHeight="?attr/actionBarSize"
+                android:layout_marginEnd="@dimen/add_button_margin"
+                android:src="@drawable/ic_baseline_add_box_24px" />
+        </FrameLayout>
+    </LinearLayout>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -20,7 +39,7 @@
         app:layout_constraintGuide_percent="0.4" />
 
     <FrameLayout
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/colorAccentDarker"
         android:id="@+id/left_child_drawer"
         android:layout_width="@dimen/list_item_size"
         android:layout_height="0dp"
@@ -28,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/topBar" />
 
     <FrameLayout
-        android:background="@android:color/holo_orange_dark"
+        android:background="@color/colorAccentDarker"
         android:id="@+id/right_child_drawer"
         android:layout_width="0dp"
         android:layout_height="0dp"

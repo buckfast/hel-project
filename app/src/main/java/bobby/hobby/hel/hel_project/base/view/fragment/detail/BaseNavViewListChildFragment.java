@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseChildFragment;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
@@ -24,8 +25,10 @@ public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> exte
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setHasFixedSize(true);
-            if (setUpAdapter() != null) {
-                recyclerView.setAdapter(setUpAdapter());
+            BaseAdapter adapter = setUpAdapter();
+            if (adapter != null) {
+                recyclerView.setAdapter(adapter);
+                //recyclerView.scrollToPosition(mFragmentsViewModel.getCurrentPositionDrawer());
             }
         }
     }
