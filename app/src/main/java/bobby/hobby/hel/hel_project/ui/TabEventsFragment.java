@@ -3,13 +3,26 @@ package bobby.hobby.hel.hel_project.ui;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.EventLog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
+import bobby.hobby.hel.hel_project.ui.model.EventItem;
 
 public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
     // TODO: Rename parameter arguments, choose names that match
@@ -20,6 +33,12 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private List<EventItem> eventList;
 
     public TabEventsFragment() {
         // Required empty public constructor
@@ -55,6 +74,10 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
+        //mFragmentsViewModel.eventList.setValue(eventList);
     }
 
     @Override
@@ -64,6 +87,31 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
         return inflater.inflate(R.layout.fragment_tab_events, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        eventList = new ArrayList<>();
+
+        eventList.add(new EventItem("asda", "asdasdadsa", null));
+        eventList.add(new EventItem("asdaasd", "gdthbdt", null));
+        eventList.add(new EventItem("se fsefsef e", "efselkselkkseklskls sekf klf lkef ", null));
+        eventList.add(new EventItem("esfjk fe", "fekfj", null));
+        eventList.add(new EventItem("sfe kejfjk s fkjs", "kjef fj kejk skj", null));
+        mFragmentsViewModel.eventList.setValue(eventList);
+
+        recyclerView = (RecyclerView) getView().findViewById(R.id.events_recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+
+        Log.d("asd", "koko"+String.valueOf(eventList.size()));
+        adapter = new EventAdapter(this,eventList);
+        recyclerView.setAdapter(adapter);
+
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -73,5 +121,75 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+
+    private class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
+
+        private Context c;
+        private List<EventItem> eventList;
+        //private final OnAdapterItemClickListener listener;
+
+        EventAdapter(Fragment context, List<EventItem> eventList/*, OnAdapterItemClickListener listener*/) {
+            this.eventList = eventList;
+            Log.d("asd", "kokonyt"+eventList.size());
+            //this.listener = listener;
+            //mFragmentsViewModel.eventList.observe(context, this::refreshData);
+        }
+
+        private void refreshData(List<EventItem> data) {
+            eventList.clear();
+            eventList.addAll(data);
+            notifyDataSetChanged();
+            Log.d("asd", String.valueOf(getItemCount()));
+        }
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            public TextView title, desc;
+            public ImageView image;
+
+
+            public MyViewHolder(View view) {
+                super(view);
+                title = (TextView) view.findViewById(R.id.event_title);
+                desc = (TextView) view.findViewById(R.id.event_desc);
+                image = (ImageView) view.findViewById(R.id.event_image);
+            }
+
+            public void bind(EventItem item, final OnAdapterItemClickListener listener) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        listener.onClick(item);
+                    }
+                });
+            }
+        }
+
+
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.fragment_tab_events_list_item, parent, false);
+            return new MyViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(final MyViewHolder holder, int position) {
+            EventItem event = eventList.get(position);
+            holder.title.setText(event.getTitle());
+            Log.d("asd", event.getTitle());
+            holder.desc.setText(event.getDesc());
+            holder.image.setImageResource(R.drawable.ic_launcher_foreground);
+            //holder.bind(event, listener);
+        }
+
+        @Override
+        public int getItemCount() {
+            return eventList.size();
+        }
+    }
+
+    public  interface OnAdapterItemClickListener {
+        void onClick(EventItem item);
     }
 }
