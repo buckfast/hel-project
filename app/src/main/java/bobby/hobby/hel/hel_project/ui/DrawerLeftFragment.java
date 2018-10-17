@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -65,6 +66,8 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
 
             Util.changeBgColor(getContext(), v, R.color.colorAccent);
             Util.changeBgColor(getContext(), v.findViewById(R.id.list_item_margin_line), R.color.colorAccentDarker);
+            //Util.changeTextColor(getContext(), v.findViewById(R.id.item_text), R.color.colorWhite);
+            Util.disableTint(v.findViewById(R.id.image));
 
             View lv = mFragmentsViewModel.lastView.getValue();
             if (lv == null) {
@@ -73,6 +76,8 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
                 if (lv != v) {
                     Util.changeBgColor(getContext(), lv, R.color.colorAccentDark);
                     Util.changeBgColor(getContext(), lv.findViewById(R.id.list_item_margin_line), R.color.colorAccentDark);
+                    //Util.changeTextColor(getContext(), lv.findViewById(R.id.item_text), R.color.colorGray);
+                    Util.setTintMode(getContext(), lv.findViewById(R.id.image), PorterDuff.Mode.MULTIPLY, R.color.colorGray);
                     mFragmentsViewModel.lastView.setValue(v);
                 }
             }
@@ -85,7 +90,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
 
         DrawerLeftChildViewHolder(View itemView, OnAdapterItemClickListener listener) {
             super(itemView, listener);
-            textView = itemView.findViewById(R.id.item);
+            textView = itemView.findViewById(R.id.item_text);
             imageView = itemView.findViewById(R.id.image);
         }
     }
@@ -116,6 +121,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         public void onBindViewHolder(@NonNull DrawerLeftChildViewHolder holder, int position) {
             holder.textView.setText(listData.get(position).tv);
             holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+            Util.setTintMode(getContext(),holder.imageView, PorterDuff.Mode.MULTIPLY, R.color.colorGray);
             //holder.imageButton.setImageResource(mData.get(position).ib);
         }
 

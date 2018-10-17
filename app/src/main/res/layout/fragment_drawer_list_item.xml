@@ -7,11 +7,12 @@
     android:id="@+id/list_item_container">
 
     <TextView
+        android:textColor="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="15dp"
         android:layout_marginStart="@dimen/list_item_padding"
-        android:id="@+id/item"/>
+        android:id="@+id/item_text"/>
 
     <ImageView
         android:id="@+id/image"
