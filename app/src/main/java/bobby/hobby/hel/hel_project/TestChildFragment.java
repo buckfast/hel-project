@@ -11,16 +11,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.nkzawa.emitter.Emitter;
+
+import java.net.Socket;
+import java.util.Map;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.repository.Repository;
+import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import okhttp3.ResponseBody;
 
-public class TestChildFragment extends BaseTabChildFragment<FragmentToFragmentTabViewModel> {
-
+public class TestChildFragment extends BaseTabChildFragment<FragmentToFragmentTabViewModel> implements SocketClient.EventListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,10 +60,17 @@ public class TestChildFragment extends BaseTabChildFragment<FragmentToFragmentTa
         mFragmentsViewModel.dataAccross.observe(this, data -> {
             Toast.makeText(getContext(), "This is from TestChildFragment, the data is: "+data, Toast.LENGTH_SHORT).show();
         });
+
+        mFragmentsViewModel.attachSocketClientTo(this);
     }
 
     @Override
     protected Class<FragmentToFragmentTabViewModel> returnFragmentsViewModel() {
         return FragmentToFragmentTabViewModel.class;
+    }
+
+    @Override
+    public Map<String, Emitter.Listener> returnListeners() {
+        return null;
     }
 }
