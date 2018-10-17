@@ -61,7 +61,7 @@ public class TestChildFragment extends BaseTabChildFragment<FragmentToFragmentTa
             Toast.makeText(getContext(), "This is from TestChildFragment, the data is: "+data, Toast.LENGTH_SHORT).show();
         });
 
-        mFragmentsViewModel.attachSocketClientTo(this);
+        mFragmentsViewModel.attachSocketClientTo(getActivity());
     }
 
     @Override
