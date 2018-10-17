@@ -32,4 +32,6 @@ public class Repository {
     public void getUser(Handler<User> callback) {
         mInternalServerClient.getUser(callback);
     }
+
+    public void logout() {mInternalServerClient.logout();}
 }

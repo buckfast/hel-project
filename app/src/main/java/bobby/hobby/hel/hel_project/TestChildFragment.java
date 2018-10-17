@@ -41,21 +41,10 @@ public class TestChildFragment extends BaseTabChildFragment<FragmentToFragmentTa
             }
 
             User newUser = new User();
-            newUser.setEmail("hoangl@mail.com");
-            newUser.setPassword("hoangl@gmail.com");
-            mFragmentsViewModel.login(newUser);
-//            Repository repo = Repository.getInstance(getActivity().getApplication());
-//            repo.login(newUser, new BaseClient.Handler<User>() {
-//                @Override
-//                public void onSuccess(@NonNull User response, int code) {
-//                    Toast.makeText(getContext(), response.getToken(), Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onError(@Nullable ResponseBody body, int code) {
-//                    Toast.makeText(getContext(), body.toString(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
+            newUser.setEmail("hoangl2@gmail.com");
+            newUser.setPassword("hoangl2@gmail.com");
+            mFragmentsViewModel.getUser();
+//            mFragmentsViewModel.login(newUser);
         });
 
         mFragmentsViewModel.user.observe(this, user -> {

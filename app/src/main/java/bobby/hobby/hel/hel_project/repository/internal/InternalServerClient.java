@@ -49,6 +49,10 @@ public class InternalServerClient extends BaseClient {
         getAPI(InternalServerAPI.class).getUserInfo().enqueue(new BaseResponseHandler<>(callback));
     }
 
+    public void logout() {
+        setAccessToken("");
+    }
+
     private class AuthResponseHandler extends BaseHandler<User> {
         private AuthResponseHandler(Handler<User> handler) {
             super(handler);

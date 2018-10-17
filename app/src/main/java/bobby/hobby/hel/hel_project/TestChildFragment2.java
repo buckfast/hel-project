@@ -34,7 +34,7 @@ public class TestChildFragment2 extends BaseTabChildFragment<FragmentToFragmentT
             } else {
                 mFragmentsViewModel.tabData.setValue("Hello");
             }
-            mFragmentsViewModel.getUser();
+            mFragmentsViewModel.logout();
 
         });
 

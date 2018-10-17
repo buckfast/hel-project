@@ -63,4 +63,8 @@ public class FragmentToFragmentTabViewModel extends BaseViewModel {
             }
         });
     }
+
+    public void logout() {
+        mRepository.logout();
+    }
 }
