@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,6 +48,9 @@ public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentView
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mFragmentsViewModel.listPosition.observe(this, pos -> {
+                mViewModel.title.setValue(mFragmentsViewModel.getTitle(pos));
+        });
     }
 
     @Override

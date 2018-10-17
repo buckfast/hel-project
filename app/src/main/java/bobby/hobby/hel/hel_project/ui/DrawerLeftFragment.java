@@ -57,6 +57,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
             mFragmentsViewModel.listPosition.setValue(position);
             mFragmentsViewModel.setCurrentPositionDrawer(position);
 
+
             Util.changeBgColor(getContext(), v, R.color.colorAccent);
             Util.changeBgColor(getContext(), v.findViewById(R.id.list_item_margin_line), R.color.colorAccentDarker);
             //Util.changeTextColor(getContext(), v.findViewById(R.id.item_text), R.color.colorWhite);

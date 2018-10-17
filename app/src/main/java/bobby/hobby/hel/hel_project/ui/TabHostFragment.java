@@ -1,10 +1,14 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
 
 public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, ActivityViewModel> {

@@ -10,7 +10,7 @@
         android:id="@+id/event_card"
         card_view:cardUseCompatPadding="true"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="160dp"
         android:layout_gravity="center"
         android:elevation="20dp">
 
@@ -21,14 +21,16 @@
 
             <ImageView
                 android:id="@+id/event_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:clickable="true"
                 android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/event_title"
+                android:textSize="20dp"
                 android:textColor="@color/colorAccentDarker"
+                android:layout_below="@id/event_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

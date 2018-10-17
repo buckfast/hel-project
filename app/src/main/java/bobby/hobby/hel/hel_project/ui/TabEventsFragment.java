@@ -1,30 +1,30 @@
 package bobby.hobby.hel.hel_project.ui;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
+import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 
-public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
+public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements OnAdapterItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -75,9 +75,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-
-        //mFragmentsViewModel.eventList.setValue(eventList);
     }
 
     @Override
@@ -92,25 +89,26 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
         super.onViewCreated(view, savedInstanceState);
         eventList = new ArrayList<>();
 
-        eventList.add(new EventItem("asda", "asdasdadsa", null));
-        eventList.add(new EventItem("asdaasd", "gdthbdt", null));
-        eventList.add(new EventItem("se fsefsef e", "efselkselkkseklskls sekf klf lkef ", null));
-        eventList.add(new EventItem("esfjk fe", "fekfj", null));
-        eventList.add(new EventItem("sfe kejfjk s fkjs", "kjef fj kejk skj", null));
-        mFragmentsViewModel.eventList.setValue(eventList);
-
         recyclerView = (RecyclerView) getView().findViewById(R.id.events_recycler_view);
         recyclerView.setHasFixedSize(true);
 
-
-        Log.d("asd", "koko"+String.valueOf(eventList.size()));
-        adapter = new EventAdapter(this,eventList);
+        adapter = new EventAdapter(this,eventList, this);
+        mFragmentsViewModel.eventList.observe(this, data ->{
+            ((EventAdapter)adapter).refreshData(data);
+        });
         recyclerView.setAdapter(adapter);
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.getAdapter().notifyDataSetChanged();
+        eventList.add(new EventItem("asda", null,"asdasdadsa"));
+        eventList.add(new EventItem("asdaasd", null,"gdthbdt" ));
+        eventList.add(new EventItem("se fsefsef e", null, "efselkselkkseklskls sekf klf lkef "));
+        eventList.add(new EventItem("esfjk fe", null, "fekfj"));
+        eventList.add(new EventItem("sfe kejfjk s fkjs", null, "kjef fj kejk skj"));
+        eventList.add(new EventItem("asda", null,"asdasdadsa"));
+        eventList.add(new EventItem("asdaasd", null, "gdthbdt"));
+        mFragmentsViewModel.eventList.setValue(eventList);
     }
 
     @Override
@@ -123,61 +121,96 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
         super.onDetach();
     }
 
+    @Override
+    public void onClick(View v, int position) {
+        List<EventItem> list = mFragmentsViewModel.eventList.getValue();
+        list.remove(position);
+        mFragmentsViewModel.eventList.setValue(list);
+    }
 
-    private class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
+
+    private class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
         private Context c;
         private List<EventItem> eventList;
-        //private final OnAdapterItemClickListener listener;
+        private final OnAdapterItemClickListener listener;
 
-        EventAdapter(Fragment context, List<EventItem> eventList/*, OnAdapterItemClickListener listener*/) {
+        public EventAdapter(Fragment context, List<EventItem> eventList, OnAdapterItemClickListener listener) {
             this.eventList = eventList;
-            Log.d("asd", "kokonyt"+eventList.size());
-            //this.listener = listener;
-            //mFragmentsViewModel.eventList.observe(context, this::refreshData);
+            this.listener = listener;
         }
 
-        private void refreshData(List<EventItem> data) {
-            eventList.clear();
-            eventList.addAll(data);
+        public void refreshData(List<EventItem> newData) {
+            //eventList = data;
+            /*DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return eventList.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return newData.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return eventList.get(oldItemPosition).getTitle() ==
+                            newData.get(newItemPosition).getTitle();
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    return eventList.get(oldItemPosition).equals(newData.get(newItemPosition));
+                }
+            });
+            result.dispatchUpdatesTo(this);*/
+
+            eventList = newData;
             notifyDataSetChanged();
-            Log.d("asd", String.valueOf(getItemCount()));
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             public TextView title, desc;
             public ImageView image;
+            public RecyclerView.Adapter adapter;
 
 
-            public MyViewHolder(View view) {
+            public ViewHolder(View view, RecyclerView.Adapter adapter) {
                 super(view);
+                this.adapter = adapter;
                 title = (TextView) view.findViewById(R.id.event_title);
                 desc = (TextView) view.findViewById(R.id.event_desc);
                 image = (ImageView) view.findViewById(R.id.event_image);
+                view.setOnClickListener(this);
             }
 
+            @Override
+            public void onClick(View view) {
+                listener.onClick(view, this.getAdapterPosition());
+            }
+/*
             public void bind(EventItem item, final OnAdapterItemClickListener listener) {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
-                        listener.onClick(item);
+                        listener.onClick(item,);
                     }
                 });
-            }
+            }*/
         }
 
 
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.fragment_tab_events_list_item, parent, false);
-            return new MyViewHolder(itemView);
+            return new ViewHolder(itemView, adapter);
         }
 
         @Override
-        public void onBindViewHolder(final MyViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, int position) {
             EventItem event = eventList.get(position);
             holder.title.setText(event.getTitle());
-            Log.d("asd", event.getTitle());
             holder.desc.setText(event.getDesc());
             holder.image.setImageResource(R.drawable.ic_launcher_foreground);
             //holder.bind(event, listener);
@@ -189,7 +222,4 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> {
         }
     }
 
-    public  interface OnAdapterItemClickListener {
-        void onClick(EventItem item);
-    }
 }

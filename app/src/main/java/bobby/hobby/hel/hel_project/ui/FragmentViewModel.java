@@ -21,4 +21,8 @@ public class FragmentViewModel extends BaseViewModel {
     public FragmentViewModel(@NonNull Application application) {
         super(application);
     }
+
+    public String getTitle(int pos) {
+        return this.drawerList.getValue().get(pos).tv;
+    }
 }

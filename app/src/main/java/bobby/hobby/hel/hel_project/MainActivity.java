@@ -1,8 +1,15 @@
 package bobby.hobby.hel.hel_project;
 
+import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.app.ActionBar;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.ui.ActivityViewModel;
@@ -35,5 +42,13 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+
+        //ActionBar actionbar = getSupportActionBar();
+        //getSupportActionBar().setDisplayOptions(actionbar.DISPLAY_SHOW_CUSTOM);
+        //getSupportActionBar().setCustomView(R.layout.action_bar);
+
+        TextView title = findViewById(R.id.toolbar_title);
+        mViewModel.getTitle().observe(this, s -> title.setText(s));
     }
+
 }
