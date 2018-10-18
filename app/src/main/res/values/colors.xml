@@ -9,4 +9,13 @@
     <color name="colorGray">#cfcfcf</color>
     <color name="colorWhite">#ffffff</color>
     <color name="transparent">#00ffffff</color>
+
+    <color name="superColor0">#2d7d9a</color>
+    <color name="superColor1">#0099bc</color>
+    <color name="superColor2">#006381</color>
+    <color name="superColor3">#0078D7</color>
+    <color name="superColor4">#6969d6</color>
+    <color name="superColor5">#bebcd8</color>
+
+
 </resources>

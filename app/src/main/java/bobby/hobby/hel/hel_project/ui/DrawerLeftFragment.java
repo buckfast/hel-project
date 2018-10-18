@@ -1,10 +1,12 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,8 @@ import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 
 public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentViewModel> {
 
+    private TypedArray colors;
+    private int i;
     @Override
     protected Class<FragmentViewModel> returnFragmentsViewModel() {
         return FragmentViewModel.class;
@@ -43,6 +47,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         array.add(new DrawerListItem("kekkonen", "@drawable/ic_launcher_foreground"));
         mFragmentsViewModel.drawerList.setValue(array);
 
+        colors = getContext().getResources().obtainTypedArray(R.array.super_colors);
 
         /*if (mFragmentsViewModel.lastView.getValue() != null) {
             Log.d("asd", "hehhe");
@@ -108,6 +113,8 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         @Override
         public DrawerLeftChildViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_drawer_list_item, parent, false);
+            //Util.changeBgColor(getContext(),v.findViewById(R.id.list_item_container),colors.getResourceId(i%colors.length(),0));
+            //i++;
             return new DrawerLeftChildViewHolder(v, mListener);
         }
 

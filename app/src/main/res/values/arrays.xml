@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="super_colors">
+        <item>@color/superColor0</item>
+        <item>@color/superColor1</item>
+        <item>@color/superColor2</item>
+        <item>@color/superColor3</item>
+        <item>@color/superColor4</item>
+        <item>@color/superColor5</item>
+    </array>
+</resources>
