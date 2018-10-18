@@ -14,12 +14,12 @@ import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> extends BaseChildFragment<T>{
 
     protected abstract BaseAdapter setUpAdapter();
+    protected abstract int returnRecyclerViewId();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        RecyclerView recyclerView = null;
+        RecyclerView recyclerView = view.findViewById(returnRecyclerViewId());
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setHasFixedSize(true);
