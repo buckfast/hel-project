@@ -8,7 +8,10 @@ import com.github.nkzawa.socketio.client.Socket;
 import bobby.hobby.hel.hel_project.base.API.BaseClient.Handler;
 import bobby.hobby.hel.hel_project.repository.internal.InternalServerClient;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
+import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
+import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
+import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 
 public class Repository {
     private static Repository instance;
@@ -59,4 +62,18 @@ public class Repository {
     }
 
     public void logout() {mInternalServerClient.logout();}
+
+    public void deleteUser(Handler<Message> callback) {
+        mInternalServerClient.deleteUser(callback);
+    }
+
+    public void updateUser(User user, Handler<Message> callback) {
+        mInternalServerClient.updateUser(user, callback);
+    }
+
+    public void getHobbyList(Handler<HobbyList> handler) {mInternalServerClient.getHobbyList(handler);}
+
+    public void getEventList(String keyword, Handler<EventList> handler) {
+        mInternalServerClient.getEventList(keyword, handler);
+    }
 }

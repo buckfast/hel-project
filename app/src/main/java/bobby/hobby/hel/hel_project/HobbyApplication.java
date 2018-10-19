@@ -8,8 +8,7 @@ import com.github.nkzawa.socketio.client.Socket;
 import java.net.URISyntaxException;
 
 public class HobbyApplication extends Application {
-    //TODO: insert base URI of the socket
-    private static final String BASE_SOCKET_URI = "";
+    private static final String BASE_SOCKET_URI = "https://hobochat.herokuapp.com";
     private Socket mSocket;
     {
         try {
