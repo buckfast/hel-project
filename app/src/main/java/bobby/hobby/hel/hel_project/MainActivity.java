@@ -5,6 +5,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import java.net.URISyntaxException;
+
 import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 
@@ -19,8 +24,7 @@ public class MainActivity extends BaseActivity<ActivityFragmentViewModel> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Not working now since lack base URL
-//        mViewModel.attachSocketClientTo(this);
+        mViewModel.attachSocketClientTo(this);
         User user = new User();
         user.setEmail("hoangl@mail.com");
         user.setPassword("hoangl@gmail.com");
@@ -37,6 +41,7 @@ public class MainActivity extends BaseActivity<ActivityFragmentViewModel> {
         mViewModel.eventList.observe(this, eventList -> {
             Log.d("Test", Integer.toString(eventList.getCount()));
         });
-//        mViewModel.emit();
+
+        mViewModel.emit();
     }
 }

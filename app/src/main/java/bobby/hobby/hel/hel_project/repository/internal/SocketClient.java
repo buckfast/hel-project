@@ -21,26 +21,19 @@ public class SocketClient implements LifecycleObserver {
     private Socket mSocket;
     public SocketClient(Application application, EventListener listener) {
         mEventListener = listener;
-//        HobbyApplication app = (HobbyApplication) application;
-        try {
-            mSocket = IO.socket("https://hobochat.herokuapp.com");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        HobbyApplication app = (HobbyApplication) application;
+        mSocket = app.getSocket();
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void connect() {
         setUpEvents(true);
         mSocket.connect();
-        Log.d("Socket", "Socket connect");
-        Log.d("Soclet", mSocket.id());
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void disconnect() {
         mSocket.disconnect();
-        Log.d("Socket", "Socket disconect");
         setUpEvents(false);
     }
 

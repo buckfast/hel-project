@@ -83,7 +83,6 @@ public class ActivityFragmentViewModel extends BaseViewModel implements SocketCl
     }
 
     public void emit() {
-        mRepository.getSocket().emit("add user", "Any string");
         mRepository.getSocket().emit("new message", "Helo");
     }
 
