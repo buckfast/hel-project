@@ -38,13 +38,17 @@ public abstract class BaseNavViewListHostFragment<T extends BaseViewModel, V ext
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Guideline guideline = view.findViewById(returnGuidelineId());
-        guideline.setGuidelinePercent(getGuidelineSplitPercentage());
-        if (returnLeftChild() != null && returnRightChild() != null) {
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                    .replace(returnLeftChildId(), returnLeftChild())
-                    .replace(returnRightChildId(), returnRightChild())
-                    .commit();
+        if (returnGuidelineId() != -1) {
+            Guideline guideline = view.findViewById(returnGuidelineId());
+            guideline.setGuidelinePercent(getGuidelineSplitPercentage());
+        }
+        if (returnLeftChildId() != -1 && returnRightChildId() != -1) {
+            if (returnLeftChild() != null && returnRightChild() != null) {
+                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(returnLeftChildId(), returnLeftChild())
+                        .replace(returnRightChildId(), returnRightChild())
+                        .commit();
+            }
         }
         mFragmentsViewModel.getClickReaction().observe(this, v-> mViewModel.setClickReaction());
     }

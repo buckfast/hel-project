@@ -19,12 +19,14 @@ public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> exte
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView = view.findViewById(returnRecyclerViewId());
-        if (recyclerView != null) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setHasFixedSize(true);
-            if (setUpAdapter() != null) {
-                recyclerView.setAdapter(setUpAdapter());
+        if (returnRecyclerViewId() != -1) {
+            RecyclerView recyclerView = view.findViewById(returnRecyclerViewId());
+            if (recyclerView != null) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setHasFixedSize(true);
+                if (setUpAdapter() != null) {
+                    recyclerView.setAdapter(setUpAdapter());
+                }
             }
         }
     }
