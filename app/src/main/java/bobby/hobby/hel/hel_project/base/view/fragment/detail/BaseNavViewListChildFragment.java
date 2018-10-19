@@ -17,29 +17,31 @@ import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> extends BaseChildFragment<T>{
 
     protected abstract BaseAdapter setUpAdapter();
+    protected abstract int returnRecyclerViewId();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        //RecyclerView recyclerView = null;
-        if (recyclerView != null) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setHasFixedSize(true);
-            BaseAdapter adapter = setUpAdapter();
-            if (adapter != null) {
-                recyclerView.setAdapter(adapter);
 
-                //the only working solution to keep selected item selected graphically after orientation change
-                //*programmatically click the item*
-                recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        recyclerView.findViewHolderForAdapterPosition(mFragmentsViewModel.getCurrentPositionDrawer()).itemView.performClick();
-                        recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                        return true;
-                    }
-                });
+        if (returnRecyclerViewId() != -1) {
+            RecyclerView recyclerView = view.findViewById(returnRecyclerViewId());
+            if (recyclerView != null) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setHasFixedSize(true);
+                if (setUpAdapter() != null) {
+                    recyclerView.setAdapter(setUpAdapter());
+
+                    //the only working solution to keep selected item selected graphically after orientation change
+                    //*programmatically click the item*
+                    recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                            recyclerView.findViewHolderForAdapterPosition(mFragmentsViewModel.getCurrentPositionDrawer()).itemView.performClick();
+                            recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                            return true;
+                        }
+                    });
+                }
 
             }
         }

@@ -8,6 +8,7 @@ import android.view.View;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
+import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 
@@ -20,6 +21,11 @@ public class FragmentViewModel extends BaseViewModel {
 
     public FragmentViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    @Override
+    protected SocketClient.EventListener returnSocketListener() {
+        return null;
     }
 
     public String getTitle(int pos) {

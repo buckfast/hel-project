@@ -33,6 +33,11 @@ public class DrawerRightFragment extends BaseNavViewListChildFragment<FragmentVi
     }
 
     @Override
+    protected int returnRecyclerViewId() {
+        return R.id.right_child_drawer;
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 

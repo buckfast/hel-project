@@ -46,6 +46,21 @@ public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentView
     }
 
     @Override
+    protected int returnGuidelineId() {
+        return R.id.guideline;
+    }
+
+    @Override
+    protected int returnLeftChildId() {
+        return R.id.left_child_drawer;
+    }
+
+    @Override
+    protected int returnRightChildId() {
+        return R.id.right_child_drawer;
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFragmentsViewModel.listPosition.observe(this, pos -> {

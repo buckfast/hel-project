@@ -83,6 +83,11 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         }, this);
     }
 
+    @Override
+    protected int returnRecyclerViewId() {
+        return R.id.recycler_view;
+    }
+
     private class DrawerLeftChildViewHolder extends BaseAdapterViewHolder {
         public TextView textView;
         public ImageView imageView;

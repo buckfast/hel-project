@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.util.AttributeSet;
@@ -15,7 +16,17 @@ import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.ui.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.DrawerHostFragment;
 import bobby.hobby.hel.hel_project.ui.TabHostFragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import java.net.URISyntaxException;
+
+import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
+import bobby.hobby.hel.hel_project.repository.internal.model.User;
 public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
     @Override
@@ -37,6 +48,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     protected Class<ActivityViewModel> returnViewModel() {
         return ActivityViewModel.class;
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
