@@ -40,7 +40,7 @@ public abstract class BaseTabHostFragment<T extends BaseViewModel, V extends Bas
         setupViewPager();
         TabLayout tabs = view.findViewById(R.id.result_tabs);
         tabs.setupWithViewPager(mViewPager);
-        mViewPager.setCurrentItem(mFragmentsViewModel.getCurrentPosition());
+        mViewPager.setCurrentItem(mFragmentsViewModel.getCurrentPosition().getValue());
     }
 
     private void setupViewPager() {

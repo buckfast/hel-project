@@ -3,10 +3,17 @@ package bobby.hobby.hel.hel_project.ui;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
@@ -56,6 +63,9 @@ public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        mFragmentsViewModel.attachSocketClientTo(getActivity());
+        mFragmentsViewModel.emitTest();
     }
 
     @Override
@@ -65,6 +75,34 @@ public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
         return inflater.inflate(R.layout.fragment_tab_chat, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        EditText message_edittext = view.findViewById(R.id.message_edittext);
+        message_edittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            // TODO: hehe
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (message_edittext.getLineCount() == 2) {
+                    message_edittext.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.chat_edittext_multirow_bg));
+                } else if (message_edittext.getLineCount() > 2) {
+                    message_edittext.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.chat_edittext_multirow_bg2));
+                } else {
+                    message_edittext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.chat_edittext_bg));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
 
     @Override
     public void onAttach(Context context) {

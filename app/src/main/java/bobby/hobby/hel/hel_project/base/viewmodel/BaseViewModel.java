@@ -14,7 +14,7 @@ public abstract class BaseViewModel extends AndroidViewModel {
     protected Repository mRepository;
     private boolean mCurrentState = false;
     private MutableLiveData<Boolean> mReaction;
-    private int mCurrentPosition;
+    private MutableLiveData<Integer> mCurrentPosition = new MutableLiveData<>();
     private int mCurrentPositionDrawer;
 
     public BaseViewModel(@NonNull Application application) {
@@ -26,7 +26,7 @@ public abstract class BaseViewModel extends AndroidViewModel {
         if (mReaction == null) {
             mReaction = new MutableLiveData<>();
             mReaction.setValue(mCurrentState);
-            mCurrentPosition = 0;
+            mCurrentPosition.setValue(0);
             mCurrentPositionDrawer = 0;
         }
         return mReaction;
@@ -38,12 +38,12 @@ public abstract class BaseViewModel extends AndroidViewModel {
         mReaction.setValue(!mCurrentState);
     }
 
-    public final int getCurrentPosition() {
+    public final MutableLiveData<Integer> getCurrentPosition() {
         return mCurrentPosition;
     }
 
     public final void setCurrentPosition(int mCurrentPosition) {
-        this.mCurrentPosition = mCurrentPosition;
+        this.mCurrentPosition.setValue(mCurrentPosition);
     }
 
 

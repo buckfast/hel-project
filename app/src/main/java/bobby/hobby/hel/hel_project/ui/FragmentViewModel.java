@@ -28,7 +28,7 @@ import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import okhttp3.ResponseBody;
 
-public class FragmentViewModel extends BaseViewModel {
+public class FragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
     MutableLiveData<View> lastView = new MutableLiveData<>();
     //MutableLiveData<Integer> lastPosition = new MutableLiveData<>();
     MutableLiveData<Integer> listPosition = new MutableLiveData<>();
@@ -44,10 +44,6 @@ public class FragmentViewModel extends BaseViewModel {
         super(application);
     }
 
-    @Override
-    protected SocketClient.EventListener returnSocketListener() {
-        return null;
-    }
 
 
     public String getTitle(int pos) {
@@ -64,7 +60,7 @@ public class FragmentViewModel extends BaseViewModel {
 
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("testi", String.valueOf(code));
+                Log.d("testi", "login"+String.valueOf(code));
             }
         });
     }
@@ -151,7 +147,7 @@ public class FragmentViewModel extends BaseViewModel {
 
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("testi", String.valueOf(code));
+                Log.d("testi", "gethobbylist"+String.valueOf(code));
 
             }
         });
@@ -166,8 +162,39 @@ public class FragmentViewModel extends BaseViewModel {
 
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("testi", String.valueOf(code));
+                Log.d("testi", "geteventlist"+String.valueOf(code));
             }
         });
+    }
+
+    @Override
+    protected SocketClient.EventListener returnSocketListener() {
+        return this;
+    }
+
+    @Override
+    public Map<String, Emitter.Listener> returnListeners() {
+        //Remember to add event listener here, this is where react to server event
+        Map<String, Emitter.Listener> map = new HashMap<>();
+        map.put(Socket.EVENT_CONNECT, args -> {
+            mRepository.getSocket().emit("add user", "uiop");
+        });
+        map.put("new message", args -> {
+            JSONObject data = (JSONObject) args[0];
+            String username;
+            String message;
+            try {
+                username = data.getString("username");
+                message = data.getString("message");
+                Log.d("Fine", username+message);
+            } catch (JSONException e) {
+                Log.e("Error", e.getMessage());
+            }
+        });
+        return map;
+    }
+
+    public void emitTest() {
+        mRepository.getSocket().emit("new message", "aaaaasd");
     }
 }

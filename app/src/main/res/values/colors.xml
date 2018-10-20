@@ -17,16 +17,16 @@
     <color name="superColor4">#6969d6</color>
     <color name="superColor5">#bebcd8</color>
 
-    <color name="gradient1_c">#927b2b81</color>
-    <color name="gradient1_e">#949e5d99</color>
-    <color name="gradient1_s">#adba5323</color>
+    <color name="gradient1_c">#807b2b81</color>
+    <color name="gradient1_e">#809e5d99</color>
+    <color name="gradient1_s">#96ba5323</color>
 
-    <color name="gradient2_s">#921b9c4a</color>
-    <color name="gradient2_c">#943a9f94</color>
-    <color name="gradient2_e">#ad185873</color>
+    <color name="gradient2_s">#801b9c4a</color>
+    <color name="gradient2_c">#803a9f94</color>
+    <color name="gradient2_e">#9a185873</color>
 
-    <color name="gradient3_s">#92ac8b12</color>
-    <color name="gradient3_c">#94c14a2c</color>
-    <color name="gradient3_e">#ad75940d</color>
+    <color name="gradient3_s">#80ac8b12</color>
+    <color name="gradient3_c">#80c14a2c</color>
+    <color name="gradient3_e">#9675940d</color>
 
 </resources>
