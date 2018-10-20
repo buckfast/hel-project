@@ -2,10 +2,10 @@ package bobby.hobby.hel.hel_project.ui.model;
 
 public class EventItem {
     String title;
-    String image;
+    int image;
     String desc;
 
-    public EventItem(String title, String image, String desc) {
+    public EventItem(String title, int image, String desc) {
         this.title = title;
         this.image = image;
         this.desc = desc;
@@ -27,11 +27,11 @@ public class EventItem {
         this.title = title;
     }
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 }

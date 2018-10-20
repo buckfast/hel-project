@@ -2,44 +2,89 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="@dimen/list_item_padding"
-    android:paddingStart="@dimen/list_item_padding"
-    android:paddingEnd="@dimen/list_item_padding">
+
+    android:clickable="true"
+>
 
     <android.support.v7.widget.CardView
         android:id="@+id/event_card"
         card_view:cardUseCompatPadding="true"
+        android:foreground="?android:selectableItemBackground"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:elevation="20dp">
+        android:clickable="false"
+
+        card_view:contentPadding="0dp"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardMaxElevation="0dp"
+        card_view:cardElevation="0dp">
 
         <RelativeLayout
-
+            android:clickable="false"
+            android:background="@color/colorGray"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <ImageView
                 android:id="@+id/event_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:clickable="true"
-                android:scaleType="fitXY" />
-
-            <TextView
-                android:id="@+id/event_title"
-                android:textSize="20dp"
-                android:textColor="@color/colorAccentDarker"
-                android:layout_below="@id/event_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:clickable="false"
+
+
+                android:scaleType="centerCrop" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <View
+                    android:layout_gravity="top"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/fading"
+                    />
+                <View
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/fading_bottom"
+                    />
+
+                <View
+                    android:id="@+id/top_gradient"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
 
             <TextView
-                android:id="@+id/event_desc"
-                android:textColor="@color/colorAccentDarker"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="10"
+                android:shadowColor="@android:color/black"
+
+                android:padding="@dimen/list_item_padding"
+                android:id="@+id/event_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/event_title" />
+                android:layout_alignParentStart="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/list_item_title" />
+
+                <TextView
+                    android:padding="@dimen/list_item_padding"
+
+                    android:layout_gravity="bottom"
+                    android:id="@+id/event_desc"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+            </FrameLayout>
+
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

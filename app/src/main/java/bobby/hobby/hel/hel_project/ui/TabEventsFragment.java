@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.util.DiffUtil;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,13 +100,13 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        eventList.add(new EventItem("asda", null,"asdasdadsa"));
-        eventList.add(new EventItem("asdaasd", null,"gdthbdt" ));
-        eventList.add(new EventItem("se fsefsef e", null, "efselkselkkseklskls sekf klf lkef "));
-        eventList.add(new EventItem("esfjk fe", null, "fekfj"));
-        eventList.add(new EventItem("sfe kejfjk s fkjs", null, "kjef fj kejk skj"));
-        eventList.add(new EventItem("asda", null,"asdasdadsa"));
-        eventList.add(new EventItem("asdaasd", null, "gdthbdt"));
+        eventList.add(new EventItem("asda", R.drawable.a342_sahly_2, "asdasdadsa"));
+        eventList.add(new EventItem("asdaasd", R.drawable.a74_muut8,"gdthbdt" ));
+        eventList.add(new EventItem("se fsefsef e", R.drawable.aaaa, "efselkselkkseklskls sekf klf lkef "));
+        eventList.add(new EventItem("esfjk fe", R.drawable.a74_muut8, "fekfj"));
+        eventList.add(new EventItem("sfe kejfjk s fkjs", R.drawable.a74_muut8, "kjef fj kejk skj"));
+        eventList.add(new EventItem("asda", R.drawable.a342_sahly_2,"asdasdadsa"));
+        eventList.add(new EventItem("asdaasd", R.drawable.aaaa, "gdthbt"));
         mFragmentsViewModel.eventList.setValue(eventList);
     }
 
@@ -187,16 +186,10 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
             @Override
             public void onClick(View view) {
+                Log.d("testi", "klik");
                 listener.onClick(view, this.getAdapterPosition());
             }
-/*
-            public void bind(EventItem item, final OnAdapterItemClickListener listener) {
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                        listener.onClick(item,);
-                    }
-                });
-            }*/
+
         }
 
 
@@ -212,7 +205,17 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             EventItem event = eventList.get(position);
             holder.title.setText(event.getTitle());
             holder.desc.setText(event.getDesc());
-            holder.image.setImageResource(R.drawable.ic_launcher_foreground);
+            holder.image.setImageResource(event.getImage());
+
+            if (position%3==0) {
+                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient));
+            } else if (position%3==1) {
+                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient2));
+            } else if (position%3==2 ) {
+                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient3));
+
+            }
+
             //holder.bind(event, listener);
         }
 

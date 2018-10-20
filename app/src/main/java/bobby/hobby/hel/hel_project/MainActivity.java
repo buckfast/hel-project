@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
+import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.ui.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.DrawerHostFragment;
 import bobby.hobby.hel.hel_project.ui.TabHostFragment;
@@ -24,6 +25,7 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
@@ -61,6 +63,9 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
         TextView title = findViewById(R.id.toolbar_title);
         mViewModel.getTitle().observe(this, s -> title.setText(s));
+
+
+
     }
 
 }
