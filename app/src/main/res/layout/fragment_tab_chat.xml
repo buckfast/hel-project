@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/chat_bg"
     android:padding="2dp">
 
     <android.support.v7.widget.RecyclerView
@@ -43,7 +44,7 @@
             android:paddingStart="16dp"
             android:padding="8dp"
             android:id="@+id/message_edittext"
-            android:hint="Enter message"
+            android:hint="Type a message"
 android:background="@drawable/chat_edittext_bg"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"

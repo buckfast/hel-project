@@ -51,24 +51,6 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-        User user = new User();
-        user.setEmail("hoangl@mail.com");
-        user.setPassword("hoangl@gmail.com");
-        mFragmentsViewModel.login(user);
-        mFragmentsViewModel.currentUser.observe(this, user1 -> {
-            Log.d("testi", user1.getToken());
-        });
-        mFragmentsViewModel.getHobbyList();
-        mFragmentsViewModel.hobbyList.observe(this, hobby -> {
-            Log.d("testi", hobby.get(2));
-        });
-
-        mFragmentsViewModel.linkedEvents.observe(this, eventList -> {
-            Log.d("testi", "oolrait");
-        });
-        mFragmentsViewModel.getEventList("jalkapallo");
-        mFragmentsViewModel.logout();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

@@ -44,128 +44,10 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         super(application);
     }
 
-
-
     public String getTitle(int pos) {
         return this.drawerList.getValue().get(pos).tv;
     }
 
-    public void login (User user) {
-
-        mRepository.login(user, new BaseClient.Handler<User>() {
-            @Override
-            public void onSuccess(@NonNull User response, int code) {
-                currentUser.postValue(response);
-            }
-
-            @Override
-            public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("testi", "login"+String.valueOf(code));
-            }
-        });
-    }
-
-    public void signup (User user) {
-        //See comment on login
-        mRepository.signup(user, new BaseClient.Handler<User>() {
-            @Override
-            public void onSuccess(@NonNull User response, int code) {
-                currentUser.postValue(response);
-            }
-
-            @Override
-            public void onError(@Nullable ResponseBody body, int code) {
-
-            }
-        });
-    }
-
-    public void getUser() {
-        //See comment on login
-        mRepository.getUser(new BaseClient.Handler<User>() {
-            @Override
-            public void onSuccess(@NonNull User response, int code) {
-                currentUser.postValue(response);
-            }
-
-            @Override
-            public void onError(@Nullable ResponseBody body, int code) {
-
-            }
-        });
-    }
-
-    public void logout() {
-        //Will remove the shared preference access token (log user out)
-        mRepository.logout();
-    }
-
-    public void deleteUser() {
-        mRepository.deleteUser(new BaseClient.Handler<Message>() {
-            @Override
-            public void onSuccess(@NonNull Message response, int code) {
-                currentUser.postValue(null);
-            }
-
-            @Override
-            public void onError(@Nullable ResponseBody body, int code) {
-
-            }
-        });
-    }
-
-    public void updateUser(User user) {
-        mRepository.updateUser(user, new BaseClient.Handler<Message>() {
-            @Override
-            public void onSuccess(@NonNull Message response, int code) {
-                mRepository.getUser(new BaseClient.Handler<User>() {
-                    @Override
-                    public void onSuccess(@NonNull User response, int code) {
-                        currentUser.postValue(response);
-                    }
-
-                    @Override
-                    public void onError(@Nullable ResponseBody body, int code) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onError(@Nullable ResponseBody body, int code) {
-
-            }
-        });
-    }
-
-    public void getHobbyList() {
-        mRepository.getHobbyList(new BaseClient.Handler<HobbyList>() {
-            @Override
-            public void onSuccess(@NonNull HobbyList response, int code) {
-                hobbyList.postValue(response.getHobbies());
-            }
-
-            @Override
-            public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("testi", "gethobbylist"+String.valueOf(code));
-
-            }
-        });
-    }
-
-    public void getEventList(String keyword) {
-        mRepository.getEventList(keyword, new BaseClient.Handler<EventList>() {
-            @Override
-            public void onSuccess(@NonNull EventList response, int code) {
-                linkedEvents.postValue(response);
-            }
-
-            @Override
-            public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("testi", "geteventlist"+String.valueOf(code));
-            }
-        });
-    }
 
     @Override
     protected SocketClient.EventListener returnSocketListener() {
@@ -174,7 +56,6 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     @Override
     public Map<String, Emitter.Listener> returnListeners() {
-        //Remember to add event listener here, this is where react to server event
         Map<String, Emitter.Listener> map = new HashMap<>();
         map.put(Socket.EVENT_CONNECT, args -> {
             mRepository.getSocket().emit("add user", "uiop");
