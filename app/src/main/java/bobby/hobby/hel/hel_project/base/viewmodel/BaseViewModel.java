@@ -10,6 +10,23 @@ import android.support.annotation.NonNull;
 import bobby.hobby.hel.hel_project.repository.Repository;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 
+/**
+ * Description: This class defy default behaviour for a viewmodel
+ * Features:
+ * - Fetch Repository instance
+ * - Set open/close drawer
+ * - Remember tab position (to survive configuration change
+ * - Set up Socket
+ * Works with:
+ * {@link Repository}
+ * {@link bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity}
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment}
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.master.BaseNavViewListHostFragment}
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment}
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment}
+ * {@link SocketClient}
+ */
+
 public abstract class BaseViewModel extends AndroidViewModel {
     protected Repository mRepository;
     private boolean mCurrentState = false;

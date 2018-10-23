@@ -9,6 +9,11 @@ import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
+/**
+ * Description: This class setup viewmodel connection between fragment and activity
+ * Works with:
+ * {@link bobby.hobby.hel.hel_project.base.view.activity.BaseActivity}
+ */
 
 public abstract class BaseFragment<T extends BaseViewModel> extends Fragment {
     protected T mViewModel;

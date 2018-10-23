@@ -12,6 +12,12 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+/**
+ * Description: This interface define all possible endpoint for internal server
+ * Works with:
+ * {@link InternalServerClient}
+ */
+
 public interface InternalServerAPI {
     @POST("users/")
     Call<User> signup(@Body User user);

@@ -22,6 +22,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Description: This class handle creation/setup of clients
+ * Features:
+ * - Automatic handling of token for clients, include saving tokens and sending with every request
+ * - Default handling for error from server
+ * Works with:
+ * {@link BaseHeaderInterceptor}
+ */
+
 public abstract class BaseClient {
     private static final String ACCESS_TOKEN_FILE_NAME = "AccessToken";
     protected abstract String returnBaseUrl();

@@ -11,6 +11,12 @@ import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 import okhttp3.ResponseBody;
 
+/**
+ * Description: This class is a client to communication with internal server
+ * Works with:
+ * {@link bobby.hobby.hel.hel_project.repository.Repository}
+ */
+
 public class InternalServerClient extends BaseClient {
     private Context mContext;
     private static final String TOKEN_HEADER_NAME = "hobotti-access-token";

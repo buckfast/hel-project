@@ -11,6 +11,13 @@ import bobby.hobby.hel.hel_project.base.view.fragment.BaseChildFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
+/**
+ * Description: This class setup recyclerview for a drawer layout's child fragment
+ * Works with:
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.master.BaseNavViewListHostFragment}
+ * {@link BaseAdapter}
+ */
+
 public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> extends BaseChildFragment<T>{
 
     protected abstract BaseAdapter setUpAdapter();

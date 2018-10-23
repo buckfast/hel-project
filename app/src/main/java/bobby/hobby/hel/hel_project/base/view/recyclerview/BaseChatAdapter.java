@@ -9,6 +9,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Description: This class setup logic for having multiple layout/viewholder inside one recyclerview
+ * Works with:
+ * {@link BaseChatAdapterViewHolder}
+ * {@link ChatText}
+ */
+
 public abstract class BaseChatAdapter extends BaseAdapter {
     private List<ChatText> chatDataList;
     private static final int LEFT_MESSAGE = 2;

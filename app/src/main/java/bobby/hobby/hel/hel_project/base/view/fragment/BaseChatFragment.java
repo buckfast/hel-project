@@ -10,6 +10,12 @@ import android.view.View;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseChatAdapter;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
+/**
+ * Description: This class setup recyclerview for a chat fragment
+ * Works with:
+ * {@link BaseChatAdapter}
+ */
+
 public abstract class BaseChatFragment<T extends BaseViewModel> extends BaseFragment<T> {
     protected RecyclerView recyclerView;
     protected abstract int returnRecyclerViewId();
