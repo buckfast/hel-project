@@ -2,9 +2,9 @@ package bobby.hobby.hel.hel_project;
 
 import java.util.Random;
 
-import bobby.hobby.hel.hel_project.base.view.fragment.BaseChatFragment;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
 
-public class Chat implements BaseChatFragment.ChatData {
+public class Chat implements ChatText {
     private String chat;
     private String user;
 
@@ -19,12 +19,10 @@ public class Chat implements BaseChatFragment.ChatData {
         return random.nextBoolean();
     }
 
-    @Override
     public String getChat() {
         return chat;
     }
 
-    @Override
     public String getUser() {
         return user;
     }

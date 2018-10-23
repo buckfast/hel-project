@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseChatFragment;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseChatAdapter;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseChatAdapterViewHolder;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
 
 public class ChatFragmentTest extends BaseChatFragment {
@@ -25,7 +28,7 @@ public class ChatFragmentTest extends BaseChatFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<Chat> list = new ArrayList<>();
+        List<ChatText> list = new ArrayList<>();
         list.add(new Chat("Hello", "nONE"));
         list.add(new Chat("one to three four five six seven eight nine ten eleven twelve thirteen fourteen", "YOYOYO"));
         list.add(new Chat("Lorem ipsum dolor sit amet, " +
@@ -84,17 +87,17 @@ public class ChatFragmentTest extends BaseChatFragment {
         }
 
         @Override
-        public BaseChatViewHolder returnLeftMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
+        public BaseChatAdapterViewHolder returnLeftMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
             return new LeftChatViewHolder(view, listener);
         }
 
         @Override
-        public BaseChatViewHolder returnRightMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
+        public BaseChatAdapterViewHolder returnRightMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
             return new RightChatViewHolder(view, listener);
         }
     }
 
-    private class LeftChatViewHolder extends BaseChatViewHolder {
+    private class LeftChatViewHolder extends BaseChatAdapterViewHolder {
         private TextView chat, user;
 
         public LeftChatViewHolder(View itemView, OnAdapterItemClickListener listener) {
@@ -104,13 +107,14 @@ public class ChatFragmentTest extends BaseChatFragment {
         }
 
         @Override
-        public void bindData(ChatData data) {
-            chat.setText(data.getChat());
-            user.setText(data.getUser());
+        public void bindData(ChatText data) {
+            Chat dataset = (Chat) data;
+            chat.setText(dataset.getChat());
+            user.setText(dataset.getUser());
         }
     }
 
-    private class RightChatViewHolder extends BaseChatViewHolder {
+    private class RightChatViewHolder extends BaseChatAdapterViewHolder {
         private TextView chat;
 
         public RightChatViewHolder(View itemView, OnAdapterItemClickListener listener) {
@@ -119,8 +123,9 @@ public class ChatFragmentTest extends BaseChatFragment {
         }
 
         @Override
-        public void bindData(ChatData data) {
-            chat.setText(data.getChat());
+        public void bindData(ChatText data) {
+            Chat dataset = (Chat) data;
+            chat.setText(dataset.getChat());
         }
     }
 }
