@@ -77,22 +77,22 @@ public class ChatFragmentTest extends BaseChatFragment {
         }
 
         @Override
-        public int returnLeftMessageViewHolderLayoutId() {
+        public int returnCurrentUserMessageLayoutId() {
             return R.layout.chattext_left;
         }
 
         @Override
-        public int returnRightMessageViewHolderLayoutId() {
+        public int returnOtherUserMessageLayoutId() {
             return R.layout.chattext_right;
         }
 
         @Override
-        public BaseChatAdapterViewHolder returnLeftMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
+        public BaseChatAdapterViewHolder returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
             return new LeftChatViewHolder(view, listener);
         }
 
         @Override
-        public BaseChatAdapterViewHolder returnRightMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
+        public BaseChatAdapterViewHolder returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
             return new RightChatViewHolder(view, listener);
         }
     }

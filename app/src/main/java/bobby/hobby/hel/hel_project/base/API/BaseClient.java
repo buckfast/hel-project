@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * {@link BaseHeaderInterceptor}
  */
 
-public abstract class BaseClient {
+public abstract class BaseClient<T> {
     private static final String ACCESS_TOKEN_FILE_NAME = "AccessToken";
     protected abstract String returnBaseUrl();
     protected abstract Context returnContext();
@@ -50,7 +50,7 @@ public abstract class BaseClient {
         getSharedPreference().edit().putString(returnTokenSharedPreferencesName(), token).apply();
     }
 
-    protected <T>T getAPI(BaseHeaderInterceptor interceptor, final Class<T> api) {
+    protected T getAPI(BaseHeaderInterceptor interceptor, final Class<T> api) {
         OkHttpClient client = null;
         if (interceptor != null) {
             client = new OkHttpClient.Builder()
@@ -72,7 +72,7 @@ public abstract class BaseClient {
         return builder.build().create(api);
     }
 
-    protected <T>T getAPI(final Class<T> api) {
+    protected T getAPI(final Class<T> api) {
         if (getAccessToken().isEmpty()) {
             return getAPI(null, api);
         } else {

@@ -22,10 +22,10 @@ public abstract class BaseChatAdapter extends BaseAdapter {
     private static final int RIGHT_MESSAGE = 1;
     private static final int NULL_LIST = 0;
 
-    public abstract int returnLeftMessageViewHolderLayoutId();
-    public abstract int returnRightMessageViewHolderLayoutId();
-    public abstract BaseChatAdapterViewHolder returnLeftMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
-    public abstract BaseChatAdapterViewHolder returnRightMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
+    public abstract int returnCurrentUserMessageLayoutId();
+    public abstract int returnOtherUserMessageLayoutId();
+    public abstract BaseChatAdapterViewHolder returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
+    public abstract BaseChatAdapterViewHolder returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
 
 
     public void refreshData(List<ChatText> list) {
@@ -58,19 +58,19 @@ public abstract class BaseChatAdapter extends BaseAdapter {
         View v;
         switch (viewType) {
             case LEFT_MESSAGE:
-                v = LayoutInflater.from(parent.getContext()).inflate(returnLeftMessageViewHolderLayoutId(), parent, false);
-                return returnLeftMessageViewHolderInstance(v, mListener);
+                v = LayoutInflater.from(parent.getContext()).inflate(returnCurrentUserMessageLayoutId(), parent, false);
+                return returnCurrentUserMessageViewHolderInstance(v, mListener);
             case RIGHT_MESSAGE:
-                v = LayoutInflater.from(parent.getContext()).inflate(returnRightMessageViewHolderLayoutId(), parent, false);
-                return returnRightMessageViewHolderInstance(v, mListener);
+                v = LayoutInflater.from(parent.getContext()).inflate(returnOtherUserMessageLayoutId(), parent, false);
+                return returnOtherUserMessageViewHolderInstance(v, mListener);
             case NULL_LIST:
                 //TODO: better handle this in the future (this is a note for Oskari)
-                v = LayoutInflater.from(parent.getContext()).inflate(returnRightMessageViewHolderLayoutId(), parent, false);
-                return returnRightMessageViewHolderInstance(v, mListener);
+                v = LayoutInflater.from(parent.getContext()).inflate(returnOtherUserMessageLayoutId(), parent, false);
+                return returnOtherUserMessageViewHolderInstance(v, mListener);
         }
         //TODO: better handle this in the future (this is a note for Oskari)
-        v = LayoutInflater.from(parent.getContext()).inflate(returnRightMessageViewHolderLayoutId(), parent, false);
-        return returnRightMessageViewHolderInstance(v, mListener);
+        v = LayoutInflater.from(parent.getContext()).inflate(returnOtherUserMessageLayoutId(), parent, false);
+        return returnOtherUserMessageViewHolderInstance(v, mListener);
     }
 
     @Override
