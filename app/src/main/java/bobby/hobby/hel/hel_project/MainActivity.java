@@ -1,8 +1,9 @@
 package bobby.hobby.hel.hel_project;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.support.annotation.Nullable;
+        import android.support.v7.app.AppCompatActivity;
+        import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -10,5 +11,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new ChatFragmentTest()).commit();
+        Button btn = findViewById(R.id.change_button);
+        btn.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new SwipeFragment()).commit();
+        });
     }
 }
