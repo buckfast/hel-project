@@ -3,7 +3,6 @@ package bobby.hobby.hel.hel_project.ui;
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
@@ -17,16 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
-import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
-import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
+import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
-import okhttp3.ResponseBody;
 
 public class FragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
     MutableLiveData<View> lastView = new MutableLiveData<>();
@@ -34,6 +30,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     MutableLiveData<Integer> listPosition = new MutableLiveData<>();
     MutableLiveData<List<DrawerListItem>> drawerList = new MutableLiveData<>();
     MutableLiveData<List<EventItem>> eventList = new MutableLiveData<>();
+
+    MutableLiveData<List<ChatMessage>> chatMessageList = new MutableLiveData<>();
 
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
@@ -47,7 +45,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public String getTitle(int pos) {
         return this.drawerList.getValue().get(pos).tv;
     }
-
+    public void addMessage(ChatMessage msg) {
+        this.chatMessageList.getValue().add(msg);
+    }
 
     @Override
     protected SocketClient.EventListener returnSocketListener() {

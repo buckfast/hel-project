@@ -100,9 +100,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        eventList.add(new EventItem("asda", R.drawable.a342_sahly_2, "asdasdadsa"));
-        eventList.add(new EventItem("asdaasd", R.drawable.a74_muut8,"gdthbdt" ));
-        eventList.add(new EventItem("se fsefsef e", R.drawable.aaaa, "efselkselkkseklskls sekf klf lkef "));
+        eventList.add(new EventItem("Jalkkis", R.drawable.a342_sahly_2, "hyvä tapahtuma kannattaa tulla"));
+        eventList.add(new EventItem("hands :)", R.drawable.a74_muut8,"abcdefg" ));
+        eventList.add(new EventItem("Cool event", R.drawable.aaaa, "nice event, cool"));
         eventList.add(new EventItem("esfjk fe", R.drawable.a74_muut8, "fekfj"));
         eventList.add(new EventItem("sfe kejfjk s fkjs", R.drawable.a74_muut8, "kjef fj kejk skj"));
         eventList.add(new EventItem("asda", R.drawable.a342_sahly_2,"asdasdadsa"));

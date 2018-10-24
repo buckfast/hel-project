@@ -41,9 +41,9 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         List<DrawerListItem> array = new ArrayList<>();
-        array.add(new DrawerListItem("asd", "@mipmap/ic_launcher_round"));
-        array.add(new DrawerListItem("gddf_aaaa", "@drawable/ic_launcher_foreground"));
-        array.add(new DrawerListItem("asdedd", "@mipmap/ic_launcher_round"));
+        array.add(new DrawerListItem("Pesäpallo", "@mipmap/ic_launcher_round"));
+        array.add(new DrawerListItem("Jalkapallo", "@drawable/ic_launcher_foreground"));
+        array.add(new DrawerListItem("Playstation", "@mipmap/ic_launcher_round"));
         array.add(new DrawerListItem("kekkonen", "@drawable/ic_launcher_foreground"));
         mFragmentsViewModel.drawerList.setValue(array);
 
