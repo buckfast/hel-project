@@ -14,6 +14,10 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
+/**
+ * Description: This class setup basic layout for a view with a drawer
+ */
+
 public abstract class BaseDrawerActivity<T extends BaseViewModel> extends BaseActivity<T> {
     private DrawerLayout mDrawerLayout;
 

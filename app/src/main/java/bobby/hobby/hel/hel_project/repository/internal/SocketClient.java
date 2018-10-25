@@ -16,6 +16,13 @@ import java.util.Map;
 
 import bobby.hobby.hel.hel_project.HobbyApplication;
 
+/**
+ * Description: This class is a client for connection to the chat server
+ * Works with:
+ * {@link HobbyApplication}
+ * {@link bobby.hobby.hel.hel_project.repository.Repository}
+ */
+
 public class SocketClient implements LifecycleObserver {
     private EventListener mEventListener;
     private Socket mSocket;
