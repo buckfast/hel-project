@@ -16,6 +16,12 @@ import bobby.hobby.hel.hel_project.base.view.fragment.BaseHostFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
+/**
+ * Description: This class setup the drawer view with multiple child fragment
+ * Works with:
+ * {@link BaseNavViewListChildFragment}
+ */
+
 public abstract class BaseNavViewListHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseHostFragment<T,V> implements NavigationDrawerLayout {
 
     protected abstract BaseNavViewListChildFragment returnLeftChild();

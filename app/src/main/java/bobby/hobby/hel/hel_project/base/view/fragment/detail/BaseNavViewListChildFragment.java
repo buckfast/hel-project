@@ -7,9 +7,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseChildFragment;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
+
+/**
+ * Description: This class setup recyclerview for a drawer layout's child fragment
+ * Works with:
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.master.BaseNavViewListHostFragment}
+ * {@link BaseAdapter}
+ */
 
 public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> extends BaseChildFragment<T>{
 
@@ -28,35 +35,6 @@ public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> exte
                     recyclerView.setAdapter(setUpAdapter());
                 }
             }
-        }
-    }
-
-    public interface OnAdapterItemClickListener {
-        void onClick(View v, int position);
-    }
-
-    public abstract class BaseAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private OnAdapterItemClickListener mListener;
-
-        public BaseAdapterViewHolder(View itemView, OnAdapterItemClickListener listener) {
-            super(itemView);
-            mListener = listener;
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mListener != null) {
-                mListener.onClick(view, getAdapterPosition());
-            }
-        }
-    }
-
-    public abstract class BaseAdapter<E extends BaseAdapterViewHolder> extends RecyclerView.Adapter<E> {
-        protected OnAdapterItemClickListener mListener;
-
-        public BaseAdapter(OnAdapterItemClickListener listener) {
-            mListener = listener;
         }
     }
 }

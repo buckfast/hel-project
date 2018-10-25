@@ -13,6 +13,14 @@ import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 
+/**
+ * Description: Single source of truth, know how to get data and where
+ * Works with:
+ * {@link bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel}
+ * {@link SocketClient}
+ * {@link InternalServerClient}
+ */
+
 public class Repository {
     private static Repository instance;
     private InternalServerClient mInternalServerClient;

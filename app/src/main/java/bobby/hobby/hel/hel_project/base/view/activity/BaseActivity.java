@@ -7,6 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
+/**
+ * Description: This class setup viewmodel connection between fragment and activity
+ * Works with:
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment}
+ * {@link BaseViewModel}
+ */
+
 public abstract class BaseActivity<T extends BaseViewModel> extends AppCompatActivity {
     protected T mViewModel;
 

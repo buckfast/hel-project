@@ -8,6 +8,12 @@ import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
+/**
+ * Description: This class setup viewmodel connection between fragment to fragment
+ * Works with:
+ * {@link BaseChildFragment}
+ */
+
 public abstract class BaseHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseFragment<V> {
     protected T mFragmentsViewModel;
 
