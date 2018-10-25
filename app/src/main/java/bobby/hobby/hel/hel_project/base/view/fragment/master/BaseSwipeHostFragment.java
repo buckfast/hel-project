@@ -19,7 +19,7 @@ public abstract class BaseSwipeHostFragment<T extends BaseViewModel, V extends B
     protected abstract int returnViewPagerId();
     protected abstract int returnNumberOfFragment();
     protected abstract FragmentManager returnFragmentManager();
-    protected abstract Class<E> returnChildFragmentClass();
+    protected abstract E returnChildFragment(int position);
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public abstract class BaseSwipeHostFragment<T extends BaseViewModel, V extends B
 
         @Override
         public Fragment getItem(int position) {
-            return E.newInstance(position, returnChildFragmentClass());
+            return returnChildFragment(position);
         }
 
         @Override
