@@ -36,8 +36,11 @@ public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> exte
                     recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                         @Override
                         public boolean onPreDraw() {
-                            recyclerView.findViewHolderForAdapterPosition(mFragmentsViewModel.getCurrentPositionDrawer()).itemView.performClick();
-                            recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                            if (recyclerView.findViewHolderForAdapterPosition(mFragmentsViewModel.getCurrentPositionDrawer()) != null) {
+                                recyclerView.findViewHolderForAdapterPosition(mFragmentsViewModel.getCurrentPositionDrawer()).itemView.performClick();
+                                recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                            }
                             return true;
                         }
                     });

@@ -87,7 +87,7 @@
                     android:padding="@dimen/list_item_padding"
 
                     android:layout_gravity="bottom"
-                    android:id="@+id/event_desc"
+                    android:id="@+id/event_short_desc"
                     android:textColor="@color/colorWhite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

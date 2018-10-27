@@ -1,11 +1,13 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.arch.lifecycle.Observer;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
@@ -38,14 +41,38 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        /*
         List<DrawerListItem> array = new ArrayList<>();
         array.add(new DrawerListItem("Pesäpallo", "@mipmap/ic_launcher_round"));
         array.add(new DrawerListItem("Jalkapallo", "@drawable/ic_launcher_foreground"));
         array.add(new DrawerListItem("Playstation", "@mipmap/ic_launcher_round"));
         array.add(new DrawerListItem("kekkonen", "@drawable/ic_launcher_foreground"));
         mFragmentsViewModel.drawerList.setValue(array);
+        */
+
+        // TODO: hehe
+        final Observer<List<String>> hobbyListObserver = new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable List<String> strings) {
+                List<DrawerListItem> newHobbyList = new ArrayList<>();
+                for (int i=0; i<strings.size(); i++) {
+                    Log.d("asd", "user hobby: "+strings.get(i));
+                    newHobbyList.add(new DrawerListItem(strings.get(i), "@mipmap/ic_launcher_round"));
+                }
+                mFragmentsViewModel.drawerList.setValue(newHobbyList);
+            }
+        };
+        mFragmentsViewModel.userHobbyList.observe(this, hobbyListObserver);
 
         colors = getContext().getResources().obtainTypedArray(R.array.super_colors);
 

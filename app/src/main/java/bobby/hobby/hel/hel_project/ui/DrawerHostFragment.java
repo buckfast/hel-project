@@ -10,6 +10,7 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseNavViewListHostFragment;
+import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
@@ -29,6 +30,7 @@ public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -67,6 +69,8 @@ public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentView
         mFragmentsViewModel.listPosition.observe(this, pos -> {
                 mViewModel.title.setValue(mFragmentsViewModel.getTitle(pos));
         });
+
+
     }
 
     @Override

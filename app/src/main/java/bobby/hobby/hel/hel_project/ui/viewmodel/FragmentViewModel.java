@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
@@ -14,7 +13,6 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
+import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
@@ -44,7 +43,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public  MutableLiveData<List<ChatText>> chatMessageList = new MutableLiveData<>();
 
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
-    public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
+    public MutableLiveData<List<String>> userHobbyList = new MutableLiveData<>();
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
 
 
@@ -62,6 +61,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         msgList.add(msg);
         this.chatMessageList.postValue(msgList);
     }
+
+    public String getHobbyByPosition(int pos) {
+        return userHobbyList.getValue().get(pos);
+    }
+
 
     @Override
     protected SocketClient.EventListener returnSocketListener() {
@@ -100,6 +104,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onSuccess(@NonNull User response, int code) {
                 currentUser.postValue(response);
+                fetchUserHobbies();
+
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
@@ -116,14 +122,41 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.getEventList(keyword, new BaseClient.Handler<EventList>() {
             @Override
             public void onSuccess(@NonNull EventList response, int code) {
-                Log.d("asd", "search linked events: code "+String.valueOf(code));
-                Log.d("asd", "search linked events: resp count"+response.getCount());
+                Log.d("asd", "search linked events: code: "+String.valueOf(code));
+                Log.d("asd", "                                                              search linked events: events count: "+response.getCount());
                 linkedEvents.postValue(response);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("asd", "sarechlinkedevents resp: "+String.valueOf(body));
-                Log.d("asd", "sarechlinkedevents error: "+String.valueOf(code));
+                Log.d("asd", "linked events error: resp: "+String.valueOf(body));
+                Log.d("asd", "                                                              linked events error: code: "+String.valueOf(code));
+                linkedEvents.setValue(null);
+            }
+        });
+    }
+
+    public void getUser() {
+        mRepository.getUser(new BaseClient.Handler<User>() {
+            @Override
+            public void onSuccess(@NonNull User response, int code) {
+                Log.d("asd", "jees user");
+            }
+            @Override
+            public void onError(@Nullable ResponseBody body, int code) {
+                Log.d("asd", "eipa user");
+            }
+        });
+    }
+
+    public void fetchUserHobbies() {
+        mRepository.getHobbyList(new BaseClient.Handler<HobbyList>() {
+            @Override
+            public void onSuccess(@NonNull HobbyList response, int code) {
+                userHobbyList.postValue(response.getHobbies());
+            }
+            @Override
+            public void onError(@Nullable ResponseBody body, int code) {
+                Log.d("asd", "hobbulist: "+code);
             }
         });
     }

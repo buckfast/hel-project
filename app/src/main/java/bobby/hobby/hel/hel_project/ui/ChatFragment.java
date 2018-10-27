@@ -43,6 +43,8 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
     private List<ChatText> messages;
     private Boolean scrollAtBottom = false;
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -53,7 +55,6 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
         EditText message_edittext = view.findViewById(R.id.message_edittext);
         message_edittext.setImeOptions(EditorInfo.IME_ACTION_SEND);
         message_edittext.setRawInputType(InputType.TYPE_CLASS_TEXT);
-
 
 
         message_edittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {

@@ -3,11 +3,13 @@ package bobby.hobby.hel.hel_project.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
+import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
@@ -57,5 +59,23 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
         TabEventsFragment eventsFragment = new TabEventsFragment();
         adater.addFragment(chatFragment, "Chat");
         adater.addFragment(eventsFragment, "Events");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mFragmentsViewModel.logout();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (mFragmentsViewModel.currentUser.getValue() == null) {
+            User user = new User();
+            user.setEmail("hoangl@mail.com");
+            user.setPassword("hoangl@gmail.com");
+            mFragmentsViewModel.login(user);
+        }
     }
 }

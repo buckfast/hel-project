@@ -116,6 +116,7 @@ public abstract class BaseClient<T> {
         @Override
         public final void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
             Log.e("API error", call.toString());
+            t.printStackTrace();
             handler.onError(null, -1);
         }
     }

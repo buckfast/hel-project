@@ -21,8 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
+import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
+import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -41,7 +44,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private List<EventItem> eventList;
+    private EventList eventList;
 
     public TabEventsFragment() {
         // Required empty public constructor
@@ -81,10 +84,8 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         mFragmentsViewModel.currentUser.observe(this, u -> {
             Log.d("asd", u.getToken());
         });
-        User user = new User();
-        user.setEmail("hoangl@mail.com");
-        user.setPassword("hoangl@gmail.com");
-        mFragmentsViewModel.login(user);
+
+
 
     }
 
@@ -104,8 +105,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         recyclerView.setHasFixedSize(true);
 
         adapter = new EventAdapter(this,eventList, this);
-        mFragmentsViewModel.eventList.observe(this, data ->{
-            //((EventAdapter)adapter).refreshData(data);
+
+        mFragmentsViewModel.linkedEvents.observe(this, data ->{
+            ((EventAdapter)adapter).refreshData(data);
             Log.d("asd", "eventissa tapahtuu");
         });
         recyclerView.setAdapter(adapter);
@@ -113,8 +115,14 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        //mFragmentsViewModel.getHobbyByPosition(mFragmentsViewModel.getCurrentPositionDrawer());
+        //mFragmentsViewModel.searchLinkedEvents("jalkapallo");
+        mFragmentsViewModel.listPosition.observe(this, pos -> {
+            Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos));
+            mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(pos));
 
-        mFragmentsViewModel.searchLinkedEvents("jalkapallo");
+        });
+
 
 
         /*eventList.add(new EventItem("Jalkkis", R.drawable.a342_sahly_2, "hyvä tapahtuma kannattaa tulla"));
@@ -136,7 +144,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     @Override
     public void onDetach() {
         super.onDetach();
-        mFragmentsViewModel.logout();
+        //mFragmentsViewModel.logout();
     }
 
     @Override
@@ -150,15 +158,15 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     private class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
         private Context c;
-        private List<EventItem> eventList;
+        private EventList eventList;
         private final OnAdapterItemClickListener listener;
 
-        public EventAdapter(Fragment context, List<EventItem> eventList, OnAdapterItemClickListener listener) {
+        public EventAdapter(Fragment context, EventList eventList, OnAdapterItemClickListener listener) {
             this.eventList = eventList;
             this.listener = listener;
         }
 
-        public void refreshData(List<EventItem> newData) {
+        public void refreshData(EventList newData) {
             //eventList = data;
             /*DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
@@ -189,7 +197,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            public TextView title, desc;
+            public TextView title, short_desc;
             public ImageView image;
             public RecyclerView.Adapter adapter;
 
@@ -198,7 +206,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 super(view);
                 this.adapter = adapter;
                 title = (TextView) view.findViewById(R.id.event_title);
-                desc = (TextView) view.findViewById(R.id.event_desc);
+                short_desc = (TextView) view.findViewById(R.id.event_short_desc);
                 image = (ImageView) view.findViewById(R.id.event_image);
                 view.setOnClickListener(this);
             }
@@ -221,10 +229,11 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            EventItem event = eventList.get(position);
-            holder.title.setText(event.getTitle());
-            holder.desc.setText(event.getDesc());
-            holder.image.setImageResource(event.getImage());
+            Event event = eventList.getEvents().get(position);
+            holder.title.setText(event.getName().getFi());
+            holder.short_desc.setText(Util.parseHtml(event.getDesc().getFi()).get(0));
+
+            //holder.image.setImageResource(event.getImage());
 
             if (position%3==0) {
                 holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient));
@@ -240,7 +249,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         @Override
         public int getItemCount() {
-            return eventList == null ? 0 : eventList.size();
+            return eventList == null ? 0 : eventList.getEvents().size();
         }
     }
 
