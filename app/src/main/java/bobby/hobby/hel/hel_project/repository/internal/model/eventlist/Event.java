@@ -28,10 +28,10 @@ public class Event {
     private Desc desc;
     @SerializedName("info")
     @Expose
-    private String info;
+    private Info info;
     @SerializedName("price")
     @Expose
-    private Price price;
+    private List<Price> price = null;
     @SerializedName("images")
     @Expose
     private List<Image> images = null;
@@ -76,19 +76,19 @@ public class Event {
         this.desc = desc;
     }
 
-    public String getInfo() {
+    public Info getInfo() {
         return info;
     }
 
-    public void setInfo(String info) {
+    public void setInfo(Info info) {
         this.info = info;
     }
 
-    public Price getPrice() {
+    public List<Price> getPrice() {
         return price;
     }
 
-    public void setPrice(Price price) {
+    public void setPrice(List<Price> price) {
         this.price = price;
     }
 

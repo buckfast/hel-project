@@ -1,9 +1,8 @@
 package bobby.hobby.hel.hel_project;
 
-        import android.os.Bundle;
+import android.os.Bundle;
         import android.support.annotation.Nullable;
         import android.support.v7.app.AppCompatActivity;
-        import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     @Override
