@@ -43,6 +43,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
 
         EditText message_edittext = view.findViewById(R.id.message_edittext);
         message_edittext.setImeOptions(EditorInfo.IME_ACTION_SEND);
@@ -58,13 +59,15 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
                 return false;
             }
         });
+
+
         message_edittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
-            // TODO: hehe
+            // TODO: hehe fix later
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (message_edittext.getLineCount() == 2) {
@@ -142,7 +145,6 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
         mViewModel.chatMessageList.observe(this, data ->{
             adap.refreshData(data);
-            Log.d("asd", String.valueOf(scrollAtBottom));
             if (scrollAtBottom) {
                 scrollToBottom();
             }

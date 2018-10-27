@@ -3,6 +3,7 @@ package bobby.hobby.hel.hel_project.ui.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
@@ -29,6 +32,7 @@ import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
+import okhttp3.ResponseBody;
 
 public class FragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
     public MutableLiveData<View> lastView = new MutableLiveData<>();
@@ -90,6 +94,40 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public void emitMessage(String text) {
         mRepository.getSocket().emit("new message", text);
+    }
+
+    public void login (User user) {
+        mRepository.login(user, new BaseClient.Handler<User>() {
+            @Override
+            public void onSuccess(@NonNull User response, int code) {
+                Log.d("asd", String.valueOf(response));
+                currentUser.postValue(response);
+            }
+            @Override
+            public void onError(@Nullable ResponseBody body, int code) {
+                Log.d("asd", String.valueOf(code));
+            }
+        });
+    }
+
+    public void logout() {
+        mRepository.logout();
+    }
+
+    public void searchLinkedEvents(String keyword) {
+        mRepository.getEventList(keyword, new BaseClient.Handler<EventList>() {
+            @Override
+            public void onSuccess(@NonNull EventList response, int code) {
+                Log.d("asd", "search linked events: code "+String.valueOf(code));
+                Log.d("asd", "search linked events: resp count"+response.getCount());
+                linkedEvents.postValue(response);
+            }
+            @Override
+            public void onError(@Nullable ResponseBody body, int code) {
+                Log.d("asd", String.valueOf(body));
+                Log.d("asd", "sarechlinkedevents error: "+String.valueOf(code));
+            }
+        });
     }
 
     public String getTime() {

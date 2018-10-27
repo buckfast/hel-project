@@ -14,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
+import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -75,6 +77,15 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        User user = new User();
+        user.setEmail("hoangl@mail.com");
+        user.setPassword("hoangl@gmail.com");
+        mFragmentsViewModel.login(user);
+        mFragmentsViewModel.currentUser.observe(this, u -> {
+            Log.d("asd", u.getToken());
+        });
+
+
     }
 
     @Override
@@ -87,21 +98,24 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        eventList = new ArrayList<>();
+        //eventList = new ArrayList<>();
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.events_recycler_view);
         recyclerView.setHasFixedSize(true);
 
         adapter = new EventAdapter(this,eventList, this);
         mFragmentsViewModel.eventList.observe(this, data ->{
-            ((EventAdapter)adapter).refreshData(data);
+            //((EventAdapter)adapter).refreshData(data);
+            Log.d("asd", "eventissa tapahtuu");
         });
         recyclerView.setAdapter(adapter);
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        eventList.add(new EventItem("Jalkkis", R.drawable.a342_sahly_2, "hyvä tapahtuma kannattaa tulla"));
+        mFragmentsViewModel.searchLinkedEvents("jalkapallo");
+
+        /*eventList.add(new EventItem("Jalkkis", R.drawable.a342_sahly_2, "hyvä tapahtuma kannattaa tulla"));
         eventList.add(new EventItem("hands :)", R.drawable.a74_muut8,"abcdefg" ));
         eventList.add(new EventItem("Cool event", R.drawable.aaaa, "nice event, cool"));
         eventList.add(new EventItem("esfjk fe", R.drawable.a74_muut8, "fekfj"));
@@ -109,6 +123,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         eventList.add(new EventItem("asda", R.drawable.a342_sahly_2,"asdasdadsa"));
         eventList.add(new EventItem("asdaasd", R.drawable.aaaa, "gdthbt"));
         mFragmentsViewModel.eventList.setValue(eventList);
+        */
     }
 
     @Override
@@ -119,6 +134,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     @Override
     public void onDetach() {
         super.onDetach();
+        //mFragmentsViewModel.logout();
     }
 
     @Override
@@ -222,7 +238,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         @Override
         public int getItemCount() {
-            return eventList.size();
+            return eventList == null ? 0 : eventList.size();
         }
     }
 
