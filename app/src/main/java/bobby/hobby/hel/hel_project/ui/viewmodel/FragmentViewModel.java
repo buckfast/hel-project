@@ -3,6 +3,7 @@ package bobby.hobby.hel.hel_project.ui.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
@@ -12,7 +13,10 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +56,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public void addMessage(ChatMessage msg) {
         List<ChatText> msgList = chatMessageList.getValue();
         msgList.add(msg);
-        this.chatMessageList.setValue(msgList);
+        this.chatMessageList.postValue(msgList);
+        emitMessage(msg.getMessage());
     }
 
     @Override
@@ -64,7 +69,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public Map<String, Emitter.Listener> returnListeners() {
         Map<String, Emitter.Listener> map = new HashMap<>();
         map.put(Socket.EVENT_CONNECT, args -> {
-            mRepository.getSocket().emit("add user", "uiop");
+            mRepository.getSocket().emit("add user", "hobo");
         });
         map.put("new message", args -> {
             JSONObject data = (JSONObject) args[0];
@@ -73,7 +78,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             try {
                 username = data.getString("username");
                 message = data.getString("message");
-                Log.d("Fine", username+message);
+                ChatMessage msg = new ChatMessage(message, true, getTime(), username);
+                addMessage(msg);
+                Log.d("asd", username+message);
             } catch (JSONException e) {
                 Log.e("Error", e.getMessage());
             }
@@ -81,7 +88,13 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         return map;
     }
 
-    public void emitTest() {
-        mRepository.getSocket().emit("new message", "aaaaasd");
+    public void emitMessage(String text) {
+        mRepository.getSocket().emit("new message", text);
+    }
+
+    public String getTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        return dateFormat.format(date);
     }
 }

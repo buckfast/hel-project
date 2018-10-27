@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -15,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
     private List<ChatText> messages;
+    private Boolean scrollAtBottom = false;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -87,10 +92,26 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             }
         });
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (((LinearLayoutManager)recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition() == recyclerView.getLayoutManager().getItemCount()-1) {
+                    scrollAtBottom = true;
+                } else {
+                    scrollAtBottom = false;
+                }
+            }
+        });
         //messages = new ArrayList<>();
         //messages.add(new ChatMessage("sdafd", "you", "xx:xx"));
 
         //mViewModel.chatMessageList.setValue(messages);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel.attachSocketClientTo(getActivity());
     }
 
     @Override
@@ -99,8 +120,10 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
     }
 
     private void sendMessage(String text) {
-        mViewModel.addMessage(new ChatMessage(text, false, "xx:xx"));
-        recyclerView.scrollToPosition(adapter.getItemCount()-1);
+        if (text.length() > 0) {
+            mViewModel.addMessage(new ChatMessage(text, false, mViewModel.getTime(), "self"));
+            scrollToBottom();
+        }
     }
 
     @Override
@@ -119,6 +142,10 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
         mViewModel.chatMessageList.observe(this, data ->{
             adap.refreshData(data);
+            Log.d("asd", String.valueOf(scrollAtBottom));
+            if (scrollAtBottom) {
+                scrollToBottom();
+            }
         });
 
         return adap;
@@ -157,18 +184,20 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
     }
 
     private class ReceivedMessageViewHolder extends BaseChatAdapterViewHolder {
-        public TextView msg, time;
+        public TextView msg, time, sender;
 
         public ReceivedMessageViewHolder(View itemView, OnAdapterItemClickListener listener) {
             super(itemView, listener);
             msg = itemView.findViewById(R.id.chat_message_received);
             time = itemView.findViewById(R.id.chat_timestamp_received);
+            sender = itemView.findViewById(R.id.chat_message_sender);
         }
 
         @Override
         public void bindData(ChatText data) {
             this.msg.setText(((ChatMessage) data).getMessage());
             this.time.setText(((ChatMessage) data).getTime());
+            this.sender.setText(((ChatMessage) data).getSender());
         }
 
     }
@@ -187,5 +216,8 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             this.message.setText(((ChatMessage) data).getMessage());
             this.timestamp.setText(((ChatMessage) data).getTime());
         }
+    }
+    private void scrollToBottom() {
+        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
     }
 }
