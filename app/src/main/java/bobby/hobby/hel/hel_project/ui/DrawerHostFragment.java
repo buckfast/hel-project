@@ -1,6 +1,5 @@
 package bobby.hobby.hel.hel_project.ui;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +10,8 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseNavViewListHostFragment;
+import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
+import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 
 public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentViewModel, ActivityViewModel> {

@@ -1,6 +1,5 @@
 package bobby.hobby.hel.hel_project.base.view.fragment.master;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +21,12 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseHostFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
+
+/**
+ * Description: This class setup layout for a tab layout with multiple child
+ * Works with:
+ * {@link BaseTabChildFragment}
+ */
 
 public abstract class BaseTabHostFragment<T extends BaseViewModel, V extends BaseViewModel> extends BaseHostFragment<T, V> {
     private ViewPager mViewPager;

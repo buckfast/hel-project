@@ -22,6 +22,7 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
+import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements OnAdapterItemClickListener {
     // TODO: Rename parameter arguments, choose names that match

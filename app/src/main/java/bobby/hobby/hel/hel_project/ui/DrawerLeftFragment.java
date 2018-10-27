@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
+import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentViewModel> {
 

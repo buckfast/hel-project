@@ -9,9 +9,9 @@
 
         android:layout_width="20dp"
         android:layout_height="39dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
 android:layout_alignTop="@id/clayout"
-        android:background="@drawable/chat_message_tri_bg"
+        android:background="@drawable/chat_message_tri_received_bg"
 
        />
 <android.support.constraint.ConstraintLayout
@@ -31,34 +31,35 @@ android:layout_alignTop="@id/clayout"
 
 
         android:layout_marginEnd="20dp"
-        android:id="@+id/chat_message"
+        android:id="@+id/chat_message_received"
         android:text=""
-        android:background="@drawable/chat_message_bg"
+        android:background="@drawable/chat_message_received_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="240dp"
+        android:maxWidth="320dp"
+        android:minWidth="64dp"
 
         android:paddingBottom="14dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:paddingTop="4dp"
         android:textColor="@android:color/black"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
 
-        android:id="@+id/chat_timestamp"
-        android:text="11:40"
+        android:id="@+id/chat_timestamp_received"
+        android:text="xxxx"
         android:textColor="@color/colorGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
 
         android:layout_marginRight="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/chat_message"
-        app:layout_constraintRight_toRightOf="@+id/chat_message" />
+        app:layout_constraintBottom_toBottomOf="@+id/chat_message_received"
+        app:layout_constraintRight_toRightOf="@+id/chat_message_received" />
 
 </android.support.constraint.ConstraintLayout>
 </RelativeLayout>

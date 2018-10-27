@@ -1,7 +1,5 @@
 package bobby.hobby.hel.hel_project.base.API;
 
-
-
 import android.util.Log;
 
 import java.io.IOException;
@@ -10,6 +8,12 @@ import java.util.Map;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+
+/**
+ * Description: This class handle logic for adding multiple header params on each request
+ * Works with:
+ * {@link BaseClient}
+ */
 
 public abstract class BaseHeaderInterceptor implements Interceptor {
     protected abstract Map<String, String> returnHeaderParams();

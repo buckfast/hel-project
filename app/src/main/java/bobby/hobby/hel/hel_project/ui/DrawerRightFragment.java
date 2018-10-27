@@ -13,6 +13,7 @@ import java.util.Objects;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
+import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class DrawerRightFragment extends BaseNavViewListChildFragment<FragmentViewModel> {
 

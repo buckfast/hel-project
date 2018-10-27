@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,10 +20,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +28,10 @@ import java.util.List;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
-import bobby.hobby.hel.hel_project.ui.model.EventItem;
+import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 
-public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
+public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel>{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,10 +42,10 @@ public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
     private String mParam2;
 
 
-    private RecyclerView recyclerView;
+    //private RecyclerView recyclerView;
     private List<ChatMessage> messages;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    //private RecyclerView.Adapter adapter;
+    //private RecyclerView.LayoutManager layoutManager;
 
     public TabChatFragment() {
         // Required empty public constructor
@@ -82,8 +81,10 @@ public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mFragmentsViewModel.attachSocketClientTo(getActivity());
-        mFragmentsViewModel.emitTest();
+
+
+        //mFragmentsViewModel.attachSocketClientTo(getActivity());
+        //mFragmentsViewModel.emitTest();
     }
 
     @Override
@@ -96,7 +97,13 @@ public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        EditText message_edittext = view.findViewById(R.id.message_edittext);
+
+        ChatFragment chatFragment = new ChatFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.chat_fragment_container, chatFragment);
+        transaction.commit();
+
+        /*EditText message_edittext = view.findViewById(R.id.message_edittext);
         message_edittext.setImeOptions(EditorInfo.IME_ACTION_SEND);
         message_edittext.setRawInputType(InputType.TYPE_CLASS_TEXT);
         message_edittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -170,6 +177,7 @@ public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
         recyclerView.setLayoutManager(layoutManager);
 
         mFragmentsViewModel.chatMessageList.setValue(messages);
+        */
     }
 
     @Override
@@ -183,12 +191,9 @@ public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
     }
 
 
-    private void sendMessage(String text) {
-        mFragmentsViewModel.addMessage(new ChatMessage(text, "you", "xx:xx"));
-        recyclerView.scrollToPosition(adapter.getItemCount()-1);
 
-    }
 
+    /*
     private class MessageListAdapter extends RecyclerView.Adapter {
         private static final int MESSAGE_SENT = 0;
         private static final int MESSAGE_RECEIVED = 1;
@@ -262,5 +267,5 @@ public class TabChatFragment extends BaseTabChildFragment<FragmentViewModel> {
         public int getItemCount() {
             return messageList.size();
         }
-    }
+    }*/
 }

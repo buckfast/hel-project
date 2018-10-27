@@ -1,28 +1,15 @@
 package bobby.hobby.hel.hel_project.ui;
 
-import android.animation.ObjectAnimator;
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
-
-import bobby.hobby.hel.hel_project.R;
-import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
-import bobby.hobby.hel.hel_project.repository.internal.model.User;
-import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
-import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
+import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
+import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, ActivityViewModel> {
     @Override

@@ -1,13 +1,15 @@
 package bobby.hobby.hel.hel_project.ui.model;
 
-public class ChatMessage {
+import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
+
+public class ChatMessage implements ChatText {
     private String message;
-    private String user;
+    private Boolean received;
     private String time;
 
-    public ChatMessage(String message, String user, String time) {
+    public ChatMessage(String message, Boolean received, String time) {
         this.message = message;
-        this.user = user;
+        this.received = received;
         this.time = time;
     }
 
@@ -19,12 +21,12 @@ public class ChatMessage {
         this.message = message;
     }
 
-    public String getUser() {
-        return user;
+    public Boolean getReceived() {
+        return received;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setReceived(Boolean received) {
+        this.received = received;
     }
 
     public String getTime() {
@@ -33,5 +35,10 @@ public class ChatMessage {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean isCurrentUser() {
+        return received;
     }
 }

@@ -1,4 +1,4 @@
-package bobby.hobby.hel.hel_project.ui;
+package bobby.hobby.hel.hel_project.ui.viewmodel;
 
 import android.support.annotation.NonNull;
 import android.app.Application;
@@ -21,7 +21,7 @@ import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList
 import okhttp3.ResponseBody;
 
 public class ActivityViewModel extends BaseViewModel {
-     MutableLiveData<String> title = new MutableLiveData<>();
+    public MutableLiveData<String> title = new MutableLiveData<>();
 
     //public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     //public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
