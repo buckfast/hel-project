@@ -61,7 +61,6 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         List<ChatText> msgList = chatMessageList.getValue();
         msgList.add(msg);
         this.chatMessageList.postValue(msgList);
-        emitMessage(msg.getMessage());
     }
 
     @Override
@@ -100,7 +99,6 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.login(user, new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
-                Log.d("asd", String.valueOf(response));
                 currentUser.postValue(response);
             }
             @Override
@@ -124,7 +122,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("asd", String.valueOf(body));
+                Log.d("asd", "sarechlinkedevents resp: "+String.valueOf(body));
                 Log.d("asd", "sarechlinkedevents error: "+String.valueOf(code));
             }
         });

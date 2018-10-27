@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -7,11 +8,15 @@ import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public final class Util {
@@ -45,5 +50,30 @@ public final class Util {
         };
         a.setDuration(duration);
         return a;
+    }
+    public static void hideKeyboard(Activity activity) {
+
+    }
+
+    public static void recursiveHideKeyboard(final Context context, View view) {
+        try {
+            if (!(view instanceof EditText || view instanceof ScrollView)) {
+                view.setOnTouchListener(new View.OnTouchListener() {
+                    public boolean onTouch(View v, MotionEvent event) {
+                        InputMethodManager in = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        in.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        return false;
+                    }
+                });
+            }
+            if (view instanceof ViewGroup) {
+                for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                    View innerView = ((ViewGroup) view).getChildAt(i);
+                    recursiveHideKeyboard(context, innerView);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

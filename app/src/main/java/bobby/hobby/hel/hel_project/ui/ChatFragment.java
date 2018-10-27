@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +14,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseChatFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseChatAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseChatAdapterViewHolder;
@@ -45,9 +49,13 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
         recyclerView.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
 
+
         EditText message_edittext = view.findViewById(R.id.message_edittext);
         message_edittext.setImeOptions(EditorInfo.IME_ACTION_SEND);
         message_edittext.setRawInputType(InputType.TYPE_CLASS_TEXT);
+
+
+
         message_edittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -125,6 +133,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
     private void sendMessage(String text) {
         if (text.length() > 0) {
             mViewModel.addMessage(new ChatMessage(text, false, mViewModel.getTime(), "self"));
+            mViewModel.emitMessage(text);
             scrollToBottom();
         }
     }

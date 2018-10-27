@@ -2,6 +2,7 @@ package bobby.hobby.hel.hel_project.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -77,14 +78,13 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        mFragmentsViewModel.currentUser.observe(this, u -> {
+            Log.d("asd", u.getToken());
+        });
         User user = new User();
         user.setEmail("hoangl@mail.com");
         user.setPassword("hoangl@gmail.com");
         mFragmentsViewModel.login(user);
-        mFragmentsViewModel.currentUser.observe(this, u -> {
-            Log.d("asd", u.getToken());
-        });
-
 
     }
 
@@ -113,7 +113,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+
         mFragmentsViewModel.searchLinkedEvents("jalkapallo");
+
 
         /*eventList.add(new EventItem("Jalkkis", R.drawable.a342_sahly_2, "hyvä tapahtuma kannattaa tulla"));
         eventList.add(new EventItem("hands :)", R.drawable.a74_muut8,"abcdefg" ));
@@ -134,7 +136,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     @Override
     public void onDetach() {
         super.onDetach();
-        //mFragmentsViewModel.logout();
+        mFragmentsViewModel.logout();
     }
 
     @Override
