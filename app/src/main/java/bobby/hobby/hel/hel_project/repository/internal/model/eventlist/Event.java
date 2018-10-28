@@ -1,7 +1,5 @@
 package bobby.hobby.hel.hel_project.repository.internal.model.eventlist;
 
-import android.media.Image;
-
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
