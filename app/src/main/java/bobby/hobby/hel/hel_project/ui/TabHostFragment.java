@@ -74,7 +74,6 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        mFragmentsViewModel.orientationChanged = true;
     }
 
     @Override

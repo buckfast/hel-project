@@ -5,12 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,20 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
-import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
-import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
+import bobby.hobby.hel.hel_project.ui.intterfase.AsyncListener;
 import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -166,7 +161,8 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     }
 
 
-    private class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
+
+    private class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> implements AsyncListener {
 
         private Context c;
         private EventList eventList;
@@ -205,6 +201,12 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
             eventList = newData;
             notifyDataSetChanged();
+        }
+
+        @Override
+        public void finish(Bitmap image, int id) {
+            ImageView iv = (ImageView) getView().findViewById(id);
+            iv.setImageBitmap(image);
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -249,7 +251,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                         event.getImages().get(0).getUrl(),
                         String.valueOf(holder.image.getId())
                 };
-                new LoadImage().execute(params);
+                LoadImage imageLoader = new LoadImage();
+                imageLoader.response = this;
+                imageLoader.execute(params);
             } else {
                 holder.image.setImageBitmap(null);
             }
@@ -272,8 +276,16 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         }
     }
 
-    private class LoadImage extends AsyncTask<String, Void, Bitmap> {
+    /*
+    @Override
+    public void finish(Bitmap image) {
+        ImageView iv = (ImageView) getView().findViewById(id);
+        iv.setImageBitmap(result);
+    }*/
+
+    private static class LoadImage extends AsyncTask<String, Void, Bitmap> {
         private int id = 0;
+        public AsyncListener response = null;
 
         @Override
         protected Bitmap doInBackground(String... params) {
@@ -288,15 +300,16 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 return image;
 
             }catch (Exception e){
-                Log.d("asd error",e.getMessage());
+                Log.d("asd",e.getMessage());
             }
             return null;
         }
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            ImageView iv = (ImageView) getView().findViewById(id);
-            iv.setImageBitmap(result);
+            response.finish(result, id);
+            //ImageView iv = (ImageView) getView().findViewById(id);
+            //iv.setImageBitmap(result);
             Log.d("asd", "image loaded");
         }
     }

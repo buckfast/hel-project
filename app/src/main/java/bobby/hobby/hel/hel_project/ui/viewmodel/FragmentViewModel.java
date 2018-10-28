@@ -47,7 +47,6 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
     public CharSequence typedText = "";
-    public boolean orientationChanged = false;
     public String lastKeyword = "";
 
 
