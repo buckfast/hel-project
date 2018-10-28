@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
@@ -86,7 +87,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             try {
                 username = data.getString("username");
                 message = data.getString("message");
-                ChatMessage msg = new ChatMessage(message, true, getTime(), username);
+                ChatMessage msg = new ChatMessage(message, true, Util.getTime(), username);
                 addMessage(msg);
                 Log.d("asd", username+message);
             } catch (JSONException e) {
@@ -158,6 +159,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onSuccess(@NonNull HobbyList response, int code) {
                 hobbyList.postValue(response.getHobbies());
+                //List<String> l = new ArrayList<>();
+                //l.add("Jääkiekko");
+                //hobbyList.setValue(l);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
@@ -166,9 +170,4 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         });
     }
 
-    public String getTime() {
-        Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        return dateFormat.format(date);
-    }
 }

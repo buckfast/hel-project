@@ -24,7 +24,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public final class Util {
@@ -74,6 +77,12 @@ public final class Util {
             parsed.add(ptag.ownText());
         }
         return parsed;
+    }
+
+    public static String getTime() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        return dateFormat.format(date);
     }
 
 }

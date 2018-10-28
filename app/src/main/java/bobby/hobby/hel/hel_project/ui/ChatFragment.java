@@ -140,7 +140,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
     private void sendMessage(String text) {
         if (text.length() > 0) {
-            mViewModel.addMessage(new ChatMessage(text, false, mViewModel.getTime(), "self"));
+            mViewModel.addMessage(new ChatMessage(text, false, Util.getTime(), "self"));
             mViewModel.emitMessage(text);
             scrollToBottom();
         }
