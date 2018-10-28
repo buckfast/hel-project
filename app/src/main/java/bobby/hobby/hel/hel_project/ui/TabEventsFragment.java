@@ -1,12 +1,16 @@
 package bobby.hobby.hel.hel_project.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -227,9 +234,13 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
-            holder.short_desc.setText(Util.parseHtml(event.getDesc().getFi()).get(0));
+            holder.short_desc.setText(event.getSDesc().getFi());
 
-            //holder.image.setImageResource(event.getImage());
+            String[] params = {
+                    event.getImages().get(0).getUrl(),
+                    String.valueOf(holder.image.getId())
+            };
+            new LoadImage().execute(params);
 
             if (position%3==0) {
                 holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient));
@@ -246,6 +257,35 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         @Override
         public int getItemCount() {
             return eventList == null ? 0 : eventList.getEvents().size();
+        }
+    }
+
+    private class LoadImage extends AsyncTask<String, Void, Bitmap> {
+        private int id = 0;
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            try {
+                URL url = new URL(params[0]);
+                id = Integer.parseInt(params[1]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap image = BitmapFactory.decodeStream(input);
+                return image;
+
+            }catch (Exception e){
+                Log.d("asd error",e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            ImageView iv = (ImageView) getView().findViewById(id);
+            iv.setImageBitmap(result);
+            Log.d("asd", "image loaded");
         }
     }
 
