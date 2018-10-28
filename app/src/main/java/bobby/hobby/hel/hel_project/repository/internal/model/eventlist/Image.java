@@ -10,7 +10,7 @@ public class Image {
 
     @SerializedName("name")
     @Expose
-    private Name_ name;
+    private String name;
     @SerializedName("url")
     @Expose
     private String url;
@@ -27,11 +27,11 @@ public class Image {
     @Expose
     private String source;
 
-    public Name_ getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Name_ name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -90,7 +90,7 @@ public class Image {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Image) == false) {
+        if (!(other instanceof Image)) {
             return false;
         }
         Image rhs = ((Image) other);
