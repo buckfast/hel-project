@@ -47,6 +47,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
     public CharSequence typedText = "";
+    public boolean orientationChanged = false;
+    public String lastKeyword = "";
 
 
     public FragmentViewModel(@NonNull Application application) {
@@ -128,13 +130,13 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.getEventList(keyword, new BaseClient.Handler<EventList>() {
             @Override
             public void onSuccess(@NonNull EventList response, int code) {
-                Log.d("asd", "search linked events: code: "+String.valueOf(code));
+                //Log.d("asd", "search linked events: code: "+String.valueOf(code));
                 Log.d("asd", "                                                              search linked events: events count: "+response.getCount());
                 linkedEvents.postValue(response);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("asd", "linked events error: resp: "+String.valueOf(body));
+                //Log.d("asd", "linked events error: resp: "+String.valueOf(body));
                 Log.d("asd", "                                                              linked events error: code: "+String.valueOf(code));
                 linkedEvents.setValue(null);
             }
@@ -149,7 +151,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("asd", "eipa user");
+                Log.d("asd", "no");
             }
         });
     }
@@ -161,6 +163,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 //hobbyList.postValue(response.getHobbies());
                 List<String> l = new ArrayList<>();
                 l.add("fifa");
+                l.add("jalkapallo");
                 hobbyList.setValue(l);
             }
             @Override

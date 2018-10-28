@@ -88,6 +88,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
         mFragmentsViewModel.currentUser.observe(this, u -> {
             Log.d("asd", u.getToken());
         });
@@ -104,6 +105,12 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //outState.pu
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //eventList = new ArrayList<>();
@@ -113,9 +120,11 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         adapter = new EventAdapter(this,eventList, this);
 
+        //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
         mFragmentsViewModel.linkedEvents.observe(this, data ->{
+
             ((EventAdapter)adapter).refreshData(data);
-            Log.d("asd", "eventissa tapahtuu");
+            Log.d("asd", "eventissa tapahtuu ");
         });
         recyclerView.setAdapter(adapter);
 
@@ -124,9 +133,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         //mFragmentsViewModel.getHobbyByPosition(mFragmentsViewModel.getCurrentPositionDrawer());
         //mFragmentsViewModel.searchLinkedEvents("jalkapallo");
-
-
-
 
         /*eventList.add(new EventItem("Jalkkis", R.drawable.a342_sahly_2, "hyvä tapahtuma kannattaa tulla"));
         eventList.add(new EventItem("hands :)", R.drawable.a74_muut8,"abcdefg" ));
@@ -137,6 +143,8 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         eventList.add(new EventItem("asdaasd", R.drawable.aaaa, "gdthbt"));
         mFragmentsViewModel.eventList.setValue(eventList);
         */
+
+
     }
 
     @Override
@@ -236,11 +244,15 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             holder.title.setText(event.getName().getFi());
             holder.short_desc.setText(event.getSDesc().getFi());
 
-            String[] params = {
-                    event.getImages().get(0).getUrl(),
-                    String.valueOf(holder.image.getId())
-            };
-            new LoadImage().execute(params);
+            if (event.getImages().size() > 0) {
+                String[] params = {
+                        event.getImages().get(0).getUrl(),
+                        String.valueOf(holder.image.getId())
+                };
+                new LoadImage().execute(params);
+            } else {
+                holder.image.setImageBitmap(null);
+            }
 
             if (position%3==0) {
                 holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient));

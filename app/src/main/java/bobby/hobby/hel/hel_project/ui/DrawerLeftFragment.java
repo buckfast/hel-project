@@ -66,7 +66,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
             public void onChanged(@Nullable List<String> strings) {
                 List<DrawerListItem> newHobbyList = new ArrayList<>();
                 for (int i=0; i<strings.size(); i++) {
-                    Log.d("asd", "user hobby: "+strings.get(i));
+                    //Log.d("asd", "user hobby: "+strings.get(i));
                     newHobbyList.add(new DrawerListItem(strings.get(i), "@mipmap/ic_launcher_round"));
                 }
                 mFragmentsViewModel.drawerList.setValue(newHobbyList);
