@@ -43,8 +43,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public  MutableLiveData<List<ChatText>> chatMessageList = new MutableLiveData<>();
 
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
-    public MutableLiveData<List<String>> userHobbyList = new MutableLiveData<>();
+    public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
+    public CharSequence typedText = "";
 
 
     public FragmentViewModel(@NonNull Application application) {
@@ -63,7 +64,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public String getHobbyByPosition(int pos) {
-        return userHobbyList.getValue().get(pos);
+        return hobbyList.getValue().get(pos);
     }
 
 
@@ -98,13 +99,17 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public void emitMessage(String text) {
         mRepository.getSocket().emit("new message", text);
     }
+    public void emitJoinRoom(String room) {
+        mRepository.getSocket().emit("join room", room);
+    }
 
     public void login (User user) {
         mRepository.login(user, new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
                 currentUser.postValue(response);
-                fetchUserHobbies();
+                Log.d("asd", String.valueOf(response.getHobbies()));
+                fetchHobbies();
 
             }
             @Override
@@ -148,11 +153,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         });
     }
 
-    public void fetchUserHobbies() {
+    public void fetchHobbies() {
         mRepository.getHobbyList(new BaseClient.Handler<HobbyList>() {
             @Override
             public void onSuccess(@NonNull HobbyList response, int code) {
-                userHobbyList.postValue(response.getHobbies());
+                hobbyList.postValue(response.getHobbies());
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {

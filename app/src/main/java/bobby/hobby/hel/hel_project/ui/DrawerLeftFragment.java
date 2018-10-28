@@ -72,7 +72,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
                 mFragmentsViewModel.drawerList.setValue(newHobbyList);
             }
         };
-        mFragmentsViewModel.userHobbyList.observe(this, hobbyListObserver);
+        mFragmentsViewModel.hobbyList.observe(this, hobbyListObserver);
 
         colors = getContext().getResources().obtainTypedArray(R.array.super_colors);
 

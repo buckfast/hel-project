@@ -42,8 +42,21 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
     private List<ChatText> messages;
     private Boolean scrollAtBottom = false;
+    private EditText message_edittext;
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mViewModel.typedText = message_edittext.getText();
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        message_edittext.setText(mViewModel.typedText);
+        changeEditTextSize();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -52,7 +65,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
         recyclerView.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
 
 
-        EditText message_edittext = view.findViewById(R.id.message_edittext);
+        message_edittext = view.findViewById(R.id.message_edittext);
         message_edittext.setImeOptions(EditorInfo.IME_ACTION_SEND);
         message_edittext.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
@@ -79,13 +92,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             // TODO: hehe fix later
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (message_edittext.getLineCount() == 2) {
-                    message_edittext.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.chat_edittext_multirow_bg));
-                } else if (message_edittext.getLineCount() > 2) {
-                    message_edittext.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.chat_edittext_multirow_bg2));
-                } else {
-                    message_edittext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.chat_edittext_bg));
-                }
+                changeEditTextSize();
             }
 
             @Override
@@ -231,5 +238,14 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
     }
     private void scrollToBottom() {
         recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+    }
+    private void changeEditTextSize() {
+        if (message_edittext.getLineCount() == 2) {
+            message_edittext.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.chat_edittext_multirow_bg));
+        } else if (message_edittext.getLineCount() > 2) {
+            message_edittext.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.chat_edittext_multirow_bg2));
+        } else {
+            message_edittext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.chat_edittext_bg));
+        }
     }
 }

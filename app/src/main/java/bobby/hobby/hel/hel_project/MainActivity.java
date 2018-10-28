@@ -45,15 +45,13 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         super.onCreate(savedInstanceState);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
 
-        //ActionBar actionbar = getSupportActionBar();
-        //getSupportActionBar().setDisplayOptions(actionbar.DISPLAY_SHOW_CUSTOM);
-        //getSupportActionBar().setCustomView(R.layout.action_bar);
 
         TextView title = findViewById(R.id.toolbar_title);
         mViewModel.getTitle().observe(this, s -> title.setText(s));
 
     }
 
+    /*
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -70,5 +68,5 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         }
         return super.dispatchTouchEvent(event);
     }
-
+    */
 }

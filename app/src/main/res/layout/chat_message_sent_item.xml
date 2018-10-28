@@ -56,7 +56,7 @@ android:layout_alignTop="@id/clayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-
+        android:layout_marginBottom="4dp"
         android:layout_marginRight="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/chat_message"
         app:layout_constraintRight_toRightOf="@+id/chat_message" />

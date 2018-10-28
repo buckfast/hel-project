@@ -117,11 +117,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         //mFragmentsViewModel.getHobbyByPosition(mFragmentsViewModel.getCurrentPositionDrawer());
         //mFragmentsViewModel.searchLinkedEvents("jalkapallo");
-        mFragmentsViewModel.listPosition.observe(this, pos -> {
-            Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos));
-            mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(pos));
 
-        });
 
 
 

@@ -8,7 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -77,5 +81,12 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
             user.setPassword("hoangl@gmail.com");
             mFragmentsViewModel.login(user);
         }
+
+        mFragmentsViewModel.listPosition.observe(this, pos -> {
+            Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos));
+            mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(pos));
+            mFragmentsViewModel.emitJoinRoom(mFragmentsViewModel.getHobbyByPosition(pos));
+            mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>());
+        });
     }
 }

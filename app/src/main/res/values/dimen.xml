@@ -6,4 +6,8 @@
     <dimen name="list_image_padding">0dp</dimen>
     <dimen name="add_button_margin">10sp</dimen>
     <dimen name="list_item_title">30dp</dimen>
+
+    <dimen name="message_bubble_shadow">2dp</dimen>
+    <dimen name="message_bubble_shadow_tri">15dp</dimen>
+
 </resources>
