@@ -9,5 +9,7 @@
 
     <dimen name="message_bubble_shadow">2dp</dimen>
     <dimen name="message_bubble_shadow_tri">15dp</dimen>
+    <dimen name="message_bubble_shadow_tri_received">10dp</dimen>
+    <dimen name="event_details_padding">16dp</dimen>
 
 </resources>

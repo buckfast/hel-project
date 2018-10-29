@@ -11,6 +11,11 @@
     <color name="transparent">#00ffffff</color>
     <color name="chat_bg">#e6ded1</color>
 
+    <color name="chat_bubble_received">#ffffff</color>
+    <color name="chat_bubble_received_dark">#cecece</color>
+
+    <color name="chat_bubble_sent">#fffaef</color>
+    <color name="chat_bubble_sent_dark">#c9c5bc</color>
 
     <color name="superColor0">#2d7d9a</color>
     <color name="superColor1">#0099bc</color>

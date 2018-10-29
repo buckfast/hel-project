@@ -11,11 +11,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.InputStream;
@@ -24,6 +26,7 @@ import java.net.URL;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
@@ -45,6 +48,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private int prevExpanded = -1;
+    private int currExpanded = -1;
+    private boolean isExpanded = false;
 
     private EventList eventList;
 
@@ -155,9 +161,10 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
     @Override
     public void onClick(View v, int position) {
-        List<EventItem> list = mFragmentsViewModel.eventList.getValue();
-        list.remove(position);
-        mFragmentsViewModel.eventList.setValue(list);
+        Log.d("asd", "event item clicked");
+        currExpanded = isExpanded ? -1 : position;
+        adapter.notifyItemChanged(prevExpanded);
+        adapter.notifyItemChanged(position);
     }
 
 
@@ -210,8 +217,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            public TextView title, short_desc;
+            public TextView title, short_desc, desc;
             public ImageView image;
+            public RelativeLayout details_container;
             public RecyclerView.Adapter adapter;
 
 
@@ -221,6 +229,8 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 title = (TextView) view.findViewById(R.id.event_title);
                 short_desc = (TextView) view.findViewById(R.id.event_short_desc);
                 image = (ImageView) view.findViewById(R.id.event_image);
+                desc = view.findViewById(R.id.event_details_desc);
+                details_container = view.findViewById(R.id.event_details);
                 view.setOnClickListener(this);
             }
 
@@ -246,6 +256,8 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             holder.title.setText(event.getName().getFi());
             holder.short_desc.setText(event.getSDesc().getFi());
 
+            holder.desc.setText(TextUtils.join("\n\n", Util.parseHtml(event.getDesc().getFi())));
+
             if (event.getImages().size() > 0) {
                 String[] params = {
                         event.getImages().get(0).getUrl(),
@@ -256,6 +268,14 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 imageLoader.execute(params);
             } else {
                 holder.image.setImageBitmap(null);
+            }
+
+
+            isExpanded = position==currExpanded;
+            holder.details_container.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+            holder.itemView.setActivated(isExpanded);
+            if (isExpanded) {
+                prevExpanded = position;
             }
 
             if (position%3==0) {
@@ -308,8 +328,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         @Override
         protected void onPostExecute(Bitmap result) {
             response.finish(result, id);
-            //ImageView iv = (ImageView) getView().findViewById(id);
-            //iv.setImageBitmap(result);
             Log.d("asd", "image loaded");
         }
     }

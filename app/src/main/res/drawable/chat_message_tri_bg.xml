@@ -10,7 +10,7 @@
         <shape
             android:shape="rectangle" >
             <solid
-                android:color="#d8e3e4" />
+                android:color="@color/chat_bubble_sent_dark" />
         </shape>
 
     </rotate>
@@ -26,7 +26,7 @@
             <shape
                 android:shape="rectangle" >
                 <solid
-                    android:color="#FFF2FEFF" />
+                    android:color="@color/chat_bubble_sent" />
             </shape>
 
         </rotate>

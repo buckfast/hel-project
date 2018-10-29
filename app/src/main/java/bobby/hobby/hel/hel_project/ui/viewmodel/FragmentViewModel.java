@@ -131,7 +131,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull EventList response, int code) {
                 //Log.d("asd", "search linked events: code: "+String.valueOf(code));
                 Log.d("asd", "                                                              search linked events: events count: "+response.getCount());
-                linkedEvents.postValue(response);
+                EventList list = response;
+                list.getEvents().add(response.getEvents().get(0));
+                linkedEvents.postValue(list);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
