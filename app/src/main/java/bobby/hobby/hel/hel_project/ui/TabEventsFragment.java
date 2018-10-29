@@ -9,13 +9,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,14 +41,17 @@ import bobby.hobby.hel.hel_project.ui.intterfase.AsyncListener;
 import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FlipInRightYAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements OnAdapterItemClickListener {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -119,11 +129,21 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         recyclerView = (RecyclerView) getView().findViewById(R.id.events_recycler_view);
         recyclerView.setHasFixedSize(true);
 
+        //recyclerView.setItemAnimator(new SlideInDownAnimator());
+        /*RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }*/
+
+
         adapter = new EventAdapter(this,eventList, this);
+        adapter.setHasStableIds(true);
 
         //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
         mFragmentsViewModel.linkedEvents.observe(this, data ->{
-
+            isExpanded = false;
+            currExpanded = -1;
+            prevExpanded = -1;
             ((EventAdapter)adapter).refreshData(data);
             Log.d("asd", "eventissa tapahtuu ");
         });
@@ -163,6 +183,20 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     public void onClick(View v, int position) {
         Log.d("asd", "event item clicked");
         currExpanded = isExpanded ? -1 : position;
+
+        Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
+        if (v.isActivated()) {
+            Animation anim = new SlideAnim(
+                    v.findViewById(R.id.event_top_container),
+                    (int)getResources().getDimension(R.dimen.event_top_container_min_height),
+                    (int)getResources().getDimension(R.dimen.event_top_container_max_height)
+            );
+            anim.setInterpolator(new AccelerateInterpolator());
+            anim.setDuration(0);
+            v.setAnimation(anim);
+            v.startAnimation(anim);
+        }
+
         adapter.notifyItemChanged(prevExpanded);
         adapter.notifyItemChanged(position);
     }
@@ -217,7 +251,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            public TextView title, short_desc, desc;
+            public TextView title, short_desc, desc, info;
             public ImageView image;
             public RelativeLayout details_container;
             public RecyclerView.Adapter adapter;
@@ -231,12 +265,12 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 image = (ImageView) view.findViewById(R.id.event_image);
                 desc = view.findViewById(R.id.event_details_desc);
                 details_container = view.findViewById(R.id.event_details);
+                info = view.findViewById(R.id.event_details_info);
                 view.setOnClickListener(this);
             }
 
             @Override
             public void onClick(View view) {
-                Log.d("testi", "klik");
                 listener.onClick(view, this.getAdapterPosition());
             }
 
@@ -256,9 +290,16 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             holder.title.setText(event.getName().getFi());
             holder.short_desc.setText(event.getSDesc().getFi());
 
+            if (event.getInfo() != null) {
+                Log.d("asd", event.getInfo().getFi());
+                final Spanned text = Html.fromHtml("<a href='" + event.getInfo().getFi()+"'>LISÄTIETOJA</a>", 0);
+                holder.info.setMovementMethod(LinkMovementMethod.getInstance());
+                holder.info.setText(text);
+                holder.info.setLinkTextColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
+            }
             holder.desc.setText(TextUtils.join("\n\n", Util.parseHtml(event.getDesc().getFi())));
 
-            if (event.getImages().size() > 0) {
+            if (event.getImages().size() > 0) { // TODO: 29.10.2018 store in cache or something 
                 String[] params = {
                         event.getImages().get(0).getUrl(),
                         String.valueOf(holder.image.getId())
@@ -273,6 +314,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
             isExpanded = position==currExpanded;
             holder.details_container.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+            holder.short_desc.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             holder.itemView.setActivated(isExpanded);
             if (isExpanded) {
                 prevExpanded = position;
@@ -288,6 +330,12 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             }
 
             //holder.bind(event, listener);
+        }
+
+        @Override
+        public long getItemId(int position) {
+           //return Long.parseLong(eventList.getEvents().get(position).getId().replace("helmet:", ""));
+            return position; // TODO: 29.10.2018 get unique long id somewhere some day 
         }
 
         @Override

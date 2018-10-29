@@ -23,9 +23,13 @@ android:orientation="vertical"
         card_view:cardMaxElevation="1dp"
         android:layout_marginBottom="1dp"
         card_view:cardElevation="1dp">
-
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
         <RelativeLayout
-            android:minHeight="150dp"
+            android:id="@+id/event_top_container"
+            android:minHeight="@dimen/event_top_container_min_height"
             android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="150dp">
@@ -36,9 +40,6 @@ android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="false"
-
-
-
                 android:scaleType="centerCrop" />
             <FrameLayout
                 android:layout_width="match_parent"
@@ -101,7 +102,6 @@ android:orientation="vertical"
         <RelativeLayout
             android:translationZ="-2dp"
             android:background="@color/colorWhite"
-            android:layout_marginTop="150dp"
             android:id="@+id/event_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,6 +126,7 @@ android:orientation="vertical"
                 android:layout_width="wrap_content" />
 
             <TextView
+                android:clickable="true"
                 android:textSize="16sp"
                 android:id="@+id/event_details_info"
                 android:textColor="@color/colorAccent"
@@ -134,10 +135,11 @@ android:orientation="vertical"
                 android:layout_alignParentRight="true"
                 android:text="LISÄTIETOJA"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:focusable="true" />
 
         </RelativeLayout>
-
+</LinearLayout>
     </android.support.v7.widget.CardView>
 
 

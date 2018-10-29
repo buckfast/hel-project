@@ -10,6 +10,7 @@ import android.view.View;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,6 +29,7 @@ import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
+import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
@@ -131,9 +133,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull EventList response, int code) {
                 //Log.d("asd", "search linked events: code: "+String.valueOf(code));
                 Log.d("asd", "                                                              search linked events: events count: "+response.getCount());
-                EventList list = response;
-                list.getEvents().add(response.getEvents().get(0));
-                linkedEvents.postValue(list);
+                linkedEvents.postValue(response);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {

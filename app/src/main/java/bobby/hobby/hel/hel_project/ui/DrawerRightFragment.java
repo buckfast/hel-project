@@ -35,7 +35,7 @@ public class DrawerRightFragment extends BaseNavViewListChildFragment<FragmentVi
 
     @Override
     protected int returnRecyclerViewId() {
-        return R.id.right_child_drawer;
+        return R.id.right_child_recyclerview;
     }
 
     @Override
