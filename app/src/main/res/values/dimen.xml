@@ -14,5 +14,7 @@
     <dimen name="event_details_padding">16dp</dimen>
     <dimen name="event_top_container_min_height">150dp</dimen>
     <dimen name="event_top_container_max_height">250dp</dimen>
+    <dimen name="event_top_container_min_height_no_images">100dp</dimen>
+
 
 </resources>

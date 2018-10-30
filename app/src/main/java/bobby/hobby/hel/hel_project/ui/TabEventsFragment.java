@@ -28,6 +28,7 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
@@ -243,11 +244,16 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             iv.setImageBitmap(image);
         }
 
+        @Override
+        public void preDownload(int id) {
+
+        }
+
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            public TextView title, short_desc, desc, info;
+            private TextView title, short_desc, desc, info;
             public ImageView image;
-            public RelativeLayout details_container, top_container;
-            public RecyclerView.Adapter adapter;
+            private RelativeLayout details_container, top_container;
+            private RecyclerView.Adapter adapter;
 
 
             public ViewHolder(View view, RecyclerView.Adapter adapter) {
@@ -282,8 +288,15 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
-            holder.short_desc.setText(event.getSDesc().getFi());
-            holder.desc.setText(TextUtils.join("\n\n", Util.parseHtml(event.getDesc().getFi())));
+            holder.short_desc.setText(Html.fromHtml(event.getSDesc().getFi(),0));
+            holder.desc.setText(Html.fromHtml(event.getDesc().getFi(),0));
+            holder.desc.setMovementMethod(LinkMovementMethod.getInstance());
+            holder.desc.setLinkTextColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
+
+            //holder.title.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            //holder.short_desc.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            //int topContainerHeight = holder.top_container.getLayoutParams().height;
+            //holder.top_container.getLayoutParams().height = topContainerHeight;
 
             if (event.getInfo() != null) {
                 holder.info.setVisibility(View.VISIBLE);
@@ -297,7 +310,10 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 holder.info.setVisibility(View.GONE);
             }
 
-            if (event.getImages().size() > 0) { // TODO: 29.10.2018 store in cache or something 
+            final Boolean containsImages = (event.getImages().size() > 0);
+
+            holder.image.setImageBitmap(null);
+            if (containsImages) { // TODO: 29.10.2018 store in cache or something
                 String[] params = {
                         event.getImages().get(0).getUrl(),
                         String.valueOf(holder.image.getId())
@@ -306,7 +322,16 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 imageLoader.response = this;
                 imageLoader.execute(params);
             } else {
-                holder.image.setImageBitmap(null);
+                holder.image.setBackgroundResource(R.color.transparent);
+            }
+
+
+            if (position%3==0) {
+                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient));
+            } else if (position%3==1) {
+                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient2));
+            } else if (position%3==2 ) {
+                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient3));
             }
 
 
@@ -315,20 +340,16 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             holder.short_desc.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             holder.itemView.setActivated(isExpanded);
             if (isExpanded) {
-                holder.top_container.getLayoutParams().height = (int)getResources().getDimension(R.dimen.event_top_container_max_height);
+                if (containsImages) {
+                    Util.changeViewHeight(getContext(), holder.top_container, R.dimen.event_top_container_max_height);
+                    //holder.top_container.getLayoutParams().height = holder.image.getHeight();
+                    Util.resetViewDrawable(holder.itemView.findViewById(R.id.top_gradient));
+                }
                 prevExpanded = position;
             } else {
-                holder.top_container.getLayoutParams().height = (int)getResources().getDimension(R.dimen.event_top_container_min_height);
-
-            }
-
-            if (position%3==0) {
-                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient));
-            } else if (position%3==1) {
-                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient2));
-            } else if (position%3==2 ) {
-                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient3));
-
+                ViewGroup.LayoutParams params = holder.top_container.getLayoutParams();
+                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                holder.top_container.setLayoutParams(params);
             }
 
             //holder.bind(event, listener);
@@ -373,6 +394,12 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 Log.d("asd",e.getMessage());
             }
             return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            response.preDownload(id);
         }
 
         @Override

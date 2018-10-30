@@ -22,6 +22,7 @@ import android.widget.TextView;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import java.text.DateFormat;
@@ -42,6 +43,13 @@ public final class Util {
         //v.setImageTintMode(mode);
         //v.setColorFilter(color);
         v.setColorFilter(ContextCompat.getColor(c, color), mode);
+    }
+
+    public static void changeViewHeight(Context c, View v, int resId) {
+        v.getLayoutParams().height = (int) c.getResources().getDimension(resId);
+    }
+    public static void resetViewDrawable(View v) {
+        v.setBackgroundResource(0);
     }
 
     public static void disableTint(ImageView v) {
@@ -74,7 +82,7 @@ public final class Util {
         Document doc = Jsoup.parse(text);
         Elements ptags = doc.select("p");
         for (Element ptag : ptags) {
-            parsed.add(ptag.ownText());
+            parsed.add(ptag.html());
         }
         return parsed;
     }

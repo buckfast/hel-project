@@ -163,8 +163,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull HobbyList response, int code) {
                 //hobbyList.postValue(response.getHobbies());
                 List<String> l = new ArrayList<>();
+                l.add("graffiti");
                 l.add("fifa");
+                l.add("perulainen joulubasaari");
                 l.add("jalkapallo");
+                l.add("kirahvi");
                 hobbyList.setValue(l);
             }
             @Override

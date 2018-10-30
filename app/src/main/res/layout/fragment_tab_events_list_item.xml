@@ -12,7 +12,7 @@ android:orientation="vertical"
         android:foreground="?android:selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="150dp"
+
         android:layout_gravity="center"
         android:clickable="false"
 
@@ -29,21 +29,23 @@ android:orientation="vertical"
     android:layout_height="wrap_content">
         <RelativeLayout
             android:id="@+id/event_top_container"
-            android:minHeight="@dimen/event_top_container_min_height"
+
             android:clickable="false"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="wrap_content">
 
 
-            <ImageView
-                android:id="@+id/event_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:scaleType="centerCrop" />
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/event_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:background="@color/black"
+                    android:scaleType="centerCrop" />
                 <View
                     android:layout_gravity="top"
                     android:layout_width="match_parent"
@@ -72,6 +74,12 @@ android:orientation="vertical"
 
                 </View>
                 -->
+
+            </FrameLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <TextView
                 android:shadowDx="0"
                 android:shadowDy="0"
@@ -80,23 +88,24 @@ android:orientation="vertical"
 
                 android:padding="@dimen/list_item_padding"
                 android:id="@+id/event_title"
+                android:layout_gravity="top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/list_item_title" />
 
-                <TextView
-                    android:padding="@dimen/list_item_padding"
+            <TextView
+                android:padding="@dimen/list_item_padding"
 
-                    android:layout_gravity="bottom"
-                    android:id="@+id/event_short_desc"
-                    android:textColor="@color/colorWhite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:id="@+id/event_short_desc"
+                android:textColor="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-                    />
-            </FrameLayout>
+                />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -116,6 +125,7 @@ android:orientation="vertical"
 
 
             <TextView
+
                 android:padding="@dimen/event_details_padding"
                 android:id="@+id/event_details_desc"
                 android:textColor="@android:color/black"

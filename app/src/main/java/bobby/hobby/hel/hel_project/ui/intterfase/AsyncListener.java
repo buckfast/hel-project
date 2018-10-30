@@ -4,4 +4,5 @@ import android.graphics.Bitmap;
 
 public interface AsyncListener {
     void finish(Bitmap image, int id);
+    void preDownload(int id);
 }
