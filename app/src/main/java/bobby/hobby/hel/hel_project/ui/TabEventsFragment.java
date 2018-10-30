@@ -9,10 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -30,22 +28,16 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
+import bobby.hobby.hel.hel_project.ui.animation.SlideAnim;
 import bobby.hobby.hel.hel_project.ui.intterfase.AsyncListener;
 import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
-import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.FlipInRightYAnimator;
-import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements OnAdapterItemClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -137,6 +129,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
 
         adapter = new EventAdapter(this,eventList, this);
+
         adapter.setHasStableIds(true);
 
         //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
@@ -185,7 +178,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         currExpanded = isExpanded ? -1 : position;
 
         Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
-        if (v.isActivated()) {
+        /*if (v.isActivated()) {
             Animation anim = new SlideAnim(
                     v.findViewById(R.id.event_top_container),
                     (int)getResources().getDimension(R.dimen.event_top_container_min_height),
@@ -195,7 +188,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             anim.setDuration(0);
             v.setAnimation(anim);
             v.startAnimation(anim);
-        }
+        }*/
 
         adapter.notifyItemChanged(prevExpanded);
         adapter.notifyItemChanged(position);
@@ -253,7 +246,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             public TextView title, short_desc, desc, info;
             public ImageView image;
-            public RelativeLayout details_container;
+            public RelativeLayout details_container, top_container;
             public RecyclerView.Adapter adapter;
 
 
@@ -265,6 +258,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 image = (ImageView) view.findViewById(R.id.event_image);
                 desc = view.findViewById(R.id.event_details_desc);
                 details_container = view.findViewById(R.id.event_details);
+                top_container = view.findViewById(R.id.event_top_container);
                 info = view.findViewById(R.id.event_details_info);
                 view.setOnClickListener(this);
             }
@@ -289,15 +283,19 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
             holder.short_desc.setText(event.getSDesc().getFi());
+            holder.desc.setText(TextUtils.join("\n\n", Util.parseHtml(event.getDesc().getFi())));
 
             if (event.getInfo() != null) {
+                holder.info.setVisibility(View.VISIBLE);
                 Log.d("asd", event.getInfo().getFi());
                 final Spanned text = Html.fromHtml("<a href='" + event.getInfo().getFi()+"'>LISÄTIETOJA</a>", 0);
                 holder.info.setMovementMethod(LinkMovementMethod.getInstance());
                 holder.info.setText(text);
                 holder.info.setLinkTextColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
+            } else {
+                Log.d("asd", "info is null");
+                holder.info.setVisibility(View.GONE);
             }
-            holder.desc.setText(TextUtils.join("\n\n", Util.parseHtml(event.getDesc().getFi())));
 
             if (event.getImages().size() > 0) { // TODO: 29.10.2018 store in cache or something 
                 String[] params = {
@@ -317,7 +315,11 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             holder.short_desc.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             holder.itemView.setActivated(isExpanded);
             if (isExpanded) {
+                holder.top_container.getLayoutParams().height = (int)getResources().getDimension(R.dimen.event_top_container_max_height);
                 prevExpanded = position;
+            } else {
+                holder.top_container.getLayoutParams().height = (int)getResources().getDimension(R.dimen.event_top_container_min_height);
+
             }
 
             if (position%3==0) {
