@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -54,6 +55,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     private int prevExpanded = -1;
     private int currExpanded = -1;
     private boolean isExpanded = false;
+    private int again = 0;
 
     private EventList eventList;
 
@@ -92,13 +94,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
         mFragmentsViewModel.currentUser.observe(this, u -> {
             Log.d("asd", u.getToken());
         });
-
-
-
     }
 
     @Override
@@ -131,7 +129,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         adapter = new EventAdapter(this,eventList, this);
 
-        adapter.setHasStableIds(true);
+        //adapter.setHasStableIds(true); todo: enable this when server and model stuff works with multiple events
 
         //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
         mFragmentsViewModel.linkedEvents.observe(this, data ->{
@@ -139,7 +137,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             currExpanded = -1;
             prevExpanded = -1;
             ((EventAdapter)adapter).refreshData(data);
-            Log.d("asd", "eventissa tapahtuu ");
         });
         recyclerView.setAdapter(adapter);
 
@@ -175,10 +172,23 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
     @Override
     public void onClick(View v, int position) {
-        Log.d("asd", "event item clicked");
-        currExpanded = isExpanded ? -1 : position;
+        Log.d("asd", "event item clicked: "+position);
 
-        Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
+
+        if (currExpanded == position) {
+            Log.d("asd", "again!!!!!!!!!");
+            again++;
+            currExpanded = -1;
+        } else {
+            currExpanded = position;
+        }
+
+        adapter.notifyItemChanged(prevExpanded);
+        adapter.notifyItemChanged(position);
+
+
+
+        //Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
         /*if (v.isActivated()) {
             Animation anim = new SlideAnim(
                     v.findViewById(R.id.event_top_container),
@@ -191,8 +201,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             v.startAnimation(anim);
         }*/
 
-        adapter.notifyItemChanged(prevExpanded);
-        adapter.notifyItemChanged(position);
+        recyclerView.scrollToPosition(position);
     }
 
 
@@ -300,13 +309,11 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
             if (event.getInfo() != null) {
                 holder.info.setVisibility(View.VISIBLE);
-                Log.d("asd", event.getInfo().getFi());
                 final Spanned text = Html.fromHtml("<a href='" + event.getInfo().getFi()+"'>LISÄTIETOJA</a>", 0);
                 holder.info.setMovementMethod(LinkMovementMethod.getInstance());
                 holder.info.setText(text);
                 holder.info.setLinkTextColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
             } else {
-                Log.d("asd", "info is null");
                 holder.info.setVisibility(View.GONE);
             }
 
@@ -335,7 +342,13 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             }
 
 
+
             isExpanded = position==currExpanded;
+            if (again == 1) {
+                isExpanded = false;
+                currExpanded = -1;
+                again = 0;
+            }
             holder.details_container.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
             holder.short_desc.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             holder.itemView.setActivated(isExpanded);
@@ -350,8 +363,10 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 ViewGroup.LayoutParams params = holder.top_container.getLayoutParams();
                 params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 holder.top_container.setLayoutParams(params);
+                again = 0;
             }
 
+            //Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
             //holder.bind(event, listener);
         }
 
@@ -405,7 +420,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         @Override
         protected void onPostExecute(Bitmap result) {
             response.finish(result, id);
-            Log.d("asd", "image loaded");
         }
     }
 

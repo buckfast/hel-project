@@ -11,7 +11,7 @@ android:orientation="vertical"
         android:id="@+id/event_card"
         android:foreground="?android:selectableItemBackground"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
 
         android:layout_gravity="center"
         android:clickable="false"
@@ -109,6 +109,8 @@ android:orientation="vertical"
         </RelativeLayout>
 
         <RelativeLayout
+            android:isScrollContainer="false"
+            android:clickable="true"
             android:translationZ="-2dp"
             android:background="@color/colorWhite"
             android:id="@+id/event_details"
@@ -125,7 +127,6 @@ android:orientation="vertical"
 
 
             <TextView
-
                 android:padding="@dimen/event_details_padding"
                 android:id="@+id/event_details_desc"
                 android:textColor="@android:color/black"
