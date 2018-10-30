@@ -342,7 +342,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             }
 
 
-
             isExpanded = position==currExpanded;
             if (again == 1) {
                 isExpanded = false;
@@ -357,7 +356,12 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                     Util.changeViewHeight(getContext(), holder.top_container, R.dimen.event_top_container_max_height);
                     //holder.top_container.getLayoutParams().height = holder.image.getHeight();
                     Util.resetViewDrawable(holder.itemView.findViewById(R.id.top_gradient));
+                } else {
+                    ViewGroup.LayoutParams params = holder.top_container.getLayoutParams();
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    holder.top_container.setLayoutParams(params);
                 }
+
                 prevExpanded = position;
             } else {
                 ViewGroup.LayoutParams params = holder.top_container.getLayoutParams();
