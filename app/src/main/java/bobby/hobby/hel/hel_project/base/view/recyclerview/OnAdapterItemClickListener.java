@@ -9,6 +9,7 @@ import android.view.View;
  * {@link BaseAdapterViewHolder}
  */
 
+@FunctionalInterface
 public interface OnAdapterItemClickListener {
     void onClick(View v, int position);
 }

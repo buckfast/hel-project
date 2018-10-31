@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Description: This class setup click listener for each recyclerview item
+ * Description: This class setup click listener for each recyclerview item and some basic list manipulation
  * Works with:
  * {@link BaseAdapterViewHolder}
  * {@link OnAdapterItemClickListener}

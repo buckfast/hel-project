@@ -9,6 +9,7 @@ import bobby.hobby.hel.hel_project.base.view.recyclerview.RecyclerItem;
  * {@link BaseChatAdapterViewHolder}
  */
 
+@FunctionalInterface
 public interface ChatText extends RecyclerItem {
     boolean isCurrentUser();
 }

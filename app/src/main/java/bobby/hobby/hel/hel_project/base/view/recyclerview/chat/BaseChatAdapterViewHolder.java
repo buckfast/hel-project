@@ -7,7 +7,7 @@ import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickList
 import bobby.hobby.hel.hel_project.base.view.recyclerview.ViewHolderBind;
 
 /**
- * Description: This class make encapsulate viewholder, they bind their own data
+ * Description: This class defy data type and selfbinding behaviour
  * Works with:
  * {@link BaseChatAdapter}
  * {@link ChatText}
