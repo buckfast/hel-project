@@ -14,9 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
-import bobby.hobby.hel.hel_project.base.view.recyclerview.RecyclerItem;
-import bobby.hobby.hel.hel_project.base.view.recyclerview.swipe.BaseSwipeAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
 import swipeable.com.layoutmanager.SwipeableLayoutManager;
 
@@ -79,7 +78,7 @@ public class SwipeFragment extends BaseSwipeFragment {
     }
 
     @Override
-    public BaseSwipeAdapter returnAdapter() {
+    public BaseAdapter returnAdapter() {
         Adapter adapter = new Adapter((v, position) -> {
             //Possition is always 0, since when swipe, the view is removed
             TextView text = v.findViewById(R.id.text);
@@ -104,26 +103,21 @@ public class SwipeFragment extends BaseSwipeFragment {
     private class Holder extends BaseAdapterViewHolder {
         public TextView text;
 
-        public Holder(View itemView, OnAdapterItemClickListener listener) {
+        Holder(View itemView, OnAdapterItemClickListener listener) {
             super(itemView, listener);
             text = itemView.findViewById(R.id.text);
         }
     }
 
-    private class Adapter extends BaseSwipeAdapter<Holder, Item> {
-
-        @Override
-        protected Holder returnViewHolderInstance(View v, OnAdapterItemClickListener listener) {
-            return new Holder(v, listener);
-        }
-
-        @Override
-        protected int returnViewHolderLayoutId() {
-            return R.layout.item_view;
-        }
-
-        public Adapter(OnAdapterItemClickListener listener) {
+    private class Adapter extends BaseAdapter<Holder, Item> {
+        Adapter(OnAdapterItemClickListener listener) {
             super(listener);
+        }
+
+        @NonNull
+        @Override
+        public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent,false), mListener);
         }
 
         @Override

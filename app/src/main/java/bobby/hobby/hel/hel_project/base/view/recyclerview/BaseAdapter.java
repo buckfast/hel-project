@@ -16,6 +16,24 @@ public abstract class BaseAdapter<E extends BaseAdapterViewHolder, T extends Rec
     protected OnAdapterItemClickListener mListener;
     protected List<T> list;
 
+    public void refreshData(List<T> newList) {
+        list.clear();
+        list.addAll(newList);
+        notifyDataSetChanged();
+    }
+
+    public void addData(T item) {
+        list.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void removeTopItem() {
+        if(!list.isEmpty()) {
+            list.remove(0);
+            notifyDataSetChanged();
+        }
+    }
+
     public BaseAdapter(OnAdapterItemClickListener listener) {
         mListener = listener;
         list = new ArrayList<>();

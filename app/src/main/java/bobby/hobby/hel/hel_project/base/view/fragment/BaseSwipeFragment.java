@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import bobby.hobby.hel.hel_project.base.view.recyclerview.swipe.BaseSwipeAdapter;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import swipeable.com.layoutmanager.OnItemSwiped;
 import swipeable.com.layoutmanager.SwipeableLayoutManager;
@@ -15,12 +15,12 @@ import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
 public abstract class BaseSwipeFragment<T extends BaseViewModel> extends BaseFragment<T> {
     protected RecyclerView recyclerView;
-    protected BaseSwipeAdapter adapter;
+    protected BaseAdapter adapter;
 
     public abstract int returnRecyclerViewId();
     public abstract SwipeCallback returnOnItemSwipeCallback();
     public abstract SwipeableLayoutManager returnSwipeableLayoutManager();
-    public abstract BaseSwipeAdapter returnAdapter();
+    public abstract BaseAdapter returnAdapter();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

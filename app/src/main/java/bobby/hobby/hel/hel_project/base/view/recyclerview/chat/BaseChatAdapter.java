@@ -28,13 +28,6 @@ public abstract class BaseChatAdapter<T extends ChatText> extends BaseAdapter<Ba
     public abstract BaseChatAdapterViewHolder<T> returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
     public abstract BaseChatAdapterViewHolder<T> returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
 
-
-    public void refreshData(List<T> newList) {
-        list.clear();
-        list.addAll(newList);
-        notifyDataSetChanged();
-    }
-
     public BaseChatAdapter(OnAdapterItemClickListener listener) {
         super(listener);
         list = new ArrayList<>();
