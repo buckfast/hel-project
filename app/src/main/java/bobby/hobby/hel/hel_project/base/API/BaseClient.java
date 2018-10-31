@@ -37,6 +37,8 @@ public abstract class BaseClient<T> {
     protected abstract Context returnContext();
     protected abstract String returnTokenHeaderName();
     protected abstract String returnTokenSharedPreferencesName();
+    protected abstract String returnAPIKeyHeaderName();
+    protected abstract String returnAPIKeyValue();
 
     private SharedPreferences getSharedPreference() {
         return returnContext().getSharedPreferences(ACCESS_TOKEN_FILE_NAME, Context.MODE_PRIVATE);
@@ -72,19 +74,24 @@ public abstract class BaseClient<T> {
         return builder.build().create(api);
     }
 
-    protected T getAPI(final Class<T> api) {
-        if (getAccessToken().isEmpty()) {
-            return getAPI(null, api);
-        } else {
-            return getAPI(new BaseHeaderInterceptor() {
-                @Override
-                protected Map<String, String> returnHeaderParams() {
-                    Map<String, String> params = new HashMap<>();
-                    params.put(returnTokenHeaderName(), getAccessToken());
-                    return params;
+    protected T getAPI(final Class<T> api, boolean isAccessToken) {
+        return getAPI(new BaseHeaderInterceptor() {
+            @Override
+            protected Map<String, String> returnHeaderParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put(returnAPIKeyHeaderName(), returnAPIKeyValue());
+                if (isAccessToken) {
+                    if (!getAccessToken().isEmpty()) {
+                        params.put(returnTokenHeaderName(), getAccessToken());
+                    }
                 }
-            }, api);
-        }
+                return params;
+            }
+        }, api);
+    }
+
+    protected T getAPI(final Class<T> api) {
+        return getAPI(api, true);
     }
 
     public interface Handler<T> {
