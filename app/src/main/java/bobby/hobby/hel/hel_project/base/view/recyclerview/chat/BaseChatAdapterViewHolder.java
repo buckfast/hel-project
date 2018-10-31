@@ -13,7 +13,7 @@ import bobby.hobby.hel.hel_project.base.view.recyclerview.ViewHolderBind;
  * {@link ChatText}
  */
 
-public abstract class BaseChatAdapterViewHolder extends BaseAdapterViewHolder implements ViewHolderBind<ChatText> {
+public abstract class BaseChatAdapterViewHolder<T extends ChatText> extends BaseAdapterViewHolder implements ViewHolderBind<T> {
     public BaseChatAdapterViewHolder(View itemView, OnAdapterItemClickListener listener) {
         super(itemView, listener);
     }
