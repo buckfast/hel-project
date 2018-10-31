@@ -29,7 +29,7 @@ public class Event {
     private Info info;
     @SerializedName("price")
     @Expose
-    private List<Price> price = null;
+    private Price price = null;
     @SerializedName("images")
     @Expose
     private List<Image> images = null;
@@ -82,11 +82,11 @@ public class Event {
         this.info = info;
     }
 
-    public List<Price> getPrice() {
+    public Price getPrice() {
         return price;
     }
 
-    public void setPrice(List<Price> price) {
+    public void setPrice(Price price) {
         this.price = price;
     }
 
