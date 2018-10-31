@@ -70,7 +70,7 @@ public class ChatFragmentTest extends BaseChatFragment {
         return null;
     }
 
-    private class ChatAdapter extends BaseChatAdapter {
+    private class ChatAdapter extends BaseChatAdapter<Chat> {
 
         public ChatAdapter(OnAdapterItemClickListener listener) {
             super(listener);
@@ -87,12 +87,12 @@ public class ChatFragmentTest extends BaseChatFragment {
         }
 
         @Override
-        public BaseChatAdapterViewHolder returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
+        public BaseChatAdapterViewHolder<Chat> returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
             return new LeftChatViewHolder(view, listener);
         }
 
         @Override
-        public BaseChatAdapterViewHolder returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
+        public BaseChatAdapterViewHolder<Chat> returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener) {
             return new RightChatViewHolder(view, listener);
         }
     }

@@ -18,18 +18,18 @@ import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickList
  * {@link ChatText}
  */
 
-public abstract class BaseChatAdapter extends BaseAdapter<BaseChatAdapterViewHolder, ChatText> {
+public abstract class BaseChatAdapter<T extends ChatText> extends BaseAdapter<BaseChatAdapterViewHolder<T>, T> {
     private static final int LEFT_MESSAGE = 2;
     private static final int RIGHT_MESSAGE = 1;
     private static final int NULL_LIST = 0;
 
     public abstract int returnCurrentUserMessageLayoutId();
     public abstract int returnOtherUserMessageLayoutId();
-    public abstract BaseChatAdapterViewHolder returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
-    public abstract BaseChatAdapterViewHolder returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
+    public abstract BaseChatAdapterViewHolder<T> returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
+    public abstract BaseChatAdapterViewHolder<T> returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
 
 
-    public void refreshData(List<ChatText> newList) {
+    public void refreshData(List<T> newList) {
         list.clear();
         list.addAll(newList);
         notifyDataSetChanged();
@@ -55,7 +55,7 @@ public abstract class BaseChatAdapter extends BaseAdapter<BaseChatAdapterViewHol
 
     @NonNull
     @Override
-    public BaseChatAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseChatAdapterViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
         switch (viewType) {
             case LEFT_MESSAGE:
@@ -75,7 +75,7 @@ public abstract class BaseChatAdapter extends BaseAdapter<BaseChatAdapterViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseChatAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseChatAdapterViewHolder<T> holder, int position) {
         holder.bindData(list.get(position));
     }
 }
