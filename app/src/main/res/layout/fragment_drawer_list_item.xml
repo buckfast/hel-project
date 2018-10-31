@@ -10,8 +10,9 @@
         android:textColor="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="15dp"
-        android:layout_marginStart="@dimen/list_item_padding"
+
+        android:textSize="@dimen/subscribed_item_name_size"
+        android:padding="@dimen/list_item_padding"
         android:id="@+id/item_text"/>
 
     <ImageView
@@ -24,10 +25,26 @@
         android:padding="@dimen/list_image_padding"
         />
     <LinearLayout
+    android:orientation="horizontal"
+    android:id="@+id/list_item_margin_line"
+    android:layout_gravity="bottom"
+    android:background="@color/colorAccentDark"
+    android:layout_width="match_parent"
+    android:layout_height="2dp"/>
+    <LinearLayout
+        android:visibility="gone"
         android:orientation="horizontal"
-        android:id="@+id/list_item_margin_line"
-        android:layout_gravity="bottom"
+        android:id="@+id/list_item_margin_line_top"
+        android:layout_gravity="top"
         android:background="@color/colorAccentDark"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_padding"></LinearLayout>
+        android:layout_height="2dp"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/list_item_margin_line_right"
+        android:layout_gravity="right"
+        android:background="@color/colorAccentDark"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"/>
+
 </FrameLayout>

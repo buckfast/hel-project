@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -92,6 +93,8 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
 
             Util.changeBgColor(getContext(), v, R.color.colorAccent);
             Util.changeBgColor(getContext(), v.findViewById(R.id.list_item_margin_line), R.color.colorAccentDarker);
+            Util.changeBgColor(getContext(), v.findViewById(R.id.list_item_margin_line_right), R.color.transparent);
+
             //Util.changeTextColor(getContext(), v.findViewById(R.id.item_text), R.color.colorWhite);
             Util.disableTint(v.findViewById(R.id.image));
 
@@ -102,6 +105,8 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
                 if (lv != v) {
                     Util.changeBgColor(getContext(), lv, R.color.colorAccentDark);
                     Util.changeBgColor(getContext(), lv.findViewById(R.id.list_item_margin_line), R.color.colorAccentDark);
+                    Util.changeBgColor(getContext(), lv.findViewById(R.id.list_item_margin_line_right), R.color.colorAccentDarker);
+
                     //Util.changeTextColor(getContext(), lv.findViewById(R.id.item_text), R.color.colorGray);
                     Util.setTintMode(getContext(), lv.findViewById(R.id.image), PorterDuff.Mode.MULTIPLY, R.color.colorGray);
                     mFragmentsViewModel.lastView.setValue(v);
@@ -118,11 +123,13 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
     private class DrawerLeftChildViewHolder extends BaseAdapterViewHolder {
         public TextView textView;
         public ImageView imageView;
+        private LinearLayout marginRight;
 
         DrawerLeftChildViewHolder(View itemView, OnAdapterItemClickListener listener) {
             super(itemView, listener);
             textView = itemView.findViewById(R.id.item_text);
             imageView = itemView.findViewById(R.id.image);
+            marginRight = itemView.findViewById(R.id.list_item_margin_line_right);
         }
     }
 
@@ -154,7 +161,9 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         public void onBindViewHolder(@NonNull DrawerLeftChildViewHolder holder, int position) {
             holder.textView.setText(listData.get(position).tv);
             holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
+            Util.changeBgColor(getContext(), holder.marginRight, R.color.colorAccentDarker);
             Util.setTintMode(getContext(),holder.imageView, PorterDuff.Mode.MULTIPLY, R.color.colorGray);
+
             //holder.imageButton.setImageResource(mData.get(position).ib);
         }
 

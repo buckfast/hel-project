@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_marginStart="@dimen/channel_name_padding"
+    android:layout_marginEnd="@dimen/channel_name_padding"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:layout_width="@dimen/list_item_padding"
+        android:layout_height="match_parent"
+
+        android:background="@color/colorWhite"
+        />
+    <TextView
+        android:background="@color/colorAccentDark"
+        android:id="@+id/channel_name"
+        android:text="aaaaaaa"
+        android:textSize="@dimen/channel_title_size"
+        android:textColor="@color/colorWhite"
+        android:padding="@dimen/channel_name_padding"
+        android:paddingStart="@dimen/channel_name_padding_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

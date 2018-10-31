@@ -1,16 +1,22 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -30,7 +36,13 @@ public class DrawerRightFragment extends BaseNavViewListChildFragment<FragmentVi
 
     @Override
     protected BaseAdapter setUpAdapter() {
-        return null;
+        return new DrawerRightAdapter(new OnAdapterItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                mFragmentsViewModel.setClickReaction();
+
+            }
+        }, this);
     }
 
     @Override
@@ -42,14 +54,49 @@ public class DrawerRightFragment extends BaseNavViewListChildFragment<FragmentVi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView textView = view.findViewById(R.id.texti);
-        textView.setOnClickListener(v -> {
+        view.findViewById(R.id.right_child_drawer).setOnClickListener(v -> {
             mFragmentsViewModel.setClickReaction();
         });
 
-        mFragmentsViewModel.listPosition.observe(this, position -> {
+       /* mFragmentsViewModel.listPosition.observe(this, position -> {
             DrawerListItem data = Objects.requireNonNull(mFragmentsViewModel.drawerList.getValue().get(position));
             textView.setText(data.tv);
-        });
+        });*/
+    }
+
+
+    private class DrawerRightChildViewHolder extends BaseAdapterViewHolder {
+        private TextView text;
+
+        DrawerRightChildViewHolder(View itemView, OnAdapterItemClickListener listener) {
+            super(itemView, listener);
+            text = itemView.findViewById(R.id.channel_name);
+        }
+    }
+
+    private class DrawerRightAdapter extends BaseAdapter<DrawerRightFragment.DrawerRightChildViewHolder> {
+        private List<String> channelList;
+
+        DrawerRightAdapter(OnAdapterItemClickListener listener, Fragment context) {
+            super(listener);
+            channelList = mFragmentsViewModel.channelList;
+        }
+
+        @NonNull
+        @Override
+        public DrawerRightFragment.DrawerRightChildViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_right_list_item, parent, false);
+            return new DrawerRightFragment.DrawerRightChildViewHolder(v, mListener);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull DrawerRightFragment.DrawerRightChildViewHolder holder, int position) {
+            holder.text.setText(channelList.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return channelList.size();
+        }
     }
 }

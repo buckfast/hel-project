@@ -1,6 +1,7 @@
 package bobby.hobby.hel.hel_project.ui.viewmodel;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,6 +42,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     //MutableLiveData<Integer> lastPosition = new MutableLiveData<>();
     public MutableLiveData<Integer> listPosition = new MutableLiveData<>();
     public MutableLiveData<List<DrawerListItem>> drawerList = new MutableLiveData<>();
+    public List<String> channelList;
+
     public MutableLiveData<List<EventItem>> eventList = new MutableLiveData<>();
 
     public  MutableLiveData<List<ChatText>> chatMessageList = new MutableLiveData<>();
@@ -56,6 +59,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         super(application);
         List<ChatText> list = new ArrayList<>();
         chatMessageList.setValue(list);
+        channelList = new ArrayList<>();
+        channelList.add("#general");
     }
 
     public String getTitle(int pos) {

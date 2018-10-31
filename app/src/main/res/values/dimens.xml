@@ -15,6 +15,12 @@
     <dimen name="event_top_container_min_height">150dp</dimen>
     <dimen name="event_top_container_max_height">250dp</dimen>
     <dimen name="event_top_container_min_height_no_images">100dp</dimen>
+    <dimen name="channel_title_size">18sp</dimen>
+    <dimen name="channels_main_title_size">22sp</dimen>
+    <dimen name="channel_name_padding">8dp</dimen>
+    <dimen name="channel_item_padding">8dp</dimen>
+    <dimen name="channel_name_padding_start">16dp</dimen>
+    <dimen name="subscribed_item_name_size">15sp</dimen>
 
 
 </resources>
