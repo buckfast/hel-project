@@ -137,7 +137,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onSuccess(@NonNull EventList response, int code) {
                 //Log.d("asd", "search linked events: code: "+String.valueOf(code));
-                Log.d("asd", "                                                              search linked events: events count: "+response.getCount());
+                Log.d("asd", "search linked events: events count: "+response.getCount());
                 EventList e = response;
                 e.getEvents().add(response.getEvents().get(0));
                 e.getEvents().add(response.getEvents().get(0));
@@ -147,7 +147,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "linked events error: resp: "+String.valueOf(body));
-                Log.d("asd", "                                                              linked events error: code: "+String.valueOf(code));
+                Log.d("asd", "linked events error: code: "+String.valueOf(code));
                 linkedEvents.setValue(null);
             }
         });
@@ -172,7 +172,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull HobbyList response, int code) {
                 //hobbyList.postValue(response.getHobbies());
                 List<String> l = new ArrayList<>();
-                l.add("graffiti");
+                l.add("tanssi");
                 l.add("fifa");
                 l.add("perulainen joulubasaari");
                 l.add("jalkapallo");
