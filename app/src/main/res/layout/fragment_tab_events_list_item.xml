@@ -130,10 +130,7 @@ android:orientation="vertical"
                 android:padding="@dimen/event_details_padding"
                 android:id="@+id/event_details_desc"
                 android:textColor="@android:color/black"
-                android:text="details details details details details details details details details details details details details details details details details details details details "
                 android:layout_height="wrap_content"
-
-                android:layout_marginBottom="@dimen/event_details_padding"
                 android:layout_width="wrap_content" />
 
             <TextView
