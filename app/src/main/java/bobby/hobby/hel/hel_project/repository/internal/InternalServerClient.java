@@ -21,6 +21,9 @@ public class InternalServerClient extends BaseClient<InternalServerAPI> {
     private Context mContext;
     private static final String TOKEN_HEADER_NAME = "hobotti-access-token";
     private static final String TOKEN_SHARED_PREFERENCES_NAME = "InternalServerToken";
+    private static final String API_KEY_HEADER_NAME = "hobotti-api-key";
+    //TODO: remove this and put this somewhere safer
+    private static final String API_KEY_VALUE = "this-is-an-API-key-honest";
 
     public InternalServerClient(Context context) {
         mContext = context;
@@ -46,13 +49,23 @@ public class InternalServerClient extends BaseClient<InternalServerAPI> {
         return TOKEN_SHARED_PREFERENCES_NAME;
     }
 
+    @Override
+    protected String returnAPIKeyHeaderName() {
+        return API_KEY_HEADER_NAME;
+    }
+
+    @Override
+    protected String returnAPIKeyValue() {
+        return API_KEY_VALUE;
+    }
+
     //User manipulation
     public void login(User user, Handler<User> callback) {
-        getAPI(null, InternalServerAPI.class).login(user).enqueue(new BaseResponseHandler<>(new AuthResponseHandler(callback)));
+        getAPI(InternalServerAPI.class, false).login(user).enqueue(new BaseResponseHandler<>(new AuthResponseHandler(callback)));
     }
 
     public void signup(User user, Handler<User> callback) {
-        getAPI(null, InternalServerAPI.class).signup(user).enqueue(new BaseResponseHandler<>(new AuthResponseHandler(callback)));
+        getAPI(InternalServerAPI.class, false).signup(user).enqueue(new BaseResponseHandler<>(new AuthResponseHandler(callback)));
     }
 
     public void getUser(Handler<User> callback) {
