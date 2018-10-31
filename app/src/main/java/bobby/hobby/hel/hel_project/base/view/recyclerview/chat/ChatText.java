@@ -1,4 +1,6 @@
-package bobby.hobby.hel.hel_project.base.view.recyclerview;
+package bobby.hobby.hel.hel_project.base.view.recyclerview.chat;
+
+import bobby.hobby.hel.hel_project.base.view.recyclerview.RecyclerItem;
 
 /**
  * Description: This interface decide the method on how to identify which viewholder to use
@@ -7,6 +9,6 @@ package bobby.hobby.hel.hel_project.base.view.recyclerview;
  * {@link BaseChatAdapterViewHolder}
  */
 
-public interface ChatText {
+public interface ChatText extends RecyclerItem {
     boolean isCurrentUser();
 }
