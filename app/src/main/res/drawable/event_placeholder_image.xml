@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/event_placeholder_bg">
+
+    </item>
+    <item>
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:src="@drawable/tausta3"
+            android:alpha="0.03"
+            android:tileMode="repeat"
+            />
+    </item>
+</layer-list>

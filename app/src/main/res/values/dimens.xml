@@ -21,6 +21,8 @@
     <dimen name="channel_item_padding">8dp</dimen>
     <dimen name="channel_name_padding_start">16dp</dimen>
     <dimen name="subscribed_item_name_size">15sp</dimen>
+    <dimen name="event_short_desc_size">16sp</dimen>
+    <dimen name="event_min_height">100dp</dimen>
 
 
 </resources>

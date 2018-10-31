@@ -2,7 +2,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorWhite"
 android:orientation="vertical"
     android:clickable="true"
 >
@@ -12,40 +11,41 @@ android:orientation="vertical"
         android:foreground="?android:selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_gravity="center"
         android:clickable="false"
 
-        card_view:contentPadding="0dp"
+        card_view:contentPadding="4dp"
         card_view:cardCornerRadius="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        card_view:cardMaxElevation="1dp"
-        android:layout_marginBottom="1dp"
-        card_view:cardElevation="1dp">
+        android:layout_margin="10dp"
+        card_view:cardElevation="8dp">
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
         <RelativeLayout
+            android:minHeight="@dimen/event_min_height"
+
             android:id="@+id/event_top_container"
 
             android:clickable="false"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
 
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/event_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clickable="false"
                     android:background="@color/black"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="center"
+                     />
+                <!--
                 <View
                     android:layout_gravity="top"
                     android:layout_width="match_parent"
@@ -59,12 +59,13 @@ android:orientation="vertical"
                     android:layout_marginBottom="0dp"
                     android:background="@drawable/fading_bottom"
                     />
-
+                -->
                 <View
                     android:id="@+id/top_gradient"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     />
+
 <!--
                 <View
                     android:layout_gravity="top"
@@ -73,40 +74,63 @@ android:orientation="vertical"
                     android:layout_height="@dimen/action_bar_height">
 
                 </View>
-                -->
+                --><TextView
+                android:id="@+id/event_short_desc_real"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+
+                android:padding="@dimen/list_item_padding"
+                android:shadowColor="@android:color/black"
+                android:shadowRadius="5"
+                android:textColor="@color/colorWhite"
+                android:text=""
+                android:background="@color/supermegacolor"
+
+
+                android:textSize="@dimen/event_short_desc_size" />
+
 
             </FrameLayout>
+
             <LinearLayout
-                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <TextView
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="10"
-                android:shadowColor="@android:color/black"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10"
+                    android:shadowColor="@android:color/black"
+                    android:padding="@dimen/list_item_padding"
+                    android:id="@+id/event_title"
+                    android:layout_gravity="top"
+                    android:background="@color/supermegacolor"
 
-                android:padding="@dimen/list_item_padding"
-                android:id="@+id/event_title"
-                android:layout_gravity="top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/list_item_title" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/list_item_title" />
 
-            <TextView
-                android:padding="@dimen/list_item_padding"
+                <TextView
+                    android:id="@+id/event_short_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
 
-                android:layout_gravity="bottom"
-                android:id="@+id/event_short_desc"
-                android:textColor="@color/colorWhite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                    android:padding="@dimen/list_item_padding"
 
-                />
+                    android:textColor="@color/colorWhite"
+
+                    android:textSize="@dimen/event_short_desc_size" />
+
             </LinearLayout>
+
         </RelativeLayout>
+
+
+
 
         <RelativeLayout
             android:isScrollContainer="false"
@@ -122,7 +146,7 @@ android:orientation="vertical"
                 android:layout_gravity="top"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@android:color/black"
+                android:background="@color/supermegacolor"
                 />
 
 

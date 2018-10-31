@@ -77,12 +77,12 @@ public final class Util {
 
     }
 
-    public static List<String> parseHtml(String text) {
+    public static List<String> precautionParseDesc(String text) {
         List<String> parsed = new ArrayList<>();
         Document doc = Jsoup.parse(text);
         Elements ptags = doc.select("p");
         for (Element ptag : ptags) {
-            parsed.add(ptag.html());
+            parsed.add(ptag.ownText());
         }
         return parsed;
     }

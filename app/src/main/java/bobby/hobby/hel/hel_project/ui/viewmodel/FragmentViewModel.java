@@ -138,11 +138,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull EventList response, int code) {
                 //Log.d("asd", "search linked events: code: "+String.valueOf(code));
                 Log.d("asd", "search linked events: events count: "+response.getCount());
-                EventList e = response;
-                e.getEvents().add(response.getEvents().get(0));
-                e.getEvents().add(response.getEvents().get(0));
-                e.getEvents().add(response.getEvents().get(0));
-                linkedEvents.postValue(e);
+                Log.d("asd", "search linked events: eventscount"+response.getEvents().size());
+                linkedEvents.postValue(response);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
@@ -177,6 +174,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 l.add("perulainen joulubasaari");
                 l.add("jalkapallo");
                 l.add("kirahvi");
+                l.add("teatteri");
+                l.add("taide");
                 hobbyList.setValue(l);
             }
             @Override

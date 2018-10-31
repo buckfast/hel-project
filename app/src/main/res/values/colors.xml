@@ -26,16 +26,22 @@
     <color name="superColor4">#6969d6</color>
     <color name="superColor5">#bebcd8</color>
 
-    <color name="gradient1_c">#807b2b81</color>
-    <color name="gradient1_e">#809e5d99</color>
-    <color name="gradient1_s">#96ba5323</color>
+    <color name="gradient1_c">#407b2b81</color>
+    <color name="gradient1_e">#409e5d99</color>
+    <color name="gradient1_s">#40ba5323</color>
 
-    <color name="gradient2_s">#801b9c4a</color>
-    <color name="gradient2_c">#803a9f94</color>
-    <color name="gradient2_e">#9a185873</color>
+    <color name="gradient2_s">#401b9c4a</color>
+    <color name="gradient2_c">#403a9f94</color>
+    <color name="gradient2_e">#40185873</color>
 
-    <color name="gradient3_s">#80ac8b12</color>
-    <color name="gradient3_c">#80c14a2c</color>
-    <color name="gradient3_e">#9675940d</color>
+    <color name="gradient3_s">#40ac8b12</color>
+    <color name="gradient3_c">#40c14a2c</color>
+    <color name="gradient3_e">#4075940d</color>
+
+    <color name="supermegacolor">#81000000</color>
+    <color name="event_placeholder_bg">#b9e1d3</color>
+    <color name="event_placeholder_bg2">#e4d0cf</color>
+    <color name="event_placeholder_bg3">#d8dab3</color>
+
 
 </resources>

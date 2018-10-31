@@ -3,6 +3,8 @@ package bobby.hobby.hel.hel_project.ui;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +25,9 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.InputStream;
@@ -56,6 +60,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     private int currExpanded = -1;
     private boolean isExpanded = false;
     private int again = 0;
+    private int[] backgrounds = {R.drawable.event_placeholder_image, R.drawable.event_placeholder_image2, R.drawable.event_placeholder_image3};
 
     private EventList eventList;
 
@@ -129,7 +134,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         adapter = new EventAdapter(this,eventList, this);
 
-        //adapter.setHasStableIds(true); todo: enable this when server and model stuff works with multiple events
+        adapter.setHasStableIds(true);
 
         //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
         mFragmentsViewModel.linkedEvents.observe(this, data ->{
@@ -172,19 +177,24 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
     @Override
     public void onClick(View v, int position) {
-        Log.d("asd", "event item clicked: "+position);
-
-
         if (currExpanded == position) {
-            Log.d("asd", "again!!!!!!!!!");
             again++;
-            currExpanded = -1;
         } else {
             currExpanded = position;
+            recyclerView.getLayoutManager().scrollToPosition(position);
         }
 
-        adapter.notifyItemChanged(prevExpanded);
+        Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
+
+
         adapter.notifyItemChanged(position);
+        if (prevExpanded != currExpanded) {
+            adapter.notifyItemChanged(prevExpanded);
+        }
+
+
+
+
 
 
 
@@ -201,7 +211,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             v.startAnimation(anim);
         }*/
 
-        recyclerView.scrollToPosition(position);
     }
 
 
@@ -259,7 +268,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            private TextView title, short_desc, desc, info;
+            private TextView title, short_desc, short_desc_real, desc, info;
             public ImageView image;
             private RelativeLayout details_container, top_container;
             private RecyclerView.Adapter adapter;
@@ -270,6 +279,8 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 this.adapter = adapter;
                 title = (TextView) view.findViewById(R.id.event_title);
                 short_desc = (TextView) view.findViewById(R.id.event_short_desc);
+                short_desc_real = (TextView) view.findViewById(R.id.event_short_desc_real);
+
                 image = (ImageView) view.findViewById(R.id.event_image);
                 desc = view.findViewById(R.id.event_details_desc);
                 details_container = view.findViewById(R.id.event_details);
@@ -297,15 +308,18 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
-            holder.short_desc.setText(Html.fromHtml(event.getSDesc().getFi(),0));
-            holder.desc.setText(Html.fromHtml(event.getDesc().getFi(),0));
+            if (event.getSDesc() != null) {
+                holder.short_desc.setText(Html.fromHtml(event.getSDesc().getFi(), 0));
+                holder.short_desc_real.setText(Html.fromHtml(event.getSDesc().getFi(), 0));
+            } else {
+                holder.short_desc.setText(event.getName().getFi());
+                holder.short_desc_real.setText(event.getName().getFi());
+            }
+            holder.short_desc.setVisibility(View.INVISIBLE);
+            holder.desc.setText(Html.fromHtml("<h1>"+event.getName().getFi()+"</h1>"+event.getDesc().getFi(),0));
             holder.desc.setMovementMethod(LinkMovementMethod.getInstance());
             holder.desc.setLinkTextColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
 
-            //holder.title.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            //holder.short_desc.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            //int topContainerHeight = holder.top_container.getLayoutParams().height;
-            //holder.top_container.getLayoutParams().height = topContainerHeight;
 
             if (event.getInfo() != null) {
                 holder.info.setVisibility(View.VISIBLE);
@@ -320,26 +334,30 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             final Boolean containsImages = (event.getImages().size() > 0);
 
             holder.image.setImageBitmap(null);
-            if (containsImages) { // TODO: 29.10.2018 store in cache or something
-                String[] params = {
+            if (containsImages) {
+                /*String[] params = {
                         event.getImages().get(0).getUrl(),
                         String.valueOf(holder.image.getId())
                 };
                 LoadImage imageLoader = new LoadImage();
                 imageLoader.response = this;
                 imageLoader.execute(params);
+                */
+                GlideApp.with(getContext()).load(event.getImages().get(0).getUrl()).into(holder.image);
             } else {
-                holder.image.setBackgroundResource(R.color.transparent);
+                holder.image.setBackgroundResource(backgrounds[position%3]);
             }
 
 
-            if (position%3==0) {
-                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient));
-            } else if (position%3==1) {
-                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient2));
-            } else if (position%3==2 ) {
-                holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient3));
-            }
+            /*
+                if (position % 3 == 0) {
+                    holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient));
+                } else if (position % 3 == 1) {
+                    holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient2));
+                } else if (position % 3 == 2) {
+                    holder.itemView.findViewById(R.id.top_gradient).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.top_gradient3));
+                }
+             */
 
 
             isExpanded = position==currExpanded;
@@ -348,29 +366,19 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 currExpanded = -1;
                 again = 0;
             }
+            holder.title.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             holder.details_container.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-            holder.short_desc.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+            holder.short_desc_real.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             holder.itemView.setActivated(isExpanded);
             if (isExpanded) {
-                if (containsImages) {
-                    Util.changeViewHeight(getContext(), holder.top_container, R.dimen.event_top_container_max_height);
-                    //holder.top_container.getLayoutParams().height = holder.image.getHeight();
+                /*if (containsImages) {
                     Util.resetViewDrawable(holder.itemView.findViewById(R.id.top_gradient));
                 } else {
-                    ViewGroup.LayoutParams params = holder.top_container.getLayoutParams();
-                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                    holder.top_container.setLayoutParams(params);
-                }
-
+                }*/
                 prevExpanded = position;
             } else {
-                ViewGroup.LayoutParams params = holder.top_container.getLayoutParams();
-                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                holder.top_container.setLayoutParams(params);
                 again = 0;
             }
-
-            //Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
             //holder.bind(event, listener);
         }
 
