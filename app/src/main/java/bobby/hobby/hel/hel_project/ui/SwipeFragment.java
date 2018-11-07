@@ -20,7 +20,9 @@ import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
+import swipeable.com.layoutmanager.OnItemSwiped;
 import swipeable.com.layoutmanager.SwipeableLayoutManager;
+import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
 public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
 
@@ -41,6 +43,41 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
         return R.id.swipe_recycler;
     }
 
+    @Override
+    public OnItemSwiped returnOnItemSwipeCallback() {
+        OnItemSwiped swipeCallback = new OnItemSwiped() {
+            @Override
+            public void onItemSwipedLeft() {
+                Log.d("asd", "swiped left");
+                adapter.removeTopItem();
+            }
+
+            @Override
+            public void onItemSwipedRight() {
+                Log.d("asd", "swiped right");
+                adapter.removeTopItem();
+            }
+
+            @Override
+            public void onItemSwipedUp() {
+
+            }
+
+            @Override
+            public void onItemSwipedDown() {
+
+            }
+
+            @Override
+            public void onItemSwiped() {
+                //super.onItemSwiped();
+            }
+        };
+
+        return swipeCallback;
+    }
+
+    /*
     @Override
     public SwipeCallback returnOnItemSwipeCallback() {
         SwipeCallback swipeCallback = new SwipeCallback() {
@@ -72,7 +109,7 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
 
         return swipeCallback;
     }
-
+*/
     @Override
     public SwipeableLayoutManager returnSwipeableLayoutManager() {
         SwipeableLayoutManager layoutManager = new SwipeableLayoutManager();
@@ -108,12 +145,12 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
 
     @Override
     public int returnAllowSwipeDirectionFlags() {
-        return 0;
+        return ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT;
     }
 
     @Override
     public int returnAllowDirectionFlags() {
-        return 0;
+        return ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT ;
     }
 
     @Override
