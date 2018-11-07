@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
+import bobby.hobby.hel.hel_project.ui.SwipeFragment;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.DrawerHostFragment;
 import bobby.hobby.hel.hel_project.ui.TabHostFragment;
@@ -43,7 +44,9 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new SwipeFragment()).commit();
+
 
 
         TextView title = findViewById(R.id.toolbar_title);
