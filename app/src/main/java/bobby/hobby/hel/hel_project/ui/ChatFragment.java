@@ -31,10 +31,11 @@ import java.util.List;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseChatFragment;
-import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseChatAdapter;
-import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseChatAdapterViewHolder;
-import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
+
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.BaseChatAdapter;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.BaseChatAdapterViewHolder;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
@@ -202,7 +203,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
         }
     }
 
-    private class ReceivedMessageViewHolder extends BaseChatAdapterViewHolder {
+    private class ReceivedMessageViewHolder extends BaseChatAdapterViewHolder<ChatText> {
         public TextView msg, time, sender;
 
         public ReceivedMessageViewHolder(View itemView, OnAdapterItemClickListener listener) {
@@ -221,7 +222,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
     }
 
-    private class SentMessageViewHolder extends BaseChatAdapterViewHolder {
+    private class SentMessageViewHolder extends BaseChatAdapterViewHolder<ChatText> {
         public TextView message, timestamp;
 
         public SentMessageViewHolder(View itemView, OnAdapterItemClickListener listener) {

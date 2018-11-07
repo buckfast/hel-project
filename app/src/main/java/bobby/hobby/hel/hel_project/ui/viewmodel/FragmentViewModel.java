@@ -25,7 +25,7 @@ import java.util.Map;
 
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.API.BaseClient;
-import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;

@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseChatAdapter;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.BaseChatAdapter;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
 /**

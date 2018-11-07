@@ -1,14 +1,15 @@
-package bobby.hobby.hel.hel_project.base.view.recyclerview;
+package bobby.hobby.hel.hel_project.base.view.recyclerview.chat;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
 
 /**
  * Description: This class setup logic for having multiple layout/viewholder inside one recyclerview
@@ -17,33 +18,25 @@ import java.util.List;
  * {@link ChatText}
  */
 
-public abstract class BaseChatAdapter extends BaseAdapter {
-    private List<ChatText> chatDataList;
+public abstract class BaseChatAdapter<T extends ChatText> extends BaseAdapter<BaseChatAdapterViewHolder<T>, T> {
     private static final int LEFT_MESSAGE = 2;
     private static final int RIGHT_MESSAGE = 1;
     private static final int NULL_LIST = 0;
 
     public abstract int returnCurrentUserMessageLayoutId();
     public abstract int returnOtherUserMessageLayoutId();
-    public abstract BaseChatAdapterViewHolder returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
-    public abstract BaseChatAdapterViewHolder returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
-
-
-    public void refreshData(List<ChatText> list) {
-        chatDataList.clear();
-        chatDataList.addAll(list);
-        notifyDataSetChanged();
-    }
+    public abstract BaseChatAdapterViewHolder<T> returnCurrentUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
+    public abstract BaseChatAdapterViewHolder<T> returnOtherUserMessageViewHolderInstance(View view, OnAdapterItemClickListener listener);
 
     public BaseChatAdapter(OnAdapterItemClickListener listener) {
         super(listener);
-        chatDataList = new ArrayList<>();
+        list = new ArrayList<>();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (chatDataList != null) {
-            ChatText data = chatDataList.get(position);
+        if (list != null) {
+            ChatText data = list.get(position);
             if (data.isCurrentUser()) {
                 return RIGHT_MESSAGE;
             } else {
@@ -55,7 +48,7 @@ public abstract class BaseChatAdapter extends BaseAdapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseChatAdapterViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
         switch (viewType) {
             case LEFT_MESSAGE:
@@ -75,12 +68,7 @@ public abstract class BaseChatAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getItemCount() {
-        return chatDataList.size();
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((BaseChatAdapterViewHolder) holder).bindData(chatDataList.get(position));
+    public void onBindViewHolder(@NonNull BaseChatAdapterViewHolder<T> holder, int position) {
+        holder.bindData(list.get(position));
     }
 }

@@ -1,6 +1,7 @@
 package bobby.hobby.hel.hel_project.ui.model;
 
-import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
+
+import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 
 public class ChatMessage implements ChatText {
     private String sender;

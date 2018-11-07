@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
-import bobby.hobby.hel.hel_project.base.view.recyclerview.ChatText;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -93,7 +93,7 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
                 Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos)+" --- "+mFragmentsViewModel.lastKeyword);
                 mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(pos));
                 mFragmentsViewModel.emitJoinRoom(mFragmentsViewModel.getHobbyByPosition(pos));
-                mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: 28.10.2018 do something some day 
+                mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: 28.10.2018 do something some day
                 mFragmentsViewModel.lastKeyword = mFragmentsViewModel.getHobbyByPosition(pos);
 
             }
