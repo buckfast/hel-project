@@ -107,6 +107,16 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
     }
 
     @Override
+    public int returnAllowSwipeDirectionFlags() {
+        return 0;
+    }
+
+    @Override
+    public int returnAllowDirectionFlags() {
+        return 0;
+    }
+
+    @Override
     protected Class returnViewModel() {
         return FragmentViewModel.class;
     }
