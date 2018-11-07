@@ -1,6 +1,8 @@
 package bobby.hobby.hel.hel_project.ui;
 
 import bobby.hobby.hel.hel_project.R;
+
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +20,7 @@ import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
+import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 import swipeable.com.layoutmanager.OnItemSwiped;
@@ -25,6 +28,8 @@ import swipeable.com.layoutmanager.SwipeableLayoutManager;
 import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
 public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -77,39 +82,11 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
         return swipeCallback;
     }
 
-    /*
     @Override
-    public SwipeCallback returnOnItemSwipeCallback() {
-        SwipeCallback swipeCallback = new SwipeCallback() {
-            @Override
-            public void onItemSwipedLeft() {
-                Log.d("asd", "swiped left");
-            }
-
-            @Override
-            public void onItemSwipedRight() {
-                Log.d("asd", "swiped right");
-            }
-
-            @Override
-            public void onItemSwipedUp() {
-
-            }
-
-            @Override
-            public void onItemSwipedDown() {
-
-            }
-
-            @Override
-            public void onItemSwiped() {
-                super.onItemSwiped();
-            }
-        };
-
-        return swipeCallback;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
-*/
+
     @Override
     public SwipeableLayoutManager returnSwipeableLayoutManager() {
         SwipeableLayoutManager layoutManager = new SwipeableLayoutManager();
@@ -127,18 +104,22 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
         SwipeAdapter adapter = new SwipeAdapter(new OnAdapterItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-
+Log.d("asd", "lkkikked");
             }
         });
 
-        List<SwipeItem> list = new ArrayList<>();
-        list.add(new SwipeItem("1"));
-        list.add(new SwipeItem("2"));
-        list.add(new SwipeItem("3"));
-        list.add(new SwipeItem("4"));
-        list.add(new SwipeItem("5"));
-        list.add(new SwipeItem("6"));
-        adapter.refreshData(list);
+        final Observer<List<String>> hobbyListObserver = new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable List<String> strings) {
+                List<SwipeItem> list = new ArrayList<>();
+                for (String s : strings) {
+                    list.add(new SwipeItem(s));
+                }
+                adapter.refreshData(list);
+            }
+        };
+        mViewModel.swipeHobbyList.observe(this, hobbyListObserver);
+        mViewModel.fetchHobbies();
 
         return adapter;
     }
@@ -172,16 +153,16 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
 
         @Override
         public void onBindViewHolder(@NonNull SwipeHolder holder, int position) {
-            holder.text.setText(list.get(position).getText());
+            holder.item_title.setText(list.get(position).getText());
         }
     }
 
     private class SwipeHolder extends BaseAdapterViewHolder {
-        public TextView text;
+        public TextView item_title;
 
         public SwipeHolder(View itemView, OnAdapterItemClickListener listener) {
             super(itemView, listener);
-            text = itemView.findViewById(R.id.text);
+            item_title = itemView.findViewById(R.id.swipe_item_title);
         }
     }
 }

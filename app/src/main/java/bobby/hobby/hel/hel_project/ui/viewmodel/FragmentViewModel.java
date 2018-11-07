@@ -35,6 +35,7 @@ import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
+import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import okhttp3.ResponseBody;
 
 public class FragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
@@ -50,6 +51,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
+    public MutableLiveData<List<String>> swipeHobbyList = new MutableLiveData<>();
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
     public CharSequence typedText = "";
     public String lastKeyword = "";
@@ -76,6 +78,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         return hobbyList.getValue().get(pos);
     }
 
+    public List<String> getSwipeHobbyList() {
+        return this.swipeHobbyList.getValue();
+    }
 
     @Override
     protected SocketClient.EventListener returnSocketListener() {
@@ -167,7 +172,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.getHobbyList(new BaseClient.Handler<HobbyList>() {
             @Override
             public void onSuccess(@NonNull HobbyList response, int code) {
-                //hobbyList.postValue(response.getHobbies());
+                swipeHobbyList.postValue(response.getHobbies());
+
+                // TODO: 7.11.2018 move to login
                 List<String> l = new ArrayList<>();
                 l.add("tanssi");
                 l.add("fifa");

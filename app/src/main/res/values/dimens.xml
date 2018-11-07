@@ -23,6 +23,7 @@
     <dimen name="subscribed_item_name_size">15sp</dimen>
     <dimen name="event_short_desc_size">16sp</dimen>
     <dimen name="event_min_height">100dp</dimen>
+    <dimen name="swipe_item_title_size">32sp</dimen>
 
 
 </resources>
