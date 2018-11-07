@@ -18,7 +18,7 @@ public abstract class BaseSwipeFragment<T extends BaseViewModel> extends BaseFra
     protected BaseAdapter adapter;
 
     public abstract int returnRecyclerViewId();
-    public abstract SwipeCallback returnOnItemSwipeCallback();
+    public abstract OnItemSwiped returnOnItemSwipeCallback();
     public abstract SwipeableLayoutManager returnSwipeableLayoutManager();
     public abstract BaseAdapter returnAdapter();
     public abstract int returnAllowSwipeDirectionFlags();
@@ -49,13 +49,6 @@ public abstract class BaseSwipeFragment<T extends BaseViewModel> extends BaseFra
             recyclerView.setLayoutManager(returnSwipeableLayoutManager());
 
             recyclerView.setAdapter(adapter);
-        }
-    }
-
-    public abstract class SwipeCallback implements OnItemSwiped {
-        @Override
-        public void onItemSwiped() {
-            adapter.removeTopItem();
         }
     }
 }
