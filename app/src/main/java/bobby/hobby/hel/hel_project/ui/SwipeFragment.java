@@ -76,11 +76,11 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
     @Override
     public SwipeableLayoutManager returnSwipeableLayoutManager() {
         SwipeableLayoutManager layoutManager = new SwipeableLayoutManager();
-        layoutManager.setAngle(10)
-                     .setAnimationDuratuion(450)
+        layoutManager.setAngle(0)
+                     .setAnimationDuratuion(100)
                      .setMaxShowCount(3)
                      .setScaleGap(0.1f)
-                     .setTransYGap(0);
+                     .setTransYGap(1);
 
         return layoutManager;
     }
@@ -108,7 +108,7 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
 
     @Override
     protected Class returnViewModel() {
-        return null;
+        return FragmentViewModel.class;
     }
 
 
