@@ -21,6 +21,8 @@ public abstract class BaseSwipeFragment<T extends BaseViewModel> extends BaseFra
     public abstract SwipeCallback returnOnItemSwipeCallback();
     public abstract SwipeableLayoutManager returnSwipeableLayoutManager();
     public abstract BaseAdapter returnAdapter();
+    public abstract int returnAllowedSwipeDirectionFlags();
+    public abstract int returnAllowedDirectionFlags();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -32,7 +34,12 @@ public abstract class BaseSwipeFragment<T extends BaseViewModel> extends BaseFra
             SwipeableTouchHelperCallback callback = new SwipeableTouchHelperCallback(returnOnItemSwipeCallback()) {
                 @Override
                 public int getAllowedSwipeDirectionsMovementFlags() {
-                    return ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+                    return returnAllowedSwipeDirectionFlags();
+                }
+
+                @Override
+                public int getAllowedDirectionsMovementFlags() {
+                    return returnAllowedDirectionFlags();
                 }
             };
 

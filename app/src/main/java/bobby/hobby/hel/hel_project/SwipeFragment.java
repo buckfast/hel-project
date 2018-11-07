@@ -18,6 +18,7 @@ import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
 import swipeable.com.layoutmanager.SwipeableLayoutManager;
+import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
 public class SwipeFragment extends BaseSwipeFragment {
     @Nullable
@@ -93,6 +94,16 @@ public class SwipeFragment extends BaseSwipeFragment {
         list.add(new Item("6"));
         adapter.refreshData(list);
         return adapter;
+    }
+
+    @Override
+    public int returnAllowedSwipeDirectionFlags() {
+        return ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT | ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+    }
+
+    @Override
+    public int returnAllowedDirectionFlags() {
+        return ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT | ItemTouchHelper.UP | ItemTouchHelper.DOWN;
     }
 
     @Override
