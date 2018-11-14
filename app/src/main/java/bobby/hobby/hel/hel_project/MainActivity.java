@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -7,11 +8,14 @@ import android.support.annotation.Nullable;
 
 import android.support.v4.view.GravityCompat;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.lang.reflect.Method;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.ui.LoginFragment;
@@ -26,6 +30,29 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     protected void accountButtonClicked() {
         mViewModel.accountButtonClick.setValue(1);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.app_menu, menu);
+        return true;
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+        if (menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                }
+            }
+        }
+        return super.onPrepareOptionsPanel(view, menu);
     }
 
     /*
@@ -67,11 +94,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         super.onCreate(savedInstanceState);
         //getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
 
-
-
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new SwipeFragment()).commit();
-
-
 
         TextView title = findViewById(R.id.toolbar_title);
         mViewModel.getTitle().observe(this, s -> title.setText(s));
