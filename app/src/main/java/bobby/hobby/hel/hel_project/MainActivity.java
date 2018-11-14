@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.support.v4.view.GravityCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -38,6 +41,25 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         inflater.inflate(R.menu.app_menu, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                Log.d("asd", "menuclick");
+                logout();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+
+
+    private void logout() {
+        mViewModel.logoutClick.setValue(true);
+    }
+
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -94,7 +116,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         super.onCreate(savedInstanceState);
         //getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new SwipeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
 
         TextView title = findViewById(R.id.toolbar_title);
         mViewModel.getTitle().observe(this, s -> title.setText(s));

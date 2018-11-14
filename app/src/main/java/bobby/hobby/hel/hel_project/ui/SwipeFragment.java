@@ -90,6 +90,8 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
+
         likedHobbies = new ArrayList<>();
     }
 

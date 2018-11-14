@@ -62,9 +62,10 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         */
 
         // TODO: hehe
-        final Observer<List<String>> hobbyListObserver = new Observer<List<String>>() {
+        mFragmentsViewModel.hobbyList.observe(getActivity(), new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable List<String> strings) {
+                Log.d("asd", "drawerleft hobbilist changed, new: "+strings);
                 List<DrawerListItem> newHobbyList = new ArrayList<>();
                 for (int i=0; i<strings.size(); i++) {
                     //Log.d("asd", "user hobby: "+strings.get(i));
@@ -72,8 +73,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
                 }
                 mFragmentsViewModel.drawerList.setValue(newHobbyList);
             }
-        };
-        mFragmentsViewModel.hobbyList.observe(this, hobbyListObserver);
+        });
 
         colors = getContext().getResources().obtainTypedArray(R.array.super_colors);
 

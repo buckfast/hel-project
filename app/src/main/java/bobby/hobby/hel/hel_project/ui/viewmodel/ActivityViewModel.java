@@ -23,6 +23,7 @@ import okhttp3.ResponseBody;
 public class ActivityViewModel extends BaseViewModel {
     public MutableLiveData<String> title = new MutableLiveData<>();
     public MutableLiveData<Integer> accountButtonClick = new MutableLiveData<>();
+    public MutableLiveData<Boolean> logoutClick = new MutableLiveData<>();
 
     //public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     //public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
@@ -30,6 +31,7 @@ public class ActivityViewModel extends BaseViewModel {
 
     public ActivityViewModel(@NonNull Application application) {
         super(application);
+        logoutClick.setValue(false);
     }
 
     @Override

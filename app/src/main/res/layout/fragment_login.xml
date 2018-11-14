@@ -105,11 +105,14 @@
 
 
     <RelativeLayout
+
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     <Button
+
         android:id="@+id/login_button"
         android:minWidth="160dp"
         android:minHeight="50dp"
@@ -121,13 +124,14 @@
         <TextView
 
             android:id="@+id/newaccount"
-
+            android:layout_alignBottom="@id/login_button"
             android:textSize="18sp"
             android:textAlignment="center"
             android:text="@string/orregister"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </RelativeLayout>
 </LinearLayout>
 

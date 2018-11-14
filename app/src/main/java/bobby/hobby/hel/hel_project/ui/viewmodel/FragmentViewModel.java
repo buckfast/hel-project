@@ -84,11 +84,14 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public String getHobbyByPosition(int pos) {
-        if (hobbyList.getValue().get(pos) != null) {
-            return hobbyList.getValue().get(pos);
-        } else {
-            return null;
+        if (hobbyList.getValue().size() > 0) {
+            if (hobbyList.getValue().get(pos) != null) {
+                return hobbyList.getValue().get(pos);
+            } else {
+                return null;
+            }
         }
+        return null;
     }
 
     public List<String> getSwipeHobbyList() {
@@ -139,14 +142,17 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public void emitAddUser(String name) {
         mRepository.getSocket().emit("add user", name);
     }
+    public void emitDisconnect() {
+        mRepository.getSocket().emit("disconnect");
+    }
 
     public void signup (User user) {
         Log.d("asd", String.valueOf(user));
         mRepository.signup(user, new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
-                currentUser.postValue(response);
                 fillHobbyList(signupLikedHobbies);
+                currentUser.postValue(response);
                 Log.d("asd", "signed up ");
                 //getUser(); 
                 // TODO: 14.11.2018 hiigaegijafd 
@@ -165,6 +171,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull User response, int code) {
                 //currentUser.postValue(response);
                 //fetchHobbies();
+                //Log.d("asd", "logged in user: "+response);
                 getUser();
                 loggedIn.setValue(true);
                 //fillHobbyList(response.getHobbies());
@@ -179,6 +186,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public void logout() {
         mRepository.logout();
+        emitDisconnect();
+        hobbyList = new MutableLiveData<>();
+        typedText = "";
+        lastKeyword = "";
+        listPosition = new MutableLiveData<>();
     }
 
     public void searchLinkedEvents(String keyword) {
@@ -186,14 +198,14 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onSuccess(@NonNull EventList response, int code) {
                 //Log.d("asd", "search linked events: code: "+String.valueOf(code));
-                Log.d("asd", "search linked events: events count: "+response.getCount());
-                Log.d("asd", "search linked events: eventscount"+response.getEvents().size());
+                //Log.d("asd", "search linked events: events count: "+response.getCount());
+                //Log.d("asd", "search linked events: eventscount"+response.getEvents().size());
                 linkedEvents.postValue(response);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "linked events error: resp: "+String.valueOf(body));
-                Log.d("asd", "linked events error: code: "+String.valueOf(code));
+                //Log.d("asd", "linked events error: code: "+String.valueOf(code));
                 linkedEvents.setValue(null);
             }
         });
@@ -203,8 +215,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.getUser(new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
-                Log.d("asd", "getuser()");
+                Log.d("asd", "logged in user: "+response);
                 currentUser.postValue(response);
+
                 fillHobbyList(response.getHobbies());
             }
             @Override
@@ -224,13 +237,13 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("asd", "hobbulist: "+code);
+                //Log.d("asd", "hobbulist: "+code);
             }
         });
     }
 
     public void fillHobbyList(List<String> list) {
-        hobbyList.setValue(list);
+        hobbyList.postValue(list);
     }
 
 

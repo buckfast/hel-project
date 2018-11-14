@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,21 +94,24 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
         }
         */
 
-        /*mViewModel.accountButtonClick.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                mFragmentsViewModel.logout();
-                Log.d("asd", "tabhostfragment logout");
-                mViewModel.accountButtonClick.removeObserver(this);
-            }
-        });*/
-
-        mFragmentsViewModel.clearTitle.observe(this, b -> {
+        mFragmentsViewModel.clearTitle.observe(getActivity(), b -> {
            mViewModel.title.setValue("");
+           mViewModel.logoutClick.setValue(false);
         });
 
-        mFragmentsViewModel.listPosition.observe(this, pos -> {
-            if (mFragmentsViewModel.getHobbyByPosition(pos) != mFragmentsViewModel.lastKeyword) {
+        mViewModel.logoutClick.observe(getActivity(), b -> {
+
+            Log.d("asd", "logout clicked "+b);
+            if (b) {
+                mFragmentsViewModel.logout();
+                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
+
+            }
+        });
+
+        mFragmentsViewModel.listPosition.observe(getActivity(), pos -> {
+            Log.d("asd", "intabostfrafme "+String.valueOf(mFragmentsViewModel.hobbyList.getValue()));
+            if (mFragmentsViewModel.hobbyList.getValue() != null && mFragmentsViewModel.getHobbyByPosition(pos) != mFragmentsViewModel.lastKeyword) {
                 Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos)+" --- "+mFragmentsViewModel.lastKeyword);
                 mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(pos));
                 mFragmentsViewModel.emitJoinRoom(mFragmentsViewModel.getHobbyByPosition(pos));
@@ -118,4 +122,5 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
 
         });
     }
+
 }
