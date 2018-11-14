@@ -1,4 +1,6 @@
 package bobby.hobby.hel.hel_project.ui;
 
-public class LoginFragment {
+import android.support.v4.app.Fragment;
+
+public class LoginFragment extends Fragment{
 }

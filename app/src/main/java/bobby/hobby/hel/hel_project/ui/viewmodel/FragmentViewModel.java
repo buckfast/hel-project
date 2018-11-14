@@ -56,6 +56,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public CharSequence typedText = "";
     public String lastKeyword = "";
 
+    public MutableLiveData<List<String>> signupLikedHobbies = new MutableLiveData<>();
 
     public FragmentViewModel(@NonNull Application application) {
         super(application);
@@ -115,6 +116,19 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
     public void emitJoinRoom(String room) {
         mRepository.getSocket().emit("join room", room);
+    }
+
+    public void signup (User user) {
+        mRepository.signup(user, new BaseClient.Handler<User>() {
+            @Override
+            public void onSuccess(@NonNull User response, int code) {
+                currentUser.postValue(response);
+            }
+            @Override
+            public void onError(@Nullable ResponseBody body, int code) {
+                Log.d("asd", "signup error: "+code);
+            }
+        });
     }
 
     public void login (User user) {

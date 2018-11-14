@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
@@ -29,7 +30,8 @@ import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
 public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
 
-
+    private int pos = 0;
+    private List<String> likedHobbies;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -55,12 +57,17 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
             public void onItemSwipedLeft() {
                 Log.d("asd", "swiped left");
                 adapter.removeTopItem();
+                pos++;
+                checkIfEndOfList();
             }
 
             @Override
             public void onItemSwipedRight() {
                 Log.d("asd", "swiped right");
+                likedHobbies.add(mViewModel.getSwipeHobbyList().get(pos));
                 adapter.removeTopItem();
+                pos++;
+                checkIfEndOfList();
             }
 
             @Override
@@ -85,6 +92,7 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        likedHobbies = new ArrayList<>();
     }
 
     @Override
@@ -99,12 +107,19 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
         return layoutManager;
     }
 
+    private void checkIfEndOfList() {
+        if (this.pos == mViewModel.getSwipeHobbyList().size()) {
+            mViewModel.signupLikedHobbies.setValue(likedHobbies);
+            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new RegisterFragment()).commit();
+        }
+    }
+
     @Override
     public BaseAdapter returnAdapter() {
         SwipeAdapter adapter = new SwipeAdapter(new OnAdapterItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-Log.d("asd", "lkkikked");
+            Log.d("asd", "lkkikked");
             }
         });
 
