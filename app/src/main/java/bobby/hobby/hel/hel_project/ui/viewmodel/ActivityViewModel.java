@@ -22,6 +22,7 @@ import okhttp3.ResponseBody;
 
 public class ActivityViewModel extends BaseViewModel {
     public MutableLiveData<String> title = new MutableLiveData<>();
+    public MutableLiveData<Integer> accountButtonClick = new MutableLiveData<>();
 
     //public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     //public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();

@@ -75,6 +75,8 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mViewModel.clearTitle.setValue(!mViewModel.clearTitle.getValue());
+
         mViewModel.currentUser.observe(getActivity(), new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {

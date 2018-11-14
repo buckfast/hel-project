@@ -17,7 +17,6 @@ import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 
 public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentViewModel, ActivityViewModel> {
-
     @Override
     protected Class<FragmentViewModel> returnFragmentsViewModel() {
         return FragmentViewModel.class;
@@ -71,14 +70,7 @@ public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentView
                 mViewModel.title.setValue(mFragmentsViewModel.getTitle(pos));
         });
 
-        TextView tv = view.findViewById(R.id.testtext);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mFragmentsViewModel.logout();
 
-            }
-        });
 
     }
 

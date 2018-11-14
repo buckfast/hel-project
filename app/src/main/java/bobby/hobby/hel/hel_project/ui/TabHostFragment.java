@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +11,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
@@ -89,6 +92,19 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
             mFragmentsViewModel.login(user);
         }
         */
+
+        /*mViewModel.accountButtonClick.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                mFragmentsViewModel.logout();
+                Log.d("asd", "tabhostfragment logout");
+                mViewModel.accountButtonClick.removeObserver(this);
+            }
+        });*/
+
+        mFragmentsViewModel.clearTitle.observe(this, b -> {
+           mViewModel.title.setValue("");
+        });
 
         mFragmentsViewModel.listPosition.observe(this, pos -> {
             if (mFragmentsViewModel.getHobbyByPosition(pos) != mFragmentsViewModel.lastKeyword) {

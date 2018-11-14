@@ -48,8 +48,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public List<String> channelList;
 
     public MutableLiveData<List<EventItem>> eventList = new MutableLiveData<>();
-
-    public  MutableLiveData<List<ChatText>> chatMessageList = new MutableLiveData<>();
+    public MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
+    public MutableLiveData<List<ChatText>> chatMessageList = new MutableLiveData<>();
 
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
@@ -57,6 +57,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
     public CharSequence typedText = "";
     public String lastKeyword = "";
+
+    public MutableLiveData<Boolean> clearTitle = new MutableLiveData<>();
 
     public List<String> signupLikedHobbies = new ArrayList<>();
 
@@ -66,11 +68,15 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         chatMessageList.setValue(list);
         channelList = new ArrayList<>();
         channelList.add("#general");
+        loggedIn.setValue(false);
+        clearTitle.setValue(false);
     }
 
     public String getTitle(int pos) {
         return this.drawerList.getValue().get(pos).tv;
     }
+
+
     public void addMessage(ChatMessage msg) {
         List<ChatText> msgList = chatMessageList.getValue();
         msgList.add(msg);
@@ -160,7 +166,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 //currentUser.postValue(response);
                 //fetchHobbies();
                 getUser();
-                //fillHobbyList();
+                loggedIn.setValue(true);
+                //fillHobbyList(response.getHobbies());
                 //emitAddUser(response.getName());
             }
             @Override
@@ -196,7 +203,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.getUser(new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
-                Log.d("asd", String.valueOf(response));
+                Log.d("asd", "getuser()");
                 currentUser.postValue(response);
                 fillHobbyList(response.getHobbies());
             }

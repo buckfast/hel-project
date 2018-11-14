@@ -99,9 +99,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        mFragmentsViewModel.currentUser.observe(this, u -> {
+        /*mFragmentsViewModel.currentUser.observe(this, u -> {
             Log.d("asd", u.getToken());
-        });
+        });*/
     }
 
     @Override

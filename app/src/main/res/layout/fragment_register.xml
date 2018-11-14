@@ -101,7 +101,7 @@
         android:textColorHint="@color/colorWhiteTrans"
         app:passwordToggleTint="@color/colorWhite"
         >
-    <android.support.v7.widget.AppCompatEditText
+    <android.support.design.widget.TextInputEditText
         android:cursorVisible="true"
         android:textCursorDrawable="@null"
         android:id="@+id/password"
