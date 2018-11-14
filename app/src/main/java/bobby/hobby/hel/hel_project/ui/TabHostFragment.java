@@ -80,6 +80,7 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
         if (mFragmentsViewModel.currentUser.getValue() == null) {
             Log.d("asd", "current user was null");
             User user = new User();
@@ -87,6 +88,7 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
             user.setPassword("hoangl@gmail.com");
             mFragmentsViewModel.login(user);
         }
+        */
 
         mFragmentsViewModel.listPosition.observe(this, pos -> {
             if (mFragmentsViewModel.getHobbyByPosition(pos) != mFragmentsViewModel.lastKeyword) {

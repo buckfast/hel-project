@@ -24,7 +24,7 @@
 
             <TextView
                 android:id="@+id/toolbar_title"
-                android:text="ok ok"
+                android:text="title :)"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

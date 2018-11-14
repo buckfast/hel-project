@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,16 +16,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 
 public class RegisterFragment extends BaseFragment<FragmentViewModel> {
+
+    private EditText nickname, password, email;
+    private Button signupButton;
+
 
     public RegisterFragment() {
 
@@ -43,7 +53,18 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Util.fixBgRepeat(view.findViewById(R.id.bottom_image));
+        password = view.findViewById(R.id.password);
+        email = view.findViewById(R.id.email);
+        nickname = view.findViewById(R.id.nickname);
+        signupButton = view.findViewById(R.id.signup_button);
 
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptSignup();
+            }
+        });
     }
 
     @Override
@@ -54,6 +75,16 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mViewModel.currentUser.observe(getActivity(), new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                if (user != null) {
+                    Log.d("asd", String.valueOf(user));
+                    Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+                    mViewModel.currentUser.removeObserver(this);
+                }
+            }
+        });
     }
 
     @Override
@@ -63,9 +94,10 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> {
 
     private void attemptSignup() {
         User user = new User();
-        user.setEmail("hoangl@mail.com");
-        user.setPassword("hoangl@gmail.com");
-        user.setHobbies(mViewModel.signupLikedHobbies.getValue());
+        user.setName(nickname.getText().toString());
+        user.setEmail(email.getText().toString());
+        user.setPassword(password.getText().toString());
+        user.setHobbies(mViewModel.signupLikedHobbies);
         mViewModel.signup(user);
     }
 }

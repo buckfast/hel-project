@@ -3,6 +3,7 @@ package bobby.hobby.hel.hel_project.ui.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -32,6 +33,7 @@ import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
+import bobby.hobby.hel.hel_project.ui.intterfase.SocketConnectListener;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
@@ -56,7 +58,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public CharSequence typedText = "";
     public String lastKeyword = "";
 
-    public MutableLiveData<List<String>> signupLikedHobbies = new MutableLiveData<>();
+    public List<String> signupLikedHobbies = new ArrayList<>();
 
     public FragmentViewModel(@NonNull Application application) {
         super(application);
@@ -76,7 +78,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public String getHobbyByPosition(int pos) {
-        return hobbyList.getValue().get(pos);
+        if (hobbyList.getValue().get(pos) != null) {
+            return hobbyList.getValue().get(pos);
+        } else {
+            return null;
+        }
     }
 
     public List<String> getSwipeHobbyList() {
@@ -93,6 +99,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         Map<String, Emitter.Listener> map = new HashMap<>();
         map.put(Socket.EVENT_CONNECT, args -> {
             mRepository.getSocket().emit("add user", "hobo");
+            //Log.d("asd", "add user"+currentUser.getValue().getName());
+            Log.d("asd","event connect docketio");
+
         });
         map.put("new message", args -> {
             JSONObject data = (JSONObject) args[0];
@@ -115,14 +124,27 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.getSocket().emit("new message", text);
     }
     public void emitJoinRoom(String room) {
-        mRepository.getSocket().emit("join room", room);
+        if (mRepository.getSocket() != null ) {
+            mRepository.getSocket().emit("join room", room);
+        } else {
+            Log.d("asd", "error: socket null");
+        }
+    }
+    public void emitAddUser(String name) {
+        mRepository.getSocket().emit("add user", name);
     }
 
     public void signup (User user) {
+        Log.d("asd", String.valueOf(user));
         mRepository.signup(user, new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
                 currentUser.postValue(response);
+                fillHobbyList(signupLikedHobbies);
+                Log.d("asd", "signed up ");
+                //getUser(); 
+                // TODO: 14.11.2018 hiigaegijafd 
+                //emitAddUser(response.getName());
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
@@ -135,10 +157,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.login(user, new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
-                currentUser.postValue(response);
-                Log.d("asd", String.valueOf(response.getHobbies()));
-                fetchHobbies();
-
+                //currentUser.postValue(response);
+                //fetchHobbies();
+                getUser();
+                //fillHobbyList();
+                //emitAddUser(response.getName());
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
@@ -173,7 +196,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.getUser(new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
-                Log.d("asd", "jees user");
+                Log.d("asd", String.valueOf(response));
+                currentUser.postValue(response);
+                fillHobbyList(response.getHobbies());
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
@@ -188,16 +213,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull HobbyList response, int code) {
                 swipeHobbyList.postValue(response.getHobbies());
 
-                // TODO: 7.11.2018 move to login
-                List<String> l = new ArrayList<>();
-                l.add("tanssi");
-                l.add("fifa");
-                l.add("perulainen joulubasaari");
-                l.add("jalkapallo");
-                l.add("kirahvi");
-                l.add("teatteri");
-                l.add("taide");
-                hobbyList.setValue(l);
+
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
@@ -205,5 +221,10 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             }
         });
     }
+
+    public void fillHobbyList(List<String> list) {
+        hobbyList.setValue(list);
+    }
+
 
 }

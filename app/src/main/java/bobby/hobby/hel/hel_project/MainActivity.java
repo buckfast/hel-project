@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.support.v4.view.GravityCompat;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +25,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     protected void accountButtonClicked() {
 
     }
+
 
     @Override
     protected NavigationDrawerLayout returnNavViewLayout() {
@@ -45,6 +47,9 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+
+
+
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new SwipeFragment()).commit();
 
 

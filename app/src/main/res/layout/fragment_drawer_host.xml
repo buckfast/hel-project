@@ -11,6 +11,12 @@
         android:background="@color/colorAccent"
         android:id="@+id/topBar"
         android:height="?android:attr/actionBarSize">
+        <TextView
+            android:id="@+id/testtext"
+            android:text="Log out"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <FrameLayout
             android:layout_width="match_parent"

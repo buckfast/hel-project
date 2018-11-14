@@ -55,7 +55,7 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
         OnItemSwiped swipeCallback = new OnItemSwiped() {
             @Override
             public void onItemSwipedLeft() {
-                Log.d("asd", "swiped left");
+                mViewModel.signupLikedHobbies.add(mViewModel.getSwipeHobbyList().get(pos));
                 adapter.removeTopItem();
                 pos++;
                 checkIfEndOfList();
@@ -63,8 +63,6 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
 
             @Override
             public void onItemSwipedRight() {
-                Log.d("asd", "swiped right");
-                likedHobbies.add(mViewModel.getSwipeHobbyList().get(pos));
                 adapter.removeTopItem();
                 pos++;
                 checkIfEndOfList();
@@ -109,7 +107,6 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
 
     private void checkIfEndOfList() {
         if (this.pos == mViewModel.getSwipeHobbyList().size()) {
-            mViewModel.signupLikedHobbies.setValue(likedHobbies);
             Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new RegisterFragment()).commit();
         }
     }

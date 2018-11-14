@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.TextView;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
@@ -70,6 +71,14 @@ public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentView
                 mViewModel.title.setValue(mFragmentsViewModel.getTitle(pos));
         });
 
+        TextView tv = view.findViewById(R.id.testtext);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFragmentsViewModel.logout();
+
+            }
+        });
 
     }
 

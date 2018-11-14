@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -85,6 +88,17 @@ public final class Util {
             parsed.add(ptag.ownText());
         }
         return parsed;
+    }
+
+    public static void fixBgRepeat(View view) {
+        Drawable bg = view.getBackground();
+        if (bg != null) {
+            if (bg instanceof BitmapDrawable) {
+                BitmapDrawable bmp = (BitmapDrawable) bg;
+                bmp.mutate(); // make sure that we aren't sharing state anymore
+                bmp.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+            }
+        }
     }
 
     public static String getTime() {

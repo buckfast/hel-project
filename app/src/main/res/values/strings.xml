@@ -9,5 +9,8 @@
     <string name="email">email</string>
     <string name="password">password</string>
 
+    <string name="register_button">Join now</string>
+    <string name="login">Login</string>
+
 
 </resources>
