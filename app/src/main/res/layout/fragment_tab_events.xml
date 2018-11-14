@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/chat_bg"
 
-    tools:context=".ui.TabEventsFragment">
+    tools:context=".ui.fragment.TabEventsFragment">
 
 
     <android.support.v7.widget.RecyclerView

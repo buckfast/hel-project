@@ -1,8 +1,6 @@
 package bobby.hobby.hel.hel_project;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -11,28 +9,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
-import bobby.hobby.hel.hel_project.ui.LoginFragment;
-import bobby.hobby.hel.hel_project.ui.SwipeFragment;
+import bobby.hobby.hel.hel_project.ui.fragment.LoginFragment;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
-import bobby.hobby.hel.hel_project.ui.DrawerHostFragment;
-import bobby.hobby.hel.hel_project.ui.TabHostFragment;
+import bobby.hobby.hel.hel_project.ui.fragment.DrawerHostFragment;
 
 public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
     @Override
     protected void accountButtonClicked() {
-        mViewModel.accountButtonClick.setValue(1);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
     }
 
     @Override

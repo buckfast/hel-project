@@ -1,4 +1,4 @@
-package bobby.hobby.hel.hel_project.ui;
+package bobby.hobby.hel.hel_project.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

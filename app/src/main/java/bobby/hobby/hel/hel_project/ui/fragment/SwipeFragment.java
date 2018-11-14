@@ -1,4 +1,4 @@
-package bobby.hobby.hel.hel_project.ui;
+package bobby.hobby.hel.hel_project.ui.fragment;
 
 import bobby.hobby.hel.hel_project.R;
 
@@ -6,7 +6,6 @@ import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
-import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 import swipeable.com.layoutmanager.OnItemSwiped;

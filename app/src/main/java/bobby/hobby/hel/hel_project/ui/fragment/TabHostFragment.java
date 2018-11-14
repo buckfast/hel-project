@@ -1,23 +1,19 @@
-package bobby.hobby.hel.hel_project.ui;
+package bobby.hobby.hel.hel_project.ui.fragment;
 
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
-import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 

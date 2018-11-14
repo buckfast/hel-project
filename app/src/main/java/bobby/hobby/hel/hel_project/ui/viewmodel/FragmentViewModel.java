@@ -187,10 +187,10 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public void logout() {
         mRepository.logout();
         emitDisconnect();
-        hobbyList = new MutableLiveData<>();
+
         typedText = "";
         lastKeyword = "";
-        listPosition = new MutableLiveData<>();
+        listPosition.setValue(0);
     }
 
     public void searchLinkedEvents(String keyword) {
