@@ -1,6 +1,8 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
+import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -26,7 +29,7 @@ public class LoginFragment extends BaseFragment<FragmentViewModel>{
     private TextInputEditText password;
     private EditText email;
     private Button loginButton;
-
+    private BaseDrawerActivity context;
 
     public LoginFragment() {
 
@@ -70,6 +73,28 @@ public class LoginFragment extends BaseFragment<FragmentViewModel>{
                 Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new SwipeFragment()).commit();
             }
         });
+
+        mViewModel.loggedIn.setValue(false);
+        //Log.d("asd", String.valueOf(mViewModel.currentUser.getValue()));
+
+        mViewModel.clearTitle.setValue(!mViewModel.clearTitle.getValue());
+
+        mViewModel.loggedIn.observe(getActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean loggedin) {
+                if (loggedin == true) {
+                    Log.d("asd", "from login fargment: cughh");
+                    //mViewModel.loggedIn.removeObserver(this);
+                    context.getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = (BaseDrawerActivity) context;
     }
 
     @Override
@@ -81,22 +106,7 @@ public class LoginFragment extends BaseFragment<FragmentViewModel>{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel.loggedIn.setValue(false);
-        //Log.d("asd", String.valueOf(mViewModel.currentUser.getValue()));
 
-        mViewModel.clearTitle.setValue(!mViewModel.clearTitle.getValue());
-
-        mViewModel.loggedIn.observe(getActivity(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean loggedin) {
-                if (loggedin) {
-                    Log.d("asd", "from login fargment: cughh");
-                    mViewModel.loggedIn.removeObserver(this);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
-                    mViewModel.loggedIn.setValue(false);
-                }
-            }
-        });
     }
 
 /*

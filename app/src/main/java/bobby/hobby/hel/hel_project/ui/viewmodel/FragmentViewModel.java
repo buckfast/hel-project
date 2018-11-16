@@ -49,6 +49,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public MutableLiveData<List<EventItem>> eventList = new MutableLiveData<>();
     public MutableLiveData<Boolean> loggedIn = new MutableLiveData<>();
+    public MutableLiveData<Boolean> signedup = new MutableLiveData<>();
+
     public MutableLiveData<List<ChatText>> chatMessageList = new MutableLiveData<>();
 
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
@@ -69,6 +71,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         channelList = new ArrayList<>();
         channelList.add("#general");
         loggedIn.setValue(false);
+        signedup.setValue(false);
+
         clearTitle.setValue(false);
     }
 
@@ -153,6 +157,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull User response, int code) {
                 fillHobbyList(signupLikedHobbies);
                 currentUser.postValue(response);
+                signedup.setValue(true);
+
                 Log.d("asd", "signed up ");
                 //getUser(); 
                 // TODO: 14.11.2018 hiigaegijafd 
@@ -173,6 +179,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 //fetchHobbies();
                 //Log.d("asd", "logged in user: "+response);
                 getUser();
+                Log.d("asd", "loggedin");
                 loggedIn.setValue(true);
                 //fillHobbyList(response.getHobbies());
                 //emitAddUser(response.getName());
@@ -185,11 +192,14 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public void logout() {
-        mRepository.logout();
+        signedup.setValue(false);
+        loggedIn.setValue(false);
+        //mRepository.logout();
         emitDisconnect();
-
+        linkedEvents.setValue(null);
         typedText = "";
         lastKeyword = "";
+
         listPosition.setValue(0);
     }
 

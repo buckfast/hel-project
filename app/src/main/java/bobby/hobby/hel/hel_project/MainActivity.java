@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.ui.fragment.LoginFragment;
@@ -47,7 +48,9 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
 
     private void logout() {
-        mViewModel.logoutClick.setValue(true);
+        mViewModel.logout();
+        Objects.requireNonNull(getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit());
+
     }
 
 

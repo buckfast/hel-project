@@ -97,11 +97,10 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
 
         mViewModel.logoutClick.observe(getActivity(), b -> {
 
-            Log.d("asd", "logout clicked "+b);
+            Log.d("asd", "logout called "+b);
             if (b) {
                 mFragmentsViewModel.logout();
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
-
+                mViewModel.logoutClick.setValue(false);
             }
         });
 

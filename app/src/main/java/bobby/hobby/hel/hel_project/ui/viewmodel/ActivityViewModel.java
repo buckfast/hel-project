@@ -18,12 +18,14 @@ import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
+import bobby.hobby.hel.hel_project.ui.intterfase.LogoutListener;
 import okhttp3.ResponseBody;
 
 public class ActivityViewModel extends BaseViewModel {
     public MutableLiveData<String> title = new MutableLiveData<>();
     public MutableLiveData<Integer> accountButtonClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> logoutClick = new MutableLiveData<>();
+
 
     //public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     //public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
@@ -32,6 +34,12 @@ public class ActivityViewModel extends BaseViewModel {
     public ActivityViewModel(@NonNull Application application) {
         super(application);
         logoutClick.setValue(false);
+
+    }
+
+    public void logout() {
+        mRepository.logout();
+        logoutClick.setValue(true);
     }
 
     @Override
