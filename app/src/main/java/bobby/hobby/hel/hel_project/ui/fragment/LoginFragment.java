@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,7 @@ import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.AuthActivity;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-public class LoginFragment extends BaseFragment<FragmentViewModel> {
+public class LoginFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
     private TextView newAccount;
     private TextInputEditText password;
     private EditText email;
@@ -139,5 +140,15 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> {
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
         mViewModel.login(user);
+    }
+
+    @Override
+    public int returnProgressBarContainer() {
+        return R.id.progressbar_container;
+    }
+
+    @Override
+    public Fragment returnProgressBarFragment() {
+        return new ProgressBarFragment();
     }
 }
