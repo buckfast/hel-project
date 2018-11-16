@@ -16,7 +16,7 @@ import bobby.hobby.hel.hel_project.ui.fragment.LoginFragment;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.AuthActivityViewModel;
 
-public class AuthActivity extends BaseActivity<AuthActivityViewModel> {
+public class AuthActivity extends BaseActivity<ActivityViewModel> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class AuthActivity extends BaseActivity<AuthActivityViewModel> {
     }
 
     @Override
-    protected Class<AuthActivityViewModel> returnViewModel() {
+    protected Class<ActivityViewModel> returnViewModel() {
         return null;
     }
 

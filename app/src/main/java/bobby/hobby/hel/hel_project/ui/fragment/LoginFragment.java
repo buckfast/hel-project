@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.MainActivity;
@@ -26,10 +27,9 @@ import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.AuthActivity;
-import bobby.hobby.hel.hel_project.ui.viewmodel.AuthFragmentViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-public class LoginFragment extends BaseFragment<AuthFragmentViewModel>{
+public class LoginFragment extends BaseFragment<FragmentViewModel> {
     private TextView newAccount;
     private TextInputEditText password;
     private EditText email;
@@ -79,21 +79,25 @@ public class LoginFragment extends BaseFragment<AuthFragmentViewModel>{
             }
         });
 
-        mViewModel.loggedIn.setValue(false);
+        //mViewModel.loggedIn.setValue(false);
         //Log.d("asd", String.valueOf(mViewModel.currentUser.getValue()));
 
         mViewModel.clearTitle.setValue(!mViewModel.clearTitle.getValue());
 
-        mViewModel.loggedIn.observe(getActivity(), new Observer<Boolean>() {
+        mViewModel.currentUser.observe(getActivity(), new Observer<User>() {
             @Override
-            public void onChanged(@Nullable Boolean loggedin) {
-                if (loggedin == true) {
+            public void onChanged(@Nullable User user) {
+                mViewModel.currentUser.removeObservers(context);
+                //if (loggedin == true) {
                     Log.d("asd", "from login fargment: cughh");
                     //mViewModel.loggedIn.removeObserver(this);
                     Intent intent = new Intent(context, MainActivity.class);
+                    Log.d("asd", "loggedin"+String.valueOf(mViewModel.currentUser.getValue()));
+
+                    intent.putExtra("user", user);
                     startActivity(intent);
                     //context.getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
-                }
+                //}
             }
         });
     }
@@ -105,8 +109,8 @@ public class LoginFragment extends BaseFragment<AuthFragmentViewModel>{
     }
 
     @Override
-    protected Class<AuthFragmentViewModel> returnViewModel() {
-        return AuthFragmentViewModel.class;
+    protected Class<FragmentViewModel> returnViewModel() {
+        return FragmentViewModel.class;
     }
 
     @Override

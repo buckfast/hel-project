@@ -57,7 +57,12 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
     public MutableLiveData<List<String>> swipeHobbyList = new MutableLiveData<>();
+
+
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
+    public MutableLiveData<User> currentUserRegister = new MutableLiveData<>();
+
+
     public CharSequence typedText = "";
     public String lastKeyword = "";
 
@@ -163,9 +168,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull User response, int code) {
                 //fillHobbyList(signupLikedHobbies);
                 //currentUser.postValue(response);
-                getUser();
+                //getUser();
                 signedup.setValue(true);
-
+                User user = response;
+                response.setHobbies(signupLikedHobbies);
+                currentUserRegister.postValue(user);
                 Log.d("asd", "signed up ");
                 //getUser(); 
                 // TODO: 14.11.2018 hiigaegijafd 
@@ -186,9 +193,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 //fetchHobbies();
                 //Log.d("asd", "logged in user: "+response);
                 getUser();
-                Log.d("asd", "loggedin");
+                //Log.d("asd", "loggedin");
 
-                loggedIn.setValue(true);
                 //fillHobbyList(response.getHobbies());
                 //emitAddUser(response.getName());
             }
@@ -233,9 +239,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         mRepository.getUser(new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
-                Log.d("asd", "logged in user: "+response);
+                //Log.d("asd", "logged in user: "+response);
                 currentUser.postValue(response);
                 fillHobbyList(response.getHobbies());
+                loggedIn.setValue(true);
+                signedup.setValue(true);
 
             }
             @Override

@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
+import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
@@ -76,10 +79,16 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
         super.onSaveInstanceState(outState);
     }
 
+    public void populateFromIntent() {
+        Intent intent = getActivity().getIntent();
+        mFragmentsViewModel.currentUser.setValue((User)(intent.getSerializableExtra("user")));
+        mFragmentsViewModel.hobbyList.setValue(mFragmentsViewModel.currentUser.getValue().getHobbies());
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        populateFromIntent();
         /*
         if (mFragmentsViewModel.currentUser.getValue() == null) {
             Log.d("asd", "current user was null");
@@ -89,6 +98,7 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
             mFragmentsViewModel.login(user);
         }
         */
+
 
         mFragmentsViewModel.clearTitle.observe(getActivity(), b -> {
            mViewModel.title.setValue("");

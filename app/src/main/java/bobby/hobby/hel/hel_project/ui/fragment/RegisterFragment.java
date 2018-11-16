@@ -72,16 +72,17 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> {
 
         mViewModel.clearTitle.setValue(!mViewModel.clearTitle.getValue());
 
-        mViewModel.signedup.observe(getActivity(), new Observer<Boolean>() {
+        mViewModel.currentUserRegister.observe(getActivity(), new Observer<User>() {
             @Override
-            public void onChanged(@Nullable Boolean b) {
-                if (b) {
-                    Log.d("asd", "from register::"+String.valueOf(b));
-                    //Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
-                    Intent intent = new Intent(context, MainActivity.class);
+            public void onChanged(@Nullable User user) {
+                Log.d("asd", "from register::"+String.valueOf(user));
+                mViewModel.currentUserRegister.removeObservers(context);
+                //if (signedup) {
+                 Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("user", user);
                     startActivity(intent);
-                    mViewModel.signedup.removeObserver(this);
-                }
+
+                //}
             }
         });
     }
