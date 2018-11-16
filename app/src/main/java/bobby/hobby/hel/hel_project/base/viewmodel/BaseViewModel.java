@@ -29,12 +29,31 @@ import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 
 public abstract class BaseViewModel extends AndroidViewModel {
     protected Repository mRepository;
+    private MutableLiveData<Boolean> isRunningLongTask;
     private boolean mCurrentState = false;
     private MutableLiveData<Boolean> mReaction;
     private int mCurrentPosition;
     public BaseViewModel(@NonNull Application application) {
         super(application);
         mRepository = Repository.getInstance(application);
+    }
+
+    public final LiveData<Boolean> getRunningTaskFlag() {
+        if (isRunningLongTask == null) {
+            isRunningLongTask = new MutableLiveData<>();
+            isRunningLongTask.setValue(false);
+        }
+        return isRunningLongTask;
+    }
+
+    protected final void setRunningLongTaskFlag(boolean value) {
+        getRunningTaskFlag();
+        isRunningLongTask.setValue(value);
+    }
+
+    protected final void postRunningLongTaskFlag(boolean value) {
+        getRunningTaskFlag();
+        isRunningLongTask.postValue(value);
     }
 
     public final LiveData<Boolean> getClickReaction() {
