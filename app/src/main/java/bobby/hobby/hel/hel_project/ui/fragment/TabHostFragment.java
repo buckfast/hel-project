@@ -112,7 +112,6 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
                 mFragmentsViewModel.emitJoinRoom(mFragmentsViewModel.getHobbyByPosition(pos));
                 mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: 28.10.2018 do something some day
                 mFragmentsViewModel.lastKeyword = mFragmentsViewModel.getHobbyByPosition(pos);
-
             }
 
         });

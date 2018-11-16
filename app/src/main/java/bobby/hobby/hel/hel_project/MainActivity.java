@@ -1,6 +1,7 @@
 package bobby.hobby.hel.hel_project;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -16,7 +17,9 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
+import bobby.hobby.hel.hel_project.ui.AuthActivity;
 import bobby.hobby.hel.hel_project.ui.fragment.LoginFragment;
+import bobby.hobby.hel.hel_project.ui.fragment.TabHostFragment;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.fragment.DrawerHostFragment;
 
@@ -49,7 +52,9 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
     private void logout() {
         mViewModel.logout();
-        Objects.requireNonNull(getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit());
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
+        //Objects.requireNonNull(getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit());
 
     }
 
@@ -107,9 +112,8 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+       //getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
 
         TextView title = findViewById(R.id.toolbar_title);
         mViewModel.getTitle().observe(this, s -> title.setText(s));

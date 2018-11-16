@@ -1,6 +1,8 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
 import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,8 +15,10 @@ import android.widget.EditText;
 
 import java.util.Objects;
 
+import bobby.hobby.hel.hel_project.MainActivity;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
+import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -24,7 +28,7 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> {
 
     private EditText nickname, password, email;
     private Button signupButton;
-
+    private BaseActivity context;
 
     public RegisterFragment() {
 
@@ -73,11 +77,19 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> {
             public void onChanged(@Nullable Boolean b) {
                 if (b) {
                     Log.d("asd", "from register::"+String.valueOf(b));
-                    Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+                    //Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
                     mViewModel.signedup.removeObserver(this);
                 }
             }
         });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = (BaseActivity) context;
     }
 
     @Override

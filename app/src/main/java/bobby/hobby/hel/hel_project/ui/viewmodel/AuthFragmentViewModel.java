@@ -1,10 +1,7 @@
 package bobby.hobby.hel.hel_project.ui.viewmodel;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,14 +10,10 @@ import android.view.View;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,16 +25,13 @@ import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
-import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
-import bobby.hobby.hel.hel_project.ui.intterfase.SocketConnectListener;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
-import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import okhttp3.ResponseBody;
 
-public class FragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
+public class AuthFragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
     public MutableLiveData<View> lastView = new MutableLiveData<>();
     //MutableLiveData<Integer> lastPosition = new MutableLiveData<>();
     public MutableLiveData<Integer> listPosition = new MutableLiveData<>();
@@ -65,7 +55,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public List<String> signupLikedHobbies = new ArrayList<>();
 
-    public FragmentViewModel(@NonNull Application application) {
+    public AuthFragmentViewModel(@NonNull Application application) {
         super(application);
         List<ChatText> list = new ArrayList<>();
         chatMessageList.setValue(list);

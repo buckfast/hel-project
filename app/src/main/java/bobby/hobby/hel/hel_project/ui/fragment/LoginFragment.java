@@ -3,6 +3,7 @@ package bobby.hobby.hel.hel_project.ui.fragment;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,19 +18,23 @@ import android.widget.TextView;
 
 import java.util.Objects;
 
+import bobby.hobby.hel.hel_project.MainActivity;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
+import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
+import bobby.hobby.hel.hel_project.ui.AuthActivity;
+import bobby.hobby.hel.hel_project.ui.viewmodel.AuthFragmentViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-public class LoginFragment extends BaseFragment<FragmentViewModel>{
+public class LoginFragment extends BaseFragment<AuthFragmentViewModel>{
     private TextView newAccount;
     private TextInputEditText password;
     private EditText email;
     private Button loginButton;
-    private BaseDrawerActivity context;
+    private BaseActivity context;
 
     public LoginFragment() {
 
@@ -85,7 +90,9 @@ public class LoginFragment extends BaseFragment<FragmentViewModel>{
                 if (loggedin == true) {
                     Log.d("asd", "from login fargment: cughh");
                     //mViewModel.loggedIn.removeObserver(this);
-                    context.getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
+                    //context.getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
                 }
             }
         });
@@ -94,12 +101,12 @@ public class LoginFragment extends BaseFragment<FragmentViewModel>{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = (BaseDrawerActivity) context;
+        this.context = (BaseActivity) context;
     }
 
     @Override
-    protected Class<FragmentViewModel> returnViewModel() {
-        return FragmentViewModel.class;
+    protected Class<AuthFragmentViewModel> returnViewModel() {
+        return AuthFragmentViewModel.class;
     }
 
     @Override

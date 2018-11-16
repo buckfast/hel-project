@@ -1,9 +1,11 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
+import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
@@ -28,6 +31,7 @@ import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentViewModel> {
 
     private TypedArray colors;
+    private BaseDrawerActivity context;
     private int i;
     @Override
     protected Class<FragmentViewModel> returnFragmentsViewModel() {
@@ -44,9 +48,6 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override
@@ -61,8 +62,18 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         mFragmentsViewModel.drawerList.setValue(array);
         */
 
+/*
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("asd", "drawerleft; "+String.valueOf(mFragmentsViewModel.currentUser.getValue()));
+            }
+        }, 10000);
+        */
+
         // TODO: hehe
-        mFragmentsViewModel.hobbyList.observe(getActivity(), new Observer<List<String>>() {
+        mFragmentsViewModel.hobbyList.observe(context, new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable List<String> strings) {
                 Log.d("asd", "drawerleft hobbilist changed, new: "+strings);
@@ -131,6 +142,12 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
             imageView = itemView.findViewById(R.id.image);
             marginRight = itemView.findViewById(R.id.list_item_margin_line_right);
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = (BaseDrawerActivity) context;
     }
 
     private class DrawerLeftAdapter extends BaseAdapter<DrawerLeftChildViewHolder> {
