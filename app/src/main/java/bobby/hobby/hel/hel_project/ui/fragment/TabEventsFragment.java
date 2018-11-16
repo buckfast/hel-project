@@ -27,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
+import bobby.hobby.hel.hel_project.base.view.fragment.BaseProgressBarFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
@@ -35,7 +37,7 @@ import bobby.hobby.hel.hel_project.ui.intterfase.AsyncListener;
 import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements OnAdapterItemClickListener {
+public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements OnAdapterItemClickListener, BaseFragment.LongRunningTaskBehaviour {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -203,7 +205,20 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
     }
 
+    @Override
+    public int returnProgressBarContainer() {
+        return R.id.events_progressbar_container;
+    }
 
+    @Override
+    public Fragment returnProgressBarFragment() {
+        return new ProgressBarFragment();
+    }
+
+    @Override
+    protected LongRunningTaskBehaviour returnLongRunningTaskBehaviour() {
+        return this;
+    }
 
     private class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> implements AsyncListener {
 

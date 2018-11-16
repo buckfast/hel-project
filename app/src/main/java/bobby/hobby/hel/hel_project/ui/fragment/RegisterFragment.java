@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,12 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
+import bobby.hobby.hel.hel_project.base.view.fragment.BaseProgressBarFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 
-public class RegisterFragment extends BaseFragment<FragmentViewModel> {
+public class RegisterFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
 
     private EditText nickname, password, email;
     private Button signupButton;
@@ -99,11 +101,26 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> {
     }
 
     private void attemptSignup() {
+        mViewModel.longRunningTask(true);
         User user = new User();
         user.setName(nickname.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
         user.setHobbies(mViewModel.signupLikedHobbies);
         mViewModel.signup(user);
+    }
+
+    @Override
+    public int returnProgressBarContainer() {
+        return R.id.register_progressbar_container;
+    }
+
+    @Override
+    public Fragment returnProgressBarFragment() {
+        return new ProgressBarFragment();
+    }
+    @Override
+    protected LongRunningTaskBehaviour returnLongRunningTaskBehaviour() {
+        return this;
     }
 }

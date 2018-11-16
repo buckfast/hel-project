@@ -1,6 +1,5 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
-import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
@@ -15,19 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.MainActivity;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
-import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
-import bobby.hobby.hel.hel_project.ui.AuthActivity;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class LoginFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
@@ -90,13 +88,15 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
             public void onChanged(@Nullable User user) {
                 mViewModel.currentUser.removeObservers(context);
                 //if (loggedin == true) {
-                    Log.d("asd", "from login fargment: cughh");
+
+                Log.d("asd", "from login fargment: cughh");
                     //mViewModel.loggedIn.removeObserver(this);
                     Intent intent = new Intent(context, MainActivity.class);
                     Log.d("asd", "loggedin"+String.valueOf(mViewModel.currentUser.getValue()));
 
                     intent.putExtra("user", user);
                     startActivity(intent);
+
                     //context.getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
                 //}
             }
@@ -140,6 +140,7 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
         mViewModel.login(user);
+        mViewModel.longRunningTask(true);
     }
 
     @Override
@@ -150,5 +151,10 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
     @Override
     public Fragment returnProgressBarFragment() {
         return new ProgressBarFragment();
+    }
+
+    @Override
+    protected LongRunningTaskBehaviour returnLongRunningTaskBehaviour() {
+        return this;
     }
 }

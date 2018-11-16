@@ -85,10 +85,14 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public String getTitle(int pos) {
-        if (this.drawerList.getValue() != null) {
+        if (this.drawerList.getValue() != null && this.drawerList.getValue().size() > 0) {
             return this.drawerList.getValue().get(pos).tv;
         }
         return "";
+    }
+
+    public void longRunningTask(Boolean b) {
+        setRunningLongTaskFlag(b);
     }
 
 
@@ -174,6 +178,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 response.setHobbies(signupLikedHobbies);
                 currentUserRegister.postValue(user);
                 Log.d("asd", "signed up ");
+
                 //getUser(); 
                 // TODO: 14.11.2018 hiigaegijafd 
                 //emitAddUser(response.getName());
@@ -181,6 +186,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 Log.d("asd", "signup error: "+code);
+                postRunningLongTaskFlag(false);
             }
         });
     }
@@ -201,6 +207,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 Log.d("asd", String.valueOf(code));
+                postRunningLongTaskFlag(false);
             }
         });
     }
@@ -225,12 +232,14 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 //Log.d("asd", "search linked events: events count: "+response.getCount());
                 //Log.d("asd", "search linked events: eventscount"+response.getEvents().size());
                 linkedEvents.postValue(response);
+                postRunningLongTaskFlag(false);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "linked events error: resp: "+String.valueOf(body));
                 //Log.d("asd", "linked events error: code: "+String.valueOf(code));
                 linkedEvents.setValue(null);
+                postRunningLongTaskFlag(false);
             }
         });
     }

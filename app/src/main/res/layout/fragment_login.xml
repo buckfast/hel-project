@@ -5,10 +5,11 @@
 
 
     <FrameLayout
+        android:visibility="visible"
+        android:elevation="2dp"
         android:id="@+id/progressbar_container"
-        android:background="@android:color/holo_blue_dark"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/progressbar_size"
+        android:layout_height="@dimen/progressbar_size"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

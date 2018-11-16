@@ -7,18 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.zip.Inflater;
-
+import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseProgressBarFragment;
+import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class ProgressBarFragment extends BaseProgressBarFragment {
     @Override
-    protected Class returnViewModel() {
-        return null;
+    public View onCreateView( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_progressbar, container, false);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return null;
+    protected Class returnViewModel() {
+        return FragmentViewModel.class;
     }
+
+
 }

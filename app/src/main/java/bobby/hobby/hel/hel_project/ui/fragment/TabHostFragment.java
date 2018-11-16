@@ -89,6 +89,8 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         populateFromIntent();
+       // mFragmentsViewModel.longRunningTask(false);
+
         /*
         if (mFragmentsViewModel.currentUser.getValue() == null) {
             Log.d("asd", "current user was null");
@@ -115,6 +117,8 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
         });
 
         mFragmentsViewModel.listPosition.observe(getActivity(), pos -> {
+            mFragmentsViewModel.longRunningTask(true);
+
             Log.d("asd", "intabostfrafme "+String.valueOf(mFragmentsViewModel.hobbyList.getValue()));
             if (mFragmentsViewModel.hobbyList.getValue() != null && mFragmentsViewModel.getHobbyByPosition(pos) != mFragmentsViewModel.lastKeyword) {
                 Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos)+" --- "+mFragmentsViewModel.lastKeyword);
@@ -122,6 +126,7 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
                 mFragmentsViewModel.emitJoinRoom(mFragmentsViewModel.getHobbyByPosition(pos));
                 mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: 28.10.2018 do something some day
                 mFragmentsViewModel.lastKeyword = mFragmentsViewModel.getHobbyByPosition(pos);
+
             }
 
         });
