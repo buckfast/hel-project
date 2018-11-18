@@ -2,9 +2,16 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/logout"
-        android:icon="@drawable/ic_baseline_lock_black_24px"
+        android:id="@+id/titlebar"
+        android:enabled="false"
+        android:title=""
+        android:actionLayout="@layout/support_simple_spinner_dropdown_item"
+        />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_baseline_lock_black_24px"
+            android:title="@string/Logout"
+             />
 
-        android:title="@string/Logout"
-         />
+
 </menu>
