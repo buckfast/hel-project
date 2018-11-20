@@ -27,6 +27,12 @@ public class Event {
     @SerializedName("info")
     @Expose
     private Info info;
+    @SerializedName("start_time")
+    @Expose
+    private String startTime;
+    @SerializedName("end_time")
+    @Expose
+    private String endTime;
     @SerializedName("price")
     @Expose
     private Price price = null;
@@ -82,6 +88,22 @@ public class Event {
         this.info = info;
     }
 
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
     public Price getPrice() {
         return price;
     }
@@ -100,12 +122,12 @@ public class Event {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("id", id).append("name", name).append("provider", provider).append("sDesc", sDesc).append("desc", desc).append("info", info).append("price", price).append("images", images).toString();
+        return new ToStringBuilder(this).append("id", id).append("name", name).append("provider", provider).append("sDesc", sDesc).append("desc", desc).append("info", info).append("startTime", startTime).append("endTime", endTime).append("price", price).append("images", images).toString();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(id).append(price).append(desc).append(sDesc).append(name).append(images).append(provider).append(info).toHashCode();
+        return new HashCodeBuilder().append(id).append(price).append(desc).append(sDesc).append(name).append(images).append(provider).append(info).append(startTime).append(endTime).toHashCode();
     }
 
     @Override
@@ -117,7 +139,7 @@ public class Event {
             return false;
         }
         Event rhs = ((Event) other);
-        return new EqualsBuilder().append(id, rhs.id).append(price, rhs.price).append(desc, rhs.desc).append(sDesc, rhs.sDesc).append(name, rhs.name).append(images, rhs.images).append(provider, rhs.provider).append(info, rhs.info).isEquals();
+        return new EqualsBuilder().append(id, rhs.id).append(price, rhs.price).append(desc, rhs.desc).append(sDesc, rhs.sDesc).append(name, rhs.name).append(images, rhs.images).append(provider, rhs.provider).append(info, rhs.info).append(startTime, rhs.startTime).append(endTime, rhs.endTime).isEquals();
     }
 
 }
