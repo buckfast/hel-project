@@ -11,6 +11,7 @@ import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
+import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 
 /**
@@ -83,5 +84,9 @@ public class Repository {
 
     public void getEventList(String keyword, Handler<EventList> handler) {
         mInternalServerClient.getEventList(keyword, handler);
+    }
+
+    public void getEventList(String keyword, Integer page, Handler<EventList> handler) {
+        mInternalServerClient.getEventList(keyword, page, handler);
     }
 }

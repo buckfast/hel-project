@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Description: This interface define all possible endpoint for internal server
@@ -38,5 +39,5 @@ public interface InternalServerAPI {
     Call<HobbyList> getHobbyList();
 
     @GET("events/{search}/")
-    Call<EventList> getEventList(@Path("search") String keyword);
+    Call<EventList> getEventList(@Path("search") String keyword, @Query("page") Integer page);
 }
