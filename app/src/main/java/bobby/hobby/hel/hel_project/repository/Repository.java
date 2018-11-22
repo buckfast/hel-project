@@ -51,6 +51,13 @@ public class Repository {
         mInternalServerClient = new InternalServerClient(mApplication);
     }
 
+    private void resetSocket() {
+        if (mSocketClient != null) {
+            mSocketClient.disconnect();
+            mSocketClient.connect();
+        }
+    }
+
     public Socket getSocket () {
         if (mSocketClient != null) {
             return mSocketClient.getSocket();
@@ -59,10 +66,16 @@ public class Repository {
     }
 
     public void login(User user, Handler<User> handler) {
+        if (mSocketClient != null) {
+            resetSocket();
+        }
         mInternalServerClient.login(user, handler);
     }
 
     public void signup(User user, Handler<User> handler) {
+        if (mSocketClient != null) {
+            resetSocket();
+        }
         mInternalServerClient.signup(user, handler);
     }
 
@@ -70,7 +83,12 @@ public class Repository {
         mInternalServerClient.getUser(callback);
     }
 
-    public void logout() {mInternalServerClient.logout();}
+    public void logout() {
+        if (mSocketClient != null) {
+            mSocketClient.disconnect();
+        }
+        mInternalServerClient.logout();
+    }
 
     public void deleteUser(Handler<Message> callback) {
         mInternalServerClient.deleteUser(callback);
