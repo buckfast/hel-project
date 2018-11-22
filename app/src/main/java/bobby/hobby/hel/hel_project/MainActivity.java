@@ -38,6 +38,8 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
         switch (item.getItemId()) {
             case R.id.logout:
                 Log.d("asd", "menuclick");
