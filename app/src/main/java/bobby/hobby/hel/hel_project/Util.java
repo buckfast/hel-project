@@ -76,8 +76,11 @@ public final class Util {
         a.setDuration(duration);
         return a;
     }
-    public static void hideKeyboard(Activity activity) {
-
+    public static void hideKeyboard(Activity activity, View v) {
+        if (v != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
 
     public static List<String> precautionParseDesc(String text) {

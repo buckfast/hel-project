@@ -9,9 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -75,6 +77,18 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
             @Override
             public void onClick(View view) {
                 Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new SwipeFragment()).commit();
+            }
+        });
+
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    Util.hideKeyboard(getActivity(), textView);
+                    attemptLogin();
+                    return true;
+                }
+                return false;
             }
         });
 
