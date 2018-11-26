@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseTabHostFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
@@ -24,23 +26,17 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-/*
+
         final Observer<Integer> tabPositionObserver = new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                int slide = getResources().getDimensionPixelSize(R.dimen.action_bar_height);
-                FrameLayout sort_container = view.findViewById(R.id.sort_button_container);
-                View tabs = view.findViewById(R.id.result_tabs);
-
-                if (mFragmentsViewModel.getCurrentPosition().getValue() == 1) {
-                    sort_container.startAnimation(Util.transformMargin(sort_container, slide,200,0));
-                } else {
-                    sort_container.startAnimation(Util.transformMargin(sort_container, slide, 200,1));
+                if (integer == 1) {
+                    Util.hideKeyboard(getActivity(),view);
                 }
             }
         };
-        mFragmentsViewModel.getCurrentPosition().observe(this, tabPositionObserver);
-        */
+        mFragmentsViewModel.getCurrentPosition().observe(getActivity(), tabPositionObserver);
+
     }
 
     @Nullable
@@ -124,7 +120,7 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
                 Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos)+" --- "+mFragmentsViewModel.lastKeyword);
                 mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(pos));
                 mFragmentsViewModel.emitJoinRoom(mFragmentsViewModel.getHobbyByPosition(pos));
-                mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: 28.10.2018 do something some day
+                mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: get chat log from server
                 mFragmentsViewModel.lastKeyword = mFragmentsViewModel.getHobbyByPosition(pos);
 
             }
