@@ -30,14 +30,16 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseProgressBarFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
+import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 import bobby.hobby.hel.hel_project.ui.GlideApp;
 import bobby.hobby.hel.hel_project.ui.intterfase.AsyncListener;
 import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
+import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements OnAdapterItemClickListener, BaseFragment.LongRunningTaskBehaviour {
+public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener, BaseFragment.LongRunningTaskBehaviour {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -220,15 +222,17 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         return this;
     }
 
-    private class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> implements AsyncListener {
+    private class EventAdapter extends bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter<EventAdapter.ViewHolder, EventItem> implements AsyncListener {
 
         private Context c;
         private EventList eventList;
-        private final OnAdapterItemClickListener listener;
+        //private final OnAdapterItemClickListener listener;
 
-        public EventAdapter(Fragment context, EventList eventList, OnAdapterItemClickListener listener) {
+        //public EventAdapter(Fragment context, EventList eventList, OnAdapterItemClickListener listener) {
+        public EventAdapter(Fragment context, EventList eventList, bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener listener) {
+            super(listener);
             this.eventList = eventList;
-            this.listener = listener;
+            //this.listener = listener;
         }
 
         public void refreshData(EventList newData) {
@@ -272,15 +276,20 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        //public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        //public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends BaseAdapterViewHolder {
+
             private TextView title, short_desc, short_desc_real, desc, info;
             public ImageView image;
             private RelativeLayout details_container, top_container;
             private RecyclerView.Adapter adapter;
 
 
-            public ViewHolder(View view, RecyclerView.Adapter adapter) {
-                super(view);
+            //public ViewHolder(View view, RecyclerView.Adapter adapter) {
+            public ViewHolder(View view, RecyclerView.Adapter adapter, bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener listener) {
+                super(view, listener);
+                //super(view);
                 this.adapter = adapter;
                 title = (TextView) view.findViewById(R.id.event_title);
                 short_desc = (TextView) view.findViewById(R.id.event_short_desc);
@@ -291,22 +300,25 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 details_container = view.findViewById(R.id.event_details);
                 top_container = view.findViewById(R.id.event_top_container);
                 info = view.findViewById(R.id.event_details_info);
-                view.setOnClickListener(this);
+               // view.setOnClickListener(this);
             }
 
-            @Override
+            /*@Override
             public void onClick(View view) {
                 listener.onClick(view, this.getAdapterPosition());
             }
-
+            */
         }
 
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+       // public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public EventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.fragment_tab_events_list_item, parent, false);
-            return new ViewHolder(itemView, adapter);
+            //return new ViewHolder(itemView, adapter);
+            return new ViewHolder(itemView, adapter, mListener);
+
         }
 
         @Override

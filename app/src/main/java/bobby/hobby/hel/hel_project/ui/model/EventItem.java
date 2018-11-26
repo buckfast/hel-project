@@ -1,6 +1,8 @@
 package bobby.hobby.hel.hel_project.ui.model;
 
-public class EventItem {
+import bobby.hobby.hel.hel_project.base.view.recyclerview.RecyclerItem;
+
+public class EventItem implements RecyclerItem{
     String title;
     int image;
     String desc;
