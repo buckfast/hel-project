@@ -12,6 +12,9 @@ public class EventList {
     @SerializedName("count")
     @Expose
     private Integer count;
+    @SerializedName("fetchDate")
+    @Expose
+    private String fetchDate;
     @SerializedName("events")
     @Expose
     private List<Event> events = null;
@@ -24,6 +27,14 @@ public class EventList {
         this.count = count;
     }
 
+    public String getFetchDate() {
+        return fetchDate;
+    }
+
+    public void setFetchDate(String fetchDate) {
+        this.fetchDate = fetchDate;
+    }
+
     public List<Event> getEvents() {
         return events;
     }
@@ -34,12 +45,12 @@ public class EventList {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("count", count).append("events", events).toString();
+        return new ToStringBuilder(this).append("count", count).append("fetchDate", fetchDate).append("events", events).toString();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(count).append(events).toHashCode();
+        return new HashCodeBuilder().append(count).append(fetchDate).append(events).toHashCode();
     }
 
     @Override
@@ -51,7 +62,7 @@ public class EventList {
             return false;
         }
         EventList rhs = ((EventList) other);
-        return new EqualsBuilder().append(count, rhs.count).append(events, rhs.events).isEquals();
+        return new EqualsBuilder().append(count, rhs.count).append(fetchDate, rhs.fetchDate).append(events, rhs.events).isEquals();
     }
 
 }

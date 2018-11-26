@@ -91,7 +91,11 @@ public class InternalServerClient extends BaseClient<InternalServerAPI> {
     }
 
     public void getEventList(String searchKeyWord, Handler<EventList> callback) {
-        getAPI(InternalServerAPI.class).getEventList(searchKeyWord).enqueue(new BaseResponseHandler<>(callback));
+        getEventList(searchKeyWord, null, callback);
+    }
+
+    public void getEventList(String searchKeyWord, Integer page, Handler<EventList> callback) {
+        getAPI(InternalServerAPI.class).getEventList(searchKeyWord, page).enqueue(new BaseResponseHandler<>(callback));
     }
     //----------------------------------------------------
 
