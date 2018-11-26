@@ -79,6 +79,7 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
         Intent intent = getActivity().getIntent();
         mFragmentsViewModel.currentUser.setValue((User)(intent.getSerializableExtra("user")));
         mFragmentsViewModel.hobbyList.setValue(mFragmentsViewModel.currentUser.getValue().getHobbies());
+        mViewModel.currentUser.setValue(mFragmentsViewModel.currentUser.getValue());
     }
 
     @Override

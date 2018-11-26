@@ -126,7 +126,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public Map<String, Emitter.Listener> returnListeners() {
         Map<String, Emitter.Listener> map = new HashMap<>();
         map.put(Socket.EVENT_CONNECT, args -> {
-            mRepository.getSocket().emit("add user", "hobo");
+            mRepository.getSocket().emit("add user", currentUser.getValue().getName());
             //Log.d("asd", "add user"+currentUser.getValue().getName());
             Log.d("asd","event connect docketio");
 

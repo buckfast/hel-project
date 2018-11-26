@@ -1,6 +1,7 @@
 package bobby.hobby.hel.hel_project;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,9 +15,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
-import java.util.Objects;
+
 
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
+import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.AuthActivity;
 import bobby.hobby.hel.hel_project.ui.fragment.LoginFragment;
 import bobby.hobby.hel.hel_project.ui.fragment.TabHostFragment;
@@ -33,6 +35,15 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.app_menu, menu);
+
+        MenuItem top = menu.getItem(0);
+        Observer userObserver = new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                top.setTitle(user.getName());
+            }
+        };
+        mViewModel.currentUser.observe(this, userObserver);
         return true;
     }
 

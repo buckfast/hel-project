@@ -24,6 +24,7 @@ public class ActivityViewModel extends BaseViewModel {
     public MutableLiveData<String> title = new MutableLiveData<>();
     public MutableLiveData<Integer> accountButtonClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> logoutClick = new MutableLiveData<>();
+    public MutableLiveData<User> currentUser = new MutableLiveData<>();
 
 
     //public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
