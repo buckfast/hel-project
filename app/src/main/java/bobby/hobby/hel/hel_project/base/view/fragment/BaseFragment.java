@@ -17,7 +17,7 @@ import java.util.Objects;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 
 /**
- * Description: This class setup viewmodel connection between fragment and activity
+ * Description: This class setup viewmodel connection between fragment and activity and setup behaviours of all fragments
  * Works with:
  * {@link bobby.hobby.hel.hel_project.base.view.activity.BaseActivity}
  */
