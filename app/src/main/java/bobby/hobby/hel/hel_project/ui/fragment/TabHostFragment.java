@@ -2,6 +2,7 @@ package bobby.hobby.hel.hel_project.ui.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -77,15 +78,34 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
 
     public void populateFromIntent() {
         Intent intent = getActivity().getIntent();
-        mFragmentsViewModel.currentUser.setValue((User)(intent.getSerializableExtra("user")));
-        mFragmentsViewModel.hobbyList.setValue(mFragmentsViewModel.currentUser.getValue().getHobbies());
-        mViewModel.currentUser.setValue(mFragmentsViewModel.currentUser.getValue());
+        if ((User)(intent.getSerializableExtra("user")) != null) {
+            mFragmentsViewModel.currentUser.setValue((User) (intent.getSerializableExtra("user")));
+            mFragmentsViewModel.hobbyList.setValue(mFragmentsViewModel.currentUser.getValue().getHobbies());
+            mViewModel.currentUser.setValue(mFragmentsViewModel.currentUser.getValue());
+            mFragmentsViewModel.token = intent.getStringExtra("token");
+
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_preferences), getActivity().MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            String username = sharedPref.getString("username", null);
+            if (username == null) {
+                editor.putString("username", ((User) (intent.getSerializableExtra("user"))).getName());
+                editor.apply();
+            }
+        }
+
+       // Log.d("asd", "useri!!!!!!!: "+username);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         populateFromIntent();
+        /*SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_preferences), getActivity().MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("token", mFragmentsViewModel.currentUser.getValue().getToken());
+        editor.commit();
+        */
+
        // mFragmentsViewModel.longRunningTask(false);
 
         /*
@@ -110,6 +130,11 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
             if (b) {
                 mFragmentsViewModel.logout();
                 mViewModel.logoutClick.setValue(false);
+
+                SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_preferences), getActivity().MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("username", "null");
+                editor.commit();
             }
         });
 

@@ -13,6 +13,7 @@
     <string name="login">Login</string>
     <string name="orregister">or create a new account here</string>
     <string name="Logout">Log out</string>
+    <string name="shared_preferences">prefs_key</string>
 
 
 </resources>

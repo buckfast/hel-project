@@ -96,8 +96,9 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> implements
                 mViewModel.currentUserRegister.removeObservers(context);
                 //if (signedup) {
                  Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra("user", user);
-                    startActivity(intent);
+                 intent.putExtra("token", mViewModel.token);
+                 intent.putExtra("user", user);
+                 startActivity(intent);
 
                 //}
             }

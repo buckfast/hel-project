@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
@@ -26,7 +28,7 @@ import swipeable.com.layoutmanager.OnItemSwiped;
 import swipeable.com.layoutmanager.SwipeableLayoutManager;
 import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
-public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
+public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
 
     private int pos = 0;
     private List<String> likedHobbies;
@@ -149,6 +151,16 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel>{
     @Override
     protected Class returnViewModel() {
         return FragmentViewModel.class;
+    }
+
+    @Override
+    public int returnProgressBarContainer() {
+        return 0;
+    }
+
+    @Override
+    public Fragment returnProgressBarFragment() {
+        return null;
     }
 
 

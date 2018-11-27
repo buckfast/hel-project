@@ -106,8 +106,8 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
                 Log.d("asd", "from login fargment: cughh");
                     //mViewModel.loggedIn.removeObserver(this);
                     Intent intent = new Intent(context, MainActivity.class);
-                    Log.d("asd", "loggedin"+String.valueOf(mViewModel.currentUser.getValue()));
-
+                    //Log.d("asd", "log in fargment, token: "+String.valueOf(mViewModel.token));
+                    intent.putExtra("token", mViewModel.token);
                     intent.putExtra("user", user);
                     startActivity(intent);
 

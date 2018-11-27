@@ -61,7 +61,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
     public MutableLiveData<User> currentUserRegister = new MutableLiveData<>();
-
+    public String token = null;
 
     public CharSequence typedText = "";
     public String lastKeyword = "";
@@ -176,6 +176,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 signedup.setValue(true);
                 User user = response;
                 response.setHobbies(signupLikedHobbies);
+                token = response.getToken();
                 currentUserRegister.postValue(user);
                 Log.d("asd", "signed up ");
 
@@ -198,6 +199,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 //currentUser.postValue(response);
                 //fetchHobbies();
                 //Log.d("asd", "logged in user: "+response);
+                token = response.getToken();
                 getUser();
                 //Log.d("asd", "loggedin");
 

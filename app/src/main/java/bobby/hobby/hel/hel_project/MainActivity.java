@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import android.support.v4.view.GravityCompat;
@@ -44,7 +45,15 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
             }
         };
         mViewModel.currentUser.observe(this, userObserver);
+
+
         return true;
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -85,6 +94,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
                 }
             }
         }
+
         return super.onPrepareOptionsPanel(view, menu);
     }
 
@@ -125,6 +135,8 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //invalidateOptionsMenu();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
        //getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
 

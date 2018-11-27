@@ -2,7 +2,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/titlebar"
+        android:id="@+id/menu_titlebar"
         android:enabled="false"
         android:title=""
         android:actionLayout="@layout/support_simple_spinner_dropdown_item"
