@@ -110,7 +110,7 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
                     intent.putExtra("token", mViewModel.token);
                     intent.putExtra("user", user);
                     startActivity(intent);
-
+                    //getActivity().finish();
                     //context.getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
                 //}
             }

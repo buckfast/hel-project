@@ -26,7 +26,7 @@ public class ActivityViewModel extends BaseViewModel {
     public MutableLiveData<Boolean> logoutClick = new MutableLiveData<>();
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
 
-
+    public MutableLiveData<Boolean> hostViewCreated = new MutableLiveData<>();
     //public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     //public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
     //public MutableLiveData<User> currentUser = new MutableLiveData<>();
@@ -34,7 +34,7 @@ public class ActivityViewModel extends BaseViewModel {
     public ActivityViewModel(@NonNull Application application) {
         super(application);
         logoutClick.setValue(false);
-
+        hostViewCreated.setValue(false);
     }
 
     public void logout() {

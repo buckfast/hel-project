@@ -20,7 +20,7 @@ import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentViewModel, ActivityViewModel> {
 
-    ImageButton search_button;
+    //ImageButton search_button;
 
     @Override
     protected Class<FragmentViewModel> returnFragmentsViewModel() {
@@ -75,13 +75,16 @@ public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentView
                 mViewModel.title.setValue(mFragmentsViewModel.getTitle(pos));
         });
 
+        mViewModel.hostViewCreated.setValue(true);
+
+/*
         search_button = view.findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new SearchFragment()).addToBackStack(null).commit();
             }
-        });
+        });*/
     }
 
     @Override

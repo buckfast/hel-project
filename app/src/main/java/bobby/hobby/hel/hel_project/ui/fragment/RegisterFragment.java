@@ -99,6 +99,7 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> implements
                  intent.putExtra("token", mViewModel.token);
                  intent.putExtra("user", user);
                  startActivity(intent);
+                //getActivity().finish();
 
                 //}
             }
