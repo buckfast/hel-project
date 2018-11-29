@@ -325,12 +325,15 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
-            if (event.getSDesc() != null) {
+            if (event.getSDesc().getFi() != null) {
+                //Log.d("asd", "sdesc: "+position+": "+event.getSDesc().getFi());
                 holder.short_desc.setText(Html.fromHtml(event.getSDesc().getFi(), 0));
                 holder.short_desc_real.setText(Html.fromHtml(event.getSDesc().getFi(), 0));
             } else {
-                holder.short_desc.setText(event.getName().getFi());
-                holder.short_desc_real.setText(event.getName().getFi());
+                if (event.getName().getFi() != null) {
+                    holder.short_desc.setText(event.getName().getFi());
+                    holder.short_desc_real.setText(event.getName().getFi());
+                }
             }
             holder.short_desc.setVisibility(View.INVISIBLE);
             holder.desc.setText(Html.fromHtml("<h1>"+event.getName().getFi()+"</h1>"+event.getDesc().getFi(),0));
