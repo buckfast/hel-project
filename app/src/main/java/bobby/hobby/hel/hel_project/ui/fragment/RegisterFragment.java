@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -88,6 +89,16 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> implements
         super.onCreate(savedInstanceState);
 
         mViewModel.clearTitle.setValue(!mViewModel.clearTitle.getValue());
+
+        mViewModel.authError.observe(getActivity(), new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                if (integer == 2) {
+                    Toast.makeText(getActivity(), "error: check your credentials", Toast.LENGTH_SHORT).show();
+                    mViewModel.authError.setValue(-1);
+                }
+            }
+        });
 
         mViewModel.currentUserRegister.observe(getActivity(), new Observer<User>() {
             @Override

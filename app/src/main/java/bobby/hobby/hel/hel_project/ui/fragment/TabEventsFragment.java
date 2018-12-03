@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -39,7 +41,7 @@ import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener, BaseFragment.LongRunningTaskBehaviour {
+public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener, BaseFragment.LongRunningTaskBehaviour, BaseFragment.SwipeToRefreshBehaviour {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -49,7 +51,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private int prevExpanded = -1;
     private int currExpanded = -1;
     private boolean isExpanded = false;
@@ -132,10 +134,14 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
         mFragmentsViewModel.linkedEvents.observe(getActivity(), data ->{
+            Log.d("asd", "tabeventsfragment linkedevets observer::reefreh");
             isExpanded = false;
             currExpanded = -1;
             prevExpanded = -1;
             ((EventAdapter)adapter).refreshData(data);
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
         });
         recyclerView.setAdapter(adapter);
 
@@ -220,6 +226,24 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
     @Override
     protected LongRunningTaskBehaviour returnLongRunningTaskBehaviour() {
         return this;
+    }
+
+    @Override
+    protected SwipeToRefreshBehaviour returnSwipeToRefresh() {
+        return this;
+    }
+
+    @Override
+    public int returnSwipeRefreshLayout() {
+        return R.id.swipe_refresh;
+    }
+
+    @Override
+    public void refresh(SwipeRefreshLayout layout) {
+        if(layoutManager.findFirstCompletelyVisibleItemPosition()==0) {
+            mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(mFragmentsViewModel.getCurrentPositionDrawer()));
+        }
+
     }
 
     private class EventAdapter extends bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter<EventAdapter.ViewHolder, EventItem> implements AsyncListener {
@@ -325,7 +349,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
-            if (event.getSDesc().getFi() != null) {
+            if (event.getSDesc() != null && event.getSDesc().getFi() != null) {
                 //Log.d("asd", "sdesc: "+position+": "+event.getSDesc().getFi());
                 holder.short_desc.setText(Html.fromHtml(event.getSDesc().getFi(), 0));
                 holder.short_desc_real.setText(Html.fromHtml(event.getSDesc().getFi(), 0));

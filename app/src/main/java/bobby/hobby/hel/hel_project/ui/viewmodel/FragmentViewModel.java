@@ -58,6 +58,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
     public MutableLiveData<List<String>> swipeHobbyList = new MutableLiveData<>();
 
+    public MutableLiveData<Integer> authError = new MutableLiveData<>();
 
     public MutableLiveData<User> currentUser = new MutableLiveData<>();
     public MutableLiveData<User> currentUserRegister = new MutableLiveData<>();
@@ -81,7 +82,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
         clearTitle.setValue(false);
 
+        authError.setValue(-1);
         Log.d("asd", "perrrrrr");
+
     }
 
     public String getTitle(int pos) {
@@ -210,6 +213,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onError(@Nullable ResponseBody body, int code) {
                 Log.d("asd", String.valueOf(code));
                 postRunningLongTaskFlag(false);
+                authError.setValue(1);
             }
         });
     }
@@ -227,6 +231,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public void searchLinkedEvents(String keyword) {
+        Log.d("asd", "serdhclined keyworkd "+keyword);
         mRepository.getEventList(keyword, new BaseClient.Handler<EventList>() {
             @Override
             public void onSuccess(@NonNull EventList response, int code) {

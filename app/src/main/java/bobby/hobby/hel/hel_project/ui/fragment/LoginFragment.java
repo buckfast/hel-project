@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -96,6 +97,16 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
         //Log.d("asd", String.valueOf(mViewModel.currentUser.getValue()));
 
         mViewModel.clearTitle.setValue(!mViewModel.clearTitle.getValue());
+
+        mViewModel.authError.observe(getActivity(), new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                if (integer == 1) {
+                    Toast.makeText(getActivity(), "incorrect email or password", Toast.LENGTH_SHORT).show();
+                    mViewModel.authError.setValue(-1);
+                }
+            }
+        });
 
         mViewModel.currentUser.observe(getActivity(), new Observer<User>() {
             @Override
