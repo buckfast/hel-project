@@ -118,6 +118,11 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
         }
         */
 
+        mFragmentsViewModel.title.observe(getActivity(), title -> {
+            mViewModel.title.setValue(mFragmentsViewModel.getTitle(mFragmentsViewModel.getCurrentPositionDrawer()));
+        });
+
+
 
         mFragmentsViewModel.clearTitle.observe(getActivity(), b -> {
            mViewModel.title.setValue("");
@@ -140,6 +145,7 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
 
         mFragmentsViewModel.listPosition.observe(getActivity(), pos -> {
             Log.d("asd", "intabostfrafme "+String.valueOf(mFragmentsViewModel.hobbyList.getValue()));
+
             if (mFragmentsViewModel.hobbyList.getValue() != null && mFragmentsViewModel.getHobbyByPosition(pos) != mFragmentsViewModel.lastKeyword) {
                 mFragmentsViewModel.longRunningTask(true);
                 Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos)+" --- "+mFragmentsViewModel.lastKeyword);

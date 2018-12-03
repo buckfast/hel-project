@@ -135,6 +135,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
         mFragmentsViewModel.linkedEvents.observe(getActivity(), data ->{
             Log.d("asd", "tabeventsfragment linkedevets observer::reefreh");
+            mFragmentsViewModel.title.setValue(mFragmentsViewModel.getTitle(mFragmentsViewModel.getCurrentPositionDrawer()));
             isExpanded = false;
             currExpanded = -1;
             prevExpanded = -1;

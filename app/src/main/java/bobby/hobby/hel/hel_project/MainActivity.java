@@ -141,6 +141,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         Fragment f = getSupportFragmentManager().findFragmentByTag("search_fragment");
         if (f != null) {
             getSupportFragmentManager().popBackStackImmediate();
+            //mViewModel.title.setValue(mViewModel.getT);
         } else {
             moveTaskToBack(true);
         }

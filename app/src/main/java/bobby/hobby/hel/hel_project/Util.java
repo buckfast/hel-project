@@ -98,7 +98,7 @@ public final class Util {
         if (bg != null) {
             if (bg instanceof BitmapDrawable) {
                 BitmapDrawable bmp = (BitmapDrawable) bg;
-                bmp.mutate(); // make sure that we aren't sharing state anymore
+                bmp.mutate();
                 bmp.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
             }
         }

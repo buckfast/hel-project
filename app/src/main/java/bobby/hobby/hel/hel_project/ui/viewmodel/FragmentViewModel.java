@@ -69,6 +69,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public MutableLiveData<Boolean> clearTitle = new MutableLiveData<>();
 
+    public MutableLiveData<String> title = new MutableLiveData<>();
+
     public List<String> signupLikedHobbies = new ArrayList<>();
 
     public FragmentViewModel(@NonNull Application application) {
