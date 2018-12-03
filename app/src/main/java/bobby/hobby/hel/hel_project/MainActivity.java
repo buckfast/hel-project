@@ -69,6 +69,14 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
                 Log.d("asd", "menuclick");
                 logout();
                 return true;
+            /*case R.id.home:
+                Fragment f = getSupportFragmentManager().findFragmentByTag("search_fragment");
+                if (f != null) {
+                    Log.d("asd","search fragment visible");
+                } else {
+                    openDrawer();
+                }
+                return true;*/
             default:
                 return super.onContextItemSelected(item);
         }
@@ -156,7 +164,15 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
        //getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
 
         TextView title = findViewById(R.id.toolbar_title);
-        mViewModel.getTitle().observe(this, s -> title.setText(s));
+        mViewModel.getTitle().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                Fragment f = getSupportFragmentManager().findFragmentByTag("search_fragment");
+                if (f == null) {
+                    title.setText(s);
+                }
+            }
+        });
 
 
         mViewModel.hostViewCreated.observe(this, new Observer<Boolean>() {

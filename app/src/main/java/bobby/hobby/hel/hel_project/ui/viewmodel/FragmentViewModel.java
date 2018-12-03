@@ -73,6 +73,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public List<String> signupLikedHobbies = new ArrayList<>();
 
+    public MutableLiveData<EventList> foundLinkedEvents = new MutableLiveData<>();
+
     public FragmentViewModel(@NonNull Application application) {
         super(application);
         List<ChatText> list = new ArrayList<>();
@@ -247,7 +249,22 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "linked events error: resp: "+String.valueOf(body));
                 //Log.d("asd", "linked events error: code: "+String.valueOf(code));
-                linkedEvents.setValue(null);
+                linkedEvents.postValue(null);
+                postRunningLongTaskFlag(false);
+            }
+        });
+    }
+
+    public void checkLinkedEvents(String keyword) {
+        mRepository.getEventList(keyword, new BaseClient.Handler<EventList>() {
+            @Override
+            public void onSuccess(@NonNull EventList response, int code) {
+                foundLinkedEvents.postValue(response);
+                postRunningLongTaskFlag(false);
+            }
+            @Override
+            public void onError(@Nullable ResponseBody body, int code) {
+                foundLinkedEvents.postValue(null);
                 postRunningLongTaskFlag(false);
             }
         });

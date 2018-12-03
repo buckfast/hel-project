@@ -16,7 +16,7 @@ import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class SearchFragment extends BaseFragment<FragmentViewModel>{
 
-    private TextView tv;
+
 
     public SearchFragment() {
     }
@@ -29,7 +29,6 @@ public class SearchFragment extends BaseFragment<FragmentViewModel>{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tv = view.findViewById(R.id.teksti);
 
     }
 
