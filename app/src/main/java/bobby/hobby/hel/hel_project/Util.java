@@ -29,10 +29,14 @@ import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public final class Util {
     public static void changeBgColor(Context c, View v, int color) {
@@ -108,6 +112,22 @@ public final class Util {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         return dateFormat.format(date);
+    }
+
+    public static String formatTime(String timestamp) {
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        Date date = new Date();
+        try {
+            date = formatter.parse(timestamp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        return format.format(date);
+        //return "12.12.2015";
     }
 
 }

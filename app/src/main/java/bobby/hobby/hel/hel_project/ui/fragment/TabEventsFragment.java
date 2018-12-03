@@ -29,6 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseProgressBarFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
@@ -350,16 +351,22 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
+            String timestamp = " — "+"<font color=\"#bfbfbf\">"+Util.formatTime(event.getStartTime())+"</font>";
+
+
             if (event.getSDesc() != null && event.getSDesc().getFi() != null) {
                 //Log.d("asd", "sdesc: "+position+": "+event.getSDesc().getFi());
-                holder.short_desc.setText(Html.fromHtml(event.getSDesc().getFi(), 0));
-                holder.short_desc_real.setText(Html.fromHtml(event.getSDesc().getFi(), 0));
+                Spanned text = Html.fromHtml(event.getSDesc().getFi()+timestamp, 0);
+                holder.short_desc.setText(text);
+                holder.short_desc_real.setText(text);
             } else {
                 if (event.getName().getFi() != null) {
-                    holder.short_desc.setText(event.getName().getFi());
-                    holder.short_desc_real.setText(event.getName().getFi());
+                    Spanned text = Html.fromHtml(event.getName().getFi()+timestamp, 0);
+                    holder.short_desc.setText(text);
+                    holder.short_desc_real.setText(text);
                 }
             }
+
             holder.short_desc.setVisibility(View.INVISIBLE);
             holder.desc.setText(Html.fromHtml("<h1>"+event.getName().getFi()+"</h1>"+event.getDesc().getFi(),0));
             holder.desc.setMovementMethod(LinkMovementMethod.getInstance());
