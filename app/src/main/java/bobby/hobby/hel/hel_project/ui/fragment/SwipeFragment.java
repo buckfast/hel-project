@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.repository.internal.model.Hobby;
+import bobby.hobby.hel.hel_project.ui.GlideApp;
 import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 import swipeable.com.layoutmanager.OnItemSwiped;
@@ -179,15 +181,18 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
         @Override
         public void onBindViewHolder(@NonNull SwipeHolder holder, int position) {
             holder.item_title.setText(list.get(position).getText());
+            GlideApp.with(getContext()).load("https://"+list.get(position).getImageUrl()).into(holder.item_image);
         }
     }
 
     private class SwipeHolder extends BaseAdapterViewHolder {
         public TextView item_title;
+        public ImageView item_image;
 
         public SwipeHolder(View itemView, OnAdapterItemClickListener listener) {
             super(itemView, listener);
             item_title = itemView.findViewById(R.id.swipe_item_title);
+            item_image = itemView.findViewById(R.id.swipe_item_image);
         }
     }
 }
