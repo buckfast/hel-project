@@ -63,14 +63,18 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
+        //super.onOptionsItemSelected(item);
 
         switch (item.getItemId()) {
             case R.id.logout:
                 Log.d("asd", "menuclick");
                 logout();
                 return true;
-
+            case android.R.id.home:
+                Log.d("asd", "home");
+                Util.hideKeyboard(this,item.getActionView());
+                openDrawer();
+                return true;
             /*case R.id.home:
                 Fragment f = getSupportFragmentManager().findFragmentByTag("search_fragment");
                 if (f != null) {

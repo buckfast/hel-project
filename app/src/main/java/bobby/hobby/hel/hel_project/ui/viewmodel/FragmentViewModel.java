@@ -30,6 +30,8 @@ import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
+import bobby.hobby.hel.hel_project.repository.internal.model.ChatLog;
+import bobby.hobby.hel.hel_project.repository.internal.model.ChatLogList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Hobby;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
@@ -88,8 +90,6 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         clearTitle.setValue(false);
 
         authError.setValue(-1);
-        Log.d("asd", "perrrrrr");
-
     }
 
     public String getTitle(int pos) {
@@ -134,8 +134,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public Map<String, Emitter.Listener> returnListeners() {
         Map<String, Emitter.Listener> map = new HashMap<>();
         map.put(Socket.EVENT_CONNECT, args -> {
+
             mRepository.getSocket().emit("add user", currentUser.getValue().getName());
-            //Log.d("asd", "add user"+currentUser.getValue().getName());
+            Log.d("asd", "add user"+currentUser.getValue().getName());
             Log.d("asd","event connect docketio");
 
         });
@@ -311,5 +312,31 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         Log.d("asd", "fillhobbylist: "+list);
     }
 
+    public void getChatLog(String roomName) {
+        mRepository.getChatLog(roomName, new BaseClient.Handler<ChatLogList>() {
+            @Override
+            public void onSuccess(@NonNull ChatLogList response, int code) {
+                Log.d("asd", "sukkes chat log "+roomName);
+                List<ChatLog> log = response.getChatLogs();
+                List<ChatText> chatMessages = new ArrayList<>();
+                ChatMessage chatMessage;
+                for (int i=0; i<log.size(); i++) {
+                    ChatLog chatLog = log.get(i);
+                    chatMessage = new ChatMessage(
+                            chatLog.getMessage(),
+                            !currentUser.getValue().getName().equals(chatLog.getUser()),
+                            chatLog.getDate(),
+                            chatLog.getUser());
+                    chatMessages.add(0,chatMessage);
+                }
+                chatMessageList.postValue(chatMessages);
+            }
+
+            @Override
+            public void onError(@Nullable ResponseBody body, int code) {
+                chatMessageList.setValue(new ArrayList<>());
+            }
+        });
+    }
 
 }

@@ -9,7 +9,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class ChatLogList {
 
-    public class MessageList {
 
         @SerializedName("chatLogs")
         @Expose
@@ -38,12 +37,12 @@ public class ChatLogList {
             if (other == this) {
                 return true;
             }
-            if (!(other instanceof MessageList)) {
+            if (!(other instanceof ChatLogList)) {
                 return false;
             }
-            MessageList rhs = ((MessageList) other);
+            ChatLogList rhs = ((ChatLogList) other);
             return new EqualsBuilder().append(chatLogs, rhs.chatLogs).isEquals();
         }
 
-    }
+
 }

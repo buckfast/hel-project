@@ -151,7 +151,8 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
                 Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos)+" --- "+mFragmentsViewModel.lastKeyword);
                 mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(pos));
                 mFragmentsViewModel.emitJoinRoom(mFragmentsViewModel.getHobbyByPosition(pos));
-                mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: get chat log from server
+                //mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: get chat log from server
+                mFragmentsViewModel.getChatLog(mFragmentsViewModel.getHobbyByPosition(pos));
                 mFragmentsViewModel.lastKeyword = mFragmentsViewModel.getHobbyByPosition(pos);
 
             }

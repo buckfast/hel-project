@@ -13,7 +13,7 @@ public class ChatMessage implements ChatText {
         this.message = message;
         this.received = received;
         this.time = time;
-        this.sender = sender;
+        this.sender = sender; //not in use hehe
     }
 
     public String getMessage() {
