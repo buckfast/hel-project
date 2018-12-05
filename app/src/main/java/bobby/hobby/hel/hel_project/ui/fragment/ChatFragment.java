@@ -161,12 +161,18 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             }
         });
 
+        mViewModel.chatMessageListUpdated.observe(getActivity(), b -> {
+            scrollToBottom();
+        });
+
         mViewModel.chatMessageList.observe(getActivity(), data ->{
             adap.refreshData(data);
             if (scrollAtBottom) {
                 scrollToBottom();
             }
         });
+
+
 
         return adap;
     }

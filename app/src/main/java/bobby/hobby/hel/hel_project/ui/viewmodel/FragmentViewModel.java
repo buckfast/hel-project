@@ -56,6 +56,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public MutableLiveData<Boolean> signedup = new MutableLiveData<>();
 
     public MutableLiveData<List<ChatText>> chatMessageList = new MutableLiveData<>();
+    public MutableLiveData<Boolean> chatMessageListUpdated = new MutableLiveData<>();
 
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
@@ -339,7 +340,8 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                             chatLog.getUser());
                     chatMessages.add(0,chatMessage);
                 }
-                chatMessageList.postValue(chatMessages);
+                chatMessageList.setValue(chatMessages);
+                chatMessageListUpdated.setValue(true);
             }
 
             @Override
