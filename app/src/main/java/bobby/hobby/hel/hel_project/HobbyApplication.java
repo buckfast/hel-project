@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
  */
 
 public class HobbyApplication extends Application {
-    private static final String BASE_SOCKET_URI = "https://hobochat.herokuapp.com";
+    private static final String BASE_SOCKET_URI = "https://hobotti-backend-testing.herokuapp.com/chat/";
     private Socket mSocket;
     {
         try {
