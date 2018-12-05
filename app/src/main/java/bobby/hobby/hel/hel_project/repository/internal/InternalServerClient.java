@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import bobby.hobby.hel.hel_project.base.API.BaseClient;
+import bobby.hobby.hel.hel_project.repository.internal.model.ChatLogList;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
@@ -96,6 +97,12 @@ public class InternalServerClient extends BaseClient<InternalServerAPI> {
 
     public void getEventList(String searchKeyWord, Integer page, Handler<EventList> callback) {
         getAPI(InternalServerAPI.class).getEventList(searchKeyWord, page).enqueue(new BaseResponseHandler<>(callback));
+    }
+    //----------------------------------------------------
+
+    //Chat
+    public void getChatLog(String chatroom, Handler<ChatLogList> callback) {
+        getAPI(InternalServerAPI.class).getChatMessage(chatroom).enqueue(new BaseResponseHandler<>(callback));
     }
     //----------------------------------------------------
 

@@ -8,6 +8,7 @@ import com.github.nkzawa.socketio.client.Socket;
 import bobby.hobby.hel.hel_project.base.API.BaseClient.Handler;
 import bobby.hobby.hel.hel_project.repository.internal.InternalServerClient;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
+import bobby.hobby.hel.hel_project.repository.internal.model.ChatLogList;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
@@ -106,5 +107,9 @@ public class Repository {
 
     public void getEventList(String keyword, Integer page, Handler<EventList> handler) {
         mInternalServerClient.getEventList(keyword, page, handler);
+    }
+
+    public void getChatLog(String chatroom, Handler<ChatLogList> handler) {
+        mInternalServerClient.getChatLog(chatroom, handler);
     }
 }

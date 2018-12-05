@@ -1,23 +1,24 @@
 package bobby.hobby.hel.hel_project.repository.internal.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.List;
+
 public class HobbyList {
 
     @SerializedName("hobbies")
     @Expose
-    private List<String> hobbies = null;
+    private List<Hobby> hobbies = null;
 
-    public List<String> getHobbies() {
+    public List<Hobby> getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(List<String> hobbies) {
+    public void setHobbies(List<Hobby> hobbies) {
         this.hobbies = hobbies;
     }
 
@@ -36,7 +37,7 @@ public class HobbyList {
         if (other == this) {
             return true;
         }
-        if ((other instanceof HobbyList) == false) {
+        if (!(other instanceof HobbyList)) {
             return false;
         }
         HobbyList rhs = ((HobbyList) other);

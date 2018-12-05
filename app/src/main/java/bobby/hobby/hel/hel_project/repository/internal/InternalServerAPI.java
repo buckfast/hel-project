@@ -1,5 +1,6 @@
 package bobby.hobby.hel.hel_project.repository.internal;
 
+import bobby.hobby.hel.hel_project.repository.internal.model.ChatLogList;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
@@ -40,4 +41,7 @@ public interface InternalServerAPI {
 
     @GET("events/{search}/")
     Call<EventList> getEventList(@Path("search") String keyword, @Query("page") Integer page);
+
+    @GET("logs/chat/{chatroom}/")
+    Call<ChatLogList> getChatMessage(@Path("chatroom") String chatroomName);
 }
