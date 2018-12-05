@@ -22,6 +22,7 @@ import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
+import bobby.hobby.hel.hel_project.repository.internal.model.Hobby;
 import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 import swipeable.com.layoutmanager.OnItemSwiped;
@@ -62,7 +63,7 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
 
             @Override
             public void onItemSwipedRight() {
-                mViewModel.signupLikedHobbies.add(mViewModel.getSwipeHobbyList().get(pos));
+                mViewModel.signupLikedHobbies.add(mViewModel.getSwipeHobbyList().get(pos).getName());
                 adapter.removeTopItem();
                 pos++;
                 checkIfEndOfList();
@@ -122,18 +123,18 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
             }
         });
 
-        final Observer<List<String>> hobbyListObserver = new Observer<List<String>>() {
+        final Observer<List<Hobby>> hobbyListObserver = new Observer<List<Hobby>>() {
             @Override
-            public void onChanged(@Nullable List<String> strings) {
+            public void onChanged(@Nullable List<Hobby> hobbies) {
                 List<SwipeItem> list = new ArrayList<>();
-                for (String s : strings) {
-                    list.add(new SwipeItem(s));
+                for (Hobby s : hobbies) {
+                    list.add(new SwipeItem(s.getName(), s.getUrl()));
                 }
                 adapter.refreshData(list);
             }
         };
         mViewModel.swipeHobbyList.observe(this, hobbyListObserver);
-        mViewModel.fetchHobbies();
+        mViewModel.fetchHobbies(5);
 
         return adapter;
     }

@@ -45,6 +45,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         Observer userObserver = new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
+                Log.d("asd", "mainactivity: currentuser:"+user.getName());
                 top.setTitle(user.getName());
             }
         };
@@ -69,6 +70,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
                 Log.d("asd", "menuclick");
                 logout();
                 return true;
+
             /*case R.id.home:
                 Fragment f = getSupportFragmentManager().findFragmentByTag("search_fragment");
                 if (f != null) {
@@ -78,7 +80,8 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
                 }
                 return true;*/
             default:
-                return super.onContextItemSelected(item);
+                return false;
+                //return super.onContextItemSelected(item);
         }
     }
 

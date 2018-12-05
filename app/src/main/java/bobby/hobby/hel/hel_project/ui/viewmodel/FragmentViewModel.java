@@ -30,6 +30,7 @@ import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
+import bobby.hobby.hel.hel_project.repository.internal.model.Hobby;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
@@ -56,7 +57,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public MutableLiveData<EventList> linkedEvents = new MutableLiveData<>();
     public MutableLiveData<List<String>> hobbyList = new MutableLiveData<>();
-    public MutableLiveData<List<String>> swipeHobbyList = new MutableLiveData<>();
+    public MutableLiveData<List<Hobby>> swipeHobbyList = new MutableLiveData<>();
 
     public MutableLiveData<Integer> authError = new MutableLiveData<>();
 
@@ -120,7 +121,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         return null;
     }
 
-    public List<String> getSwipeHobbyList() {
+    public List<Hobby> getSwipeHobbyList() {
         return this.swipeHobbyList.getValue();
     }
 
@@ -288,13 +289,15 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         });
     }
 
-    public void fetchHobbies() {
+    public void fetchHobbies(int amount) {
         mRepository.getHobbyList(new BaseClient.Handler<HobbyList>() {
             @Override
             public void onSuccess(@NonNull HobbyList response, int code) {
-                swipeHobbyList.postValue(response.getHobbies());
-
-
+                List<Hobby> hobbies = new ArrayList<>();
+                for (int i=0; i<amount; i++) {
+                    hobbies.add(response.getHobbies().get(i));
+                }
+                swipeHobbyList.postValue(hobbies);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {

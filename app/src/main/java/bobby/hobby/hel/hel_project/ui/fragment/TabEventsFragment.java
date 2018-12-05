@@ -367,11 +367,12 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 }
             }
 
-            holder.short_desc.setVisibility(View.INVISIBLE);
-            holder.desc.setText(Html.fromHtml("<h1>"+event.getName().getFi()+"</h1>"+event.getDesc().getFi(),0));
-            holder.desc.setMovementMethod(LinkMovementMethod.getInstance());
-            holder.desc.setLinkTextColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
-
+            if (event.getDesc() != null && event.getDesc().getFi() != null) {
+                holder.short_desc.setVisibility(View.INVISIBLE);
+                holder.desc.setText(Html.fromHtml("<h1>" + event.getName().getFi() + "</h1>" + event.getDesc().getFi(), 0));
+                holder.desc.setMovementMethod(LinkMovementMethod.getInstance());
+                holder.desc.setLinkTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+            }
 
             if (event.getInfo() != null) {
                 holder.info.setVisibility(View.VISIBLE);
