@@ -71,21 +71,16 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
                 logout();
                 return true;
             case android.R.id.home:
-                Log.d("asd", "home");
-                Util.hideKeyboard(this,item.getActionView());
-                openDrawer();
-                return true;
-            /*case R.id.home:
                 Fragment f = getSupportFragmentManager().findFragmentByTag("search_fragment");
                 if (f != null) {
                     Log.d("asd","search fragment visible");
                 } else {
                     openDrawer();
+                    Util.hideKeyboard(this,null);
                 }
-                return true;*/
+                return true;
             default:
-                return false;
-                //return super.onContextItemSelected(item);
+                return super.onContextItemSelected(item);
         }
     }
 

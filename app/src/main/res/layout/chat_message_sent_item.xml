@@ -39,7 +39,7 @@ android:layout_alignTop="@id/clayout"
         android:maxWidth="320dp"
         android:minWidth="100dp"
 
-        android:paddingBottom="14dp"
+        android:paddingBottom="16dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:paddingTop="4dp"

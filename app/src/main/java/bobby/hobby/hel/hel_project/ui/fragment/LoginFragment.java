@@ -70,7 +70,7 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
                 //imm.hideSoftInputFromWindow(email.getWindowToken(), 0);
                 //imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
                 attemptLogin();
-                Log.d("asd", "login click");
+                //Log.d("asd", "login click");
             }
         });
 
@@ -114,7 +114,7 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
                 mViewModel.currentUser.removeObservers(context);
                 //if (loggedin == true) {
 
-                Log.d("asd", "from login fargment: cughh");
+               // Log.d("asd", "from login fargment: cughh");
                     //mViewModel.loggedIn.removeObserver(this);
                     Intent intent = new Intent(context, MainActivity.class);
                     //Log.d("asd", "log in fargment, token: "+String.valueOf(mViewModel.token));

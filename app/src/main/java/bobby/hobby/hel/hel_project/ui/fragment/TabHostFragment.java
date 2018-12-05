@@ -144,11 +144,11 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
         });
 
         mFragmentsViewModel.listPosition.observe(getActivity(), pos -> {
-            Log.d("asd", "intabostfrafme "+String.valueOf(mFragmentsViewModel.hobbyList.getValue()));
+           // Log.d("asd", "intabostfrafme "+String.valueOf(mFragmentsViewModel.hobbyList.getValue()));
 
             if (mFragmentsViewModel.hobbyList.getValue() != null && mFragmentsViewModel.getHobbyByPosition(pos) != mFragmentsViewModel.lastKeyword) {
                 mFragmentsViewModel.longRunningTask(true);
-                Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos)+" --- "+mFragmentsViewModel.lastKeyword);
+                //Log.d("asd", pos+", "+mFragmentsViewModel.getHobbyByPosition(pos)+" --- "+mFragmentsViewModel.lastKeyword);
                 mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(pos));
                 mFragmentsViewModel.emitJoinRoom(mFragmentsViewModel.getHobbyByPosition(pos));
                 //mFragmentsViewModel.chatMessageList.setValue(new ArrayList<ChatText>()); // TODO: get chat log from server

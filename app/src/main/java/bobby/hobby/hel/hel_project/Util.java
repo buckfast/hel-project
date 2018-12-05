@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -114,10 +115,8 @@ public final class Util {
         return dateFormat.format(date);
     }
 
-    public static String formatTime(String timestamp) {
-
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    public static String formatTime(String timestamp, String srcPattern, String returnPattern) {
+        SimpleDateFormat formatter = new SimpleDateFormat(srcPattern);
 
         Date date = new Date();
         try {
@@ -125,7 +124,8 @@ public final class Util {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+         DateFormat format = new SimpleDateFormat(returnPattern);
+        //date = DateUtils.addHours(date, 7);
         return format.format(date);
         //return "12.12.2015";
     }

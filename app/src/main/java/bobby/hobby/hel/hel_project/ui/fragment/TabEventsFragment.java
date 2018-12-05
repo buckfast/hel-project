@@ -135,7 +135,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
         mFragmentsViewModel.linkedEvents.observe(getActivity(), data ->{
-            Log.d("asd", "tabeventsfragment linkedevets observer::reefreh");
+           // Log.d("asd", "tabeventsfragment linkedevets observer::reefreh");
             mFragmentsViewModel.title.setValue(mFragmentsViewModel.getTitle(mFragmentsViewModel.getCurrentPositionDrawer()));
             isExpanded = false;
             currExpanded = -1;
@@ -186,7 +186,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             recyclerView.getLayoutManager().scrollToPosition(position);
         }
 
-        Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
+        //Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
 
 
         adapter.notifyItemChanged(position);
@@ -351,7 +351,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
-            String timestamp = " — "+"<font color=\"#bfbfbf\">"+Util.formatTime(event.getStartTime())+"</font>";
+            String timestamp = " — "+"<font color=\"#bfbfbf\">"+Util.formatTime(event.getStartTime(), "yyyy-MM-dd", "dd.MM.yyyy")+"</font>";
 
 
             if (event.getSDesc() != null && event.getSDesc().getFi() != null) {

@@ -1,10 +1,7 @@
 package bobby.hobby.hel.hel_project.ui.viewmodel;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,14 +10,10 @@ import android.view.View;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,16 +28,13 @@ import bobby.hobby.hel.hel_project.repository.internal.model.ChatLogList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Hobby;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
-import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
-import bobby.hobby.hel.hel_project.ui.intterfase.SocketConnectListener;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
-import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import okhttp3.ResponseBody;
 
-public class FragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
+public class AuthFragmentViewModel extends BaseViewModel {
     public MutableLiveData<View> lastView = new MutableLiveData<>();
     //MutableLiveData<Integer> lastPosition = new MutableLiveData<>();
     public MutableLiveData<Integer> listPosition = new MutableLiveData<>();
@@ -78,7 +68,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
 
     public MutableLiveData<EventList> foundLinkedEvents = new MutableLiveData<>();
 
-    public FragmentViewModel(@NonNull Application application) {
+    public AuthFragmentViewModel(@NonNull Application application) {
         super(application);
         List<ChatText> list = new ArrayList<>();
         chatMessageList.setValue(list);
@@ -90,6 +80,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         clearTitle.setValue(false);
 
         authError.setValue(-1);
+    }
+
+    @Override
+    protected SocketClient.EventListener returnSocketListener() {
+        return null;
     }
 
     public String getTitle(int pos) {
@@ -125,39 +120,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         return this.swipeHobbyList.getValue();
     }
 
-    @Override
-    protected SocketClient.EventListener returnSocketListener() {
-        return this;
-    }
 
-    @Override
-    public Map<String, Emitter.Listener> returnListeners() {
-        Map<String, Emitter.Listener> map = new HashMap<>();
-        map.put(Socket.EVENT_CONNECT, args -> {
-            Log.d("asd", "add user !!!!!!!!!! "+currentUser.getValue().getName());
-
-            mRepository.getSocket().emit("add user", currentUser.getValue().getName()); // TODO: fix name bug
-            //mRepository.getSocket().emit("asd", )
-
-            Log.d("asd","event connect docketio");
-
-        });
-        map.put("new message", args -> {
-            JSONObject data = (JSONObject) args[0];
-            String username;
-            String message;
-            try {
-                username = data.getString("username");
-                message = data.getString("message");
-                ChatMessage msg = new ChatMessage(message, true, Util.getTime(), username);
-                addMessage(msg);
-               // Log.d("asd", username+message);
-            } catch (JSONException e) {
-                Log.e("Error", e.getMessage());
-            }
-        });
-        return map;
-    }
 
     public void emitMessage(String text) {
         JSONObject obj = new JSONObject();
@@ -335,7 +298,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                     chatMessage = new ChatMessage(
                             chatLog.getMessage(),
                             !currentUser.getValue().getName().equals(chatLog.getUser()),
-                            Util.formatTime(chatLog.getDate(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd.MM. HH:mm"),
+                            chatLog.getDate(),
                             chatLog.getUser());
                     chatMessages.add(0,chatMessage);
                 }

@@ -76,7 +76,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         mFragmentsViewModel.hobbyList.observe(context, new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable List<String> strings) {
-                Log.d("asd", "drawerleft hobbilist changed, new: "+strings);
+                //Log.d("asd", "drawerleft hobbilist changed, new: "+strings);
                 List<DrawerListItem> newHobbyList = new ArrayList<>();
                 for (int i=0; i<strings.size(); i++) {
                     //Log.d("asd", "user hobby: "+strings.get(i));
