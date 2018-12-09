@@ -25,4 +25,5 @@ public abstract class BaseAdapterViewHolder extends RecyclerView.ViewHolder impl
             mListener.onClick(view, getAdapterPosition());
         }
     }
+
 }

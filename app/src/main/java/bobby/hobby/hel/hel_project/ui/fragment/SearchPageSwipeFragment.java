@@ -1,20 +1,14 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
-import bobby.hobby.hel.hel_project.R;
-
 import android.arch.lifecycle.Observer;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
@@ -35,7 +30,7 @@ import swipeable.com.layoutmanager.OnItemSwiped;
 import swipeable.com.layoutmanager.SwipeableLayoutManager;
 import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
-public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
+public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
 
     private int pos = 0;
     private List<String> likedHobbies;
@@ -43,33 +38,6 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DialoggFragment dialog = new DialoggFragment();
-        dialog.setup(getActivity(),getResources().getString(R.string.swipe_message), "got it");
-        dialog.show(getActivity().getSupportFragmentManager(), "DialogFragment");
-
-        /*
-        final float[] xCoord = new float[1];
-        final float[] yCoord = new float[1];
-        r.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                final int action = event.getAction();
-                switch (action & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_DOWN: {
-                        xCoord[0] = event.getX();
-                        yCoord[0] = event.getY();
-                        break;
-                    }
-                    case MotionEvent.ACTION_MOVE:{
-                        xCoord[0] = event.getX();
-                        yCoord[0] = event.getY();
-                        Log.d("asd", "x: "+xCoord[0]+"\t y: "+yCoord[0]);
-                        break;
-                    }
-                }
-                return true;
-            }
-
-        });*/
     }
 
     @Nullable
@@ -96,10 +64,9 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
 
             @Override
             public void onItemSwipedRight() {
-                mViewModel.signupLikedHobbies.add(mViewModel.getSwipeHobbyList().get(pos).getName());
+                mViewModel.addUserHobby(mViewModel.getSwipeHobbyList().get(pos).getName());
                 adapter.removeTopItem();
                 pos++;
-
                 checkIfEndOfList();
             }
 
@@ -143,8 +110,8 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
     }
 
     private void checkIfEndOfList() {
-        if (this.pos == mViewModel.getSwipeHobbyList().size()) {
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.container, new RegisterFragment()).commit();
+        if (this.pos == adapter.getItemCount()) {
+            Log.d("asd", "loppu");
         }
     }
 
@@ -162,13 +129,16 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
             public void onChanged(@Nullable List<Hobby> hobbies) {
                 List<SwipeItem> list = new ArrayList<>();
                 for (Hobby s : hobbies) {
-                    list.add(new SwipeItem(s.getName(), s.getUrl()));
+                    //Log.d("asd", mViewModel.currentUser.getValue().getHobbies().)
+                    if (!mViewModel.currentUser.getValue().getHobbies().contains(s.getName())) {
+                        list.add(new SwipeItem(s.getName(), s.getUrl()));
+                    }
                 }
                 adapter.refreshData(list);
             }
         };
         mViewModel.swipeHobbyList.observe(this, hobbyListObserver);
-        mViewModel.fetchHobbies(5);
+        mViewModel.fetchHobbies(15);
 
         return adapter;
     }

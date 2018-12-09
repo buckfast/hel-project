@@ -244,7 +244,9 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
         }
     }
     private void scrollToBottom() {
-        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+        if (adapter != null) {
+            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+        }
     }
     private void changeEditTextSize() {
         if (message_edittext.getLineCount() == 2) {

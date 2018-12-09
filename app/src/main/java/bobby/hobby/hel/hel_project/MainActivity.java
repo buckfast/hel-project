@@ -187,7 +187,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
                         @Override
                         public void onClick(View view) {
                             closeDrawer();
-                            title.setText("Search hobbies");
+                            title.setText(getResources().getString(R.string.search_title));
                             Objects.requireNonNull(getSupportFragmentManager().beginTransaction().replace(R.id.container, new SearchFragment(), "search_fragment").addToBackStack(null).commit());
                         }
                     });

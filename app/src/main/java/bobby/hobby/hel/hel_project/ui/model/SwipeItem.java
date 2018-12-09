@@ -1,5 +1,7 @@
 package bobby.hobby.hel.hel_project.ui.model;
 
+import java.util.Objects;
+
 import bobby.hobby.hel.hel_project.base.view.recyclerview.RecyclerItem;
 
 public class SwipeItem implements RecyclerItem {
@@ -15,5 +17,19 @@ public class SwipeItem implements RecyclerItem {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SwipeItem swipeItem = (SwipeItem) o;
+        return Objects.equals(text, swipeItem.text);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(text);
     }
 }

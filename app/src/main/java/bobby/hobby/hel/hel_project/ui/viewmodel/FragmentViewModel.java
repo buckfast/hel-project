@@ -34,6 +34,7 @@ import bobby.hobby.hel.hel_project.repository.internal.model.ChatLog;
 import bobby.hobby.hel.hel_project.repository.internal.model.ChatLogList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Hobby;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
+import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
@@ -347,6 +348,23 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 chatMessageList.setValue(new ArrayList<>());
+            }
+        });
+    }
+
+    public void addUserHobby(String hobby) {
+        List newHobbies = currentUser.getValue().getHobbies();
+        newHobbies.add(hobby);
+        currentUser.getValue().setHobbies(newHobbies);
+        mRepository.updateUser(currentUser.getValue(), new BaseClient.Handler<Message>() {
+            @Override
+            public void onSuccess(@NonNull Message response, int code) {
+                Log.d("asd", "sukkes add hobbies code: "+code);
+            }
+
+            @Override
+            public void onError(@Nullable ResponseBody body, int code) {
+                Log.d("asd", "error add hobbies code: "+code);
             }
         });
     }

@@ -13,6 +13,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
@@ -20,7 +22,6 @@ import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
 public class SearchFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
-    private TextView events_found;
     private android.support.v7.widget.SearchView searchView;
     private String lastKeyword;
 
@@ -41,9 +42,9 @@ public class SearchFragment extends BaseFragment<FragmentViewModel> implements B
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        events_found = view.findViewById(R.id.events_found);
         searchView = view.findViewById(R.id.searchview);
 
+        /*
         mViewModel.foundLinkedEvents.observe(getActivity(), new Observer<EventList>() {
             @Override
             public void onChanged(@Nullable EventList eventList) {
@@ -55,12 +56,16 @@ public class SearchFragment extends BaseFragment<FragmentViewModel> implements B
             }
         });
 
+*/
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.swipe_container, new SearchPageSwipeFragment()).commit();
+
+
         searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 lastKeyword = query;
-                mViewModel.checkLinkedEvents(query);
-                mViewModel.longRunningTask(true);
+                //mViewModel.checkLinkedEvents(query);
+                //mViewModel.longRunningTask(true);
                 return true;
             }
 
