@@ -78,6 +78,8 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
 
     public void populateFromIntent() {
         Intent intent = getActivity().getIntent();
+        String s = ((User)intent.getSerializableExtra("user")).getName();
+        Log.d("asd","tabhost user: "+s);
         if ((User)(intent.getSerializableExtra("user")) != null) {
             mFragmentsViewModel.currentUser.setValue((User) (intent.getSerializableExtra("user")));
             mFragmentsViewModel.hobbyList.setValue(mFragmentsViewModel.currentUser.getValue().getHobbies());

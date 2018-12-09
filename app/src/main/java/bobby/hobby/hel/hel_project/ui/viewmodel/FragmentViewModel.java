@@ -193,11 +193,11 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 //fillHobbyList(signupLikedHobbies);
                 //currentUser.postValue(response);
                 //getUser();
+                currentUserRegister.setValue(user);
                 signedup.setValue(true);
                 User user = response;
                 response.setHobbies(signupLikedHobbies);
                 token = response.getToken();
-                currentUserRegister.postValue(user);
                 //Log.d("asd", "signed up ");
 
                 //getUser(); 
