@@ -27,12 +27,15 @@
     android:layout_width="match_parent"
     android:elevation="5dp"
     android:layout_height="wrap_content"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
     <android.support.v7.widget.SearchView
 
         app:defaultQueryHint="disabled"
         android:id="@+id/searchview"
         app:iconifiedByDefault="false"
+
+        android:defaultFocusHighlightEnabled="false"
         android:background="@drawable/searchview_bg"
         android:layout_margin="10dp"
         android:layout_width="match_parent"

@@ -34,6 +34,7 @@ public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel
 
     private int pos = 0;
     private List<String> likedHobbies;
+    private List<SwipeItem> list;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel
 
             @Override
             public void onItemSwipedRight() {
-                mViewModel.addUserHobby(mViewModel.getSwipeHobbyList().get(pos).getName());
+                mViewModel.addUserHobby(list.get(pos).getText());
                 adapter.removeTopItem();
                 pos++;
                 checkIfEndOfList();
@@ -110,9 +111,7 @@ public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel
     }
 
     private void checkIfEndOfList() {
-        if (this.pos == adapter.getItemCount()) {
-            Log.d("asd", "loppu");
-        }
+
     }
 
     @Override
@@ -127,7 +126,7 @@ public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel
         final Observer<List<Hobby>> hobbyListObserver = new Observer<List<Hobby>>() {
             @Override
             public void onChanged(@Nullable List<Hobby> hobbies) {
-                List<SwipeItem> list = new ArrayList<>();
+                list = new ArrayList<>();
                 for (Hobby s : hobbies) {
                     //Log.d("asd", mViewModel.currentUser.getValue().getHobbies().)
                     if (!mViewModel.currentUser.getValue().getHobbies().contains(s.getName())) {

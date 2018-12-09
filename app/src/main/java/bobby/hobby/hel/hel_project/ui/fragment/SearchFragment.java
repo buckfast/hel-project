@@ -31,7 +31,7 @@ public class SearchFragment extends BaseFragment<FragmentViewModel> implements B
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel.longRunningTask(false);
+        mViewModel.longRunningTask(true);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class SearchFragment extends BaseFragment<FragmentViewModel> implements B
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchView = view.findViewById(R.id.searchview);
+        searchView.clearFocus();
 
         /*
         mViewModel.foundLinkedEvents.observe(getActivity(), new Observer<EventList>() {

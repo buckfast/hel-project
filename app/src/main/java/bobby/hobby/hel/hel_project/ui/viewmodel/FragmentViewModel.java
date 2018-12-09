@@ -311,10 +311,13 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                     hobbies.add(response.getHobbies().get(i));
                 }
                 swipeHobbyList.postValue(hobbies);
+                postRunningLongTaskFlag(false);
             }
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "hobbulist: "+code);
+                postRunningLongTaskFlag(false);
+
             }
         });
     }
@@ -353,13 +356,17 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public void addUserHobby(String hobby) {
+        Log.d("asd", "hobbu to add: "+hobby);
         List newHobbies = currentUser.getValue().getHobbies();
         newHobbies.add(hobby);
         currentUser.getValue().setHobbies(newHobbies);
         mRepository.updateUser(currentUser.getValue(), new BaseClient.Handler<Message>() {
             @Override
             public void onSuccess(@NonNull Message response, int code) {
-                Log.d("asd", "sukkes add hobbies code: "+code);
+
+                hobbyList.setValue(newHobbies);
+                Log.d("asd", "newhobbylist: "+hobbyList.getValue());
+
             }
 
             @Override
