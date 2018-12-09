@@ -43,6 +43,7 @@ public final class Util {
     public static void changeBgColor(Context c, View v, int color) {
         v.setBackgroundColor(ResourcesCompat.getColor(c.getResources(), color, null));
     }
+
     public static void changeTextColor(TextView v, int color) {
         v.setTextColor(color);
     }

@@ -331,14 +331,14 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 List<ChatLog> log = response.getChatLogs();
                 List<ChatText> chatMessages = new ArrayList<>();
                 ChatMessage chatMessage;
-                for (int i=0; i<log.size(); i++) {
+                for (int i=log.size()-1; i>=0; i--) {
                     ChatLog chatLog = log.get(i);
                     chatMessage = new ChatMessage(
                             chatLog.getMessage(),
                             !currentUser.getValue().getName().equals(chatLog.getUser()),
                             Util.formatTime(chatLog.getDate(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd.MM. HH:mm"),
                             chatLog.getUser());
-                    chatMessages.add(0,chatMessage);
+                    chatMessages.add(chatMessage);
                 }
                 chatMessageList.setValue(chatMessages);
                 chatMessageListUpdated.setValue(true);

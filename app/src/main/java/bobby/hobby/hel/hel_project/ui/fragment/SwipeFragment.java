@@ -39,6 +39,9 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        DialoggFragment dialog = new DialoggFragment();
+        dialog.setup(getActivity(),getResources().getString(R.string.swipe_message), "got it");
+        dialog.show(getActivity().getSupportFragmentManager(), "DialogFragment");
     }
 
     @Nullable
