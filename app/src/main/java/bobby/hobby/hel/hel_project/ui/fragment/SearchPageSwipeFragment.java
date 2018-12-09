@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,10 +37,12 @@ public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel
     private int pos = 0;
     private List<String> likedHobbies;
     private List<SwipeItem> list;
+    private TextView noItemsTv;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        noItemsTv = getActivity().findViewById(R.id.swipe_no_items);
     }
 
     @Nullable
@@ -111,7 +115,11 @@ public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel
     }
 
     private void checkIfEndOfList() {
-
+        if (pos == list.size()) {
+            if (noItemsTv != null) {
+                noItemsTv.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -133,6 +141,12 @@ public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel
                         list.add(new SwipeItem(s.getName(), s.getUrl()));
                     }
                 }
+                if (list.size() == 0) {
+                    if (noItemsTv != null) {
+                        noItemsTv.setVisibility(View.VISIBLE);
+                    }
+                }
+
                 adapter.refreshData(list);
             }
         };
