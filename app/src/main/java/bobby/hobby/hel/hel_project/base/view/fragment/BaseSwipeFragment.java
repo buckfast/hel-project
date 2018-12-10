@@ -13,6 +13,10 @@ import swipeable.com.layoutmanager.SwipeableLayoutManager;
 import swipeable.com.layoutmanager.SwipeableTouchHelperCallback;
 import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
+/**
+ * This class setup views for swiping of hobby view
+ */
+
 public abstract class BaseSwipeFragment<T extends BaseViewModel> extends BaseFragment<T> {
     protected RecyclerView recyclerView;
     protected BaseAdapter adapter;

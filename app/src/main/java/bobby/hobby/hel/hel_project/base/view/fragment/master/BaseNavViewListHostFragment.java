@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import java.util.Objects;
 
-import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity.NavigationDrawerLayout;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseHostFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;

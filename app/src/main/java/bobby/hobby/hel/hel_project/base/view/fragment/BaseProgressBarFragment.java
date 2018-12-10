@@ -1,10 +1,5 @@
 package bobby.hobby.hel.hel_project.base.view.fragment;
 
-/**
- * Description: This class setup the appear/disappear of the progressbar
- * Works with:
- * {@link bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment}
- */
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +9,12 @@ import android.view.View;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
+
+/**
+ * Description: This class setup the appear/disappear of the progressbar
+ * Works with:
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment}
+ */
 
 public abstract class BaseProgressBarFragment<T extends BaseViewModel> extends BaseFragment<T> {
     @Override

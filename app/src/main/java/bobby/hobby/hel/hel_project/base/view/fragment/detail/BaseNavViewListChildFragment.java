@@ -5,14 +5,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import bobby.hobby.hel.hel_project.R;
-import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseChildFragment;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
+
+/**
+ * This class setup the inner recyclerview for the child list in drawer
+ * Works with:
+ * {@link bobby.hobby.hel.hel_project.base.view.fragment.master.BaseNavViewListHostFragment}
+ */
 
 public abstract class BaseNavViewListChildFragment<T extends BaseViewModel> extends BaseChildFragment<T>{
 

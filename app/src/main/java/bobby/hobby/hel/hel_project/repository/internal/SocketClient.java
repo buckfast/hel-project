@@ -4,14 +4,10 @@ import android.app.Application;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
-import java.net.URISyntaxException;
 import java.util.Map;
 
 import bobby.hobby.hel.hel_project.HobbyApplication;
