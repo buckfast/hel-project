@@ -18,6 +18,7 @@
     <style name="superteema" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:itemBackground">@color/colorWhite</item>
         <item name="android:textColor">@color/black</item>
+
     </style>
 
 

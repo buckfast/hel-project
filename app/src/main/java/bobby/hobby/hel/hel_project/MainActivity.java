@@ -1,8 +1,12 @@
 package bobby.hobby.hel.hel_project;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -16,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -89,8 +94,9 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     private void logout() {
         mViewModel.logout();
         Intent intent = new Intent(this, AuthActivity.class);
+        intent.putExtra("logout", true);
         startActivity(intent);
-        //Objects.requireNonNull(getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit());
+
 
     }
 
@@ -112,23 +118,6 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         return super.onPrepareOptionsPanel(view, menu);
     }
 
-    /*
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if ( v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        }
-        return super.dispatchTouchEvent( event );
-    }*/
 
     @Override
     protected NavigationDrawerLayout returnNavViewLayout() {
@@ -154,6 +143,17 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
             //mViewModel.title.setValue(mViewModel.getT);
         } else {
             moveTaskToBack(true);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) {
+            Toast.makeText(this, "keyboard visible", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
+            Toast.makeText(this, "keyboard hidden", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -196,22 +196,4 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         });
     }
 
-    /*
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if ( v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        }
-        return super.dispatchTouchEvent(event);
-    }
-    */
 }

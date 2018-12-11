@@ -17,7 +17,11 @@ import bobby.hobby.hel.hel_project.base.view.fragment.master.BaseNavViewListHost
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-
+/**
+ * Description: Host fragment for side drawer implemented from base code
+ * Features:
+ * - Will hold two fragments: left and right sides
+ */
 public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentViewModel, ActivityViewModel> {
 
     //ImageButton search_button;

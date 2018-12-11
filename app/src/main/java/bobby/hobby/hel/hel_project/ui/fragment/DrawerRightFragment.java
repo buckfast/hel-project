@@ -15,6 +15,11 @@ import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
+/**
+ * Description: Right side child fragment in host drawer fragment
+ * Features:
+ * - holds views for list of chat channels (currently just one)
+ */
 public class DrawerRightFragment extends BaseNavViewListChildFragment<FragmentViewModel> {
 
     @Nullable

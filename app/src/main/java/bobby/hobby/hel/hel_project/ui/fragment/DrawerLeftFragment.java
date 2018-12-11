@@ -27,7 +27,11 @@ import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
-
+/**
+ * Description: Left side child fragment in host drawer fragment
+ * Features:
+ * - Observers and handles list of hobby items user has subscribed
+ */
 public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentViewModel> {
 
     private TypedArray colors;
