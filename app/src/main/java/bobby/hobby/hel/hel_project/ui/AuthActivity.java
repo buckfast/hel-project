@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
@@ -31,8 +33,7 @@ public class AuthActivity extends BaseActivity<ActivityViewModel> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        if (
-                this.getIntent().getExtras() != null &&
+        if (this.getIntent().getExtras() != null &&
                 this.getIntent().getExtras().getBoolean("logout",false)) {
             forceCrashAndRestart();
         } else {
@@ -43,6 +44,7 @@ public class AuthActivity extends BaseActivity<ActivityViewModel> {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
         } else {*/
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
+            //this.getIntent().putExtra("logout",false);
         }
         //}
 
@@ -62,7 +64,7 @@ public class AuthActivity extends BaseActivity<ActivityViewModel> {
         Intent intent = new Intent(this, AuthActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
         AlarmManager alarmManager = (AlarmManager) AuthActivity.this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pendingIntent);
+        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 50, pendingIntent);
         this.finish();
         System.exit(2);
     }
