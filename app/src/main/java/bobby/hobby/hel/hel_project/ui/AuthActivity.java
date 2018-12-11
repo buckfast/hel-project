@@ -1,6 +1,10 @@
 package bobby.hobby.hel.hel_project.ui;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,12 +31,19 @@ public class AuthActivity extends BaseActivity<ActivityViewModel> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
+        if (
+                this.getIntent().getExtras() != null &&
+                this.getIntent().getExtras().getBoolean("logout",false)) {
+            forceCrashAndRestart();
+        } else {
+
         /*SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.shared_preferences), this.MODE_PRIVATE);
         String username = sharedPref.getString("username", "null");
         if (username != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
         } else {*/
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
+        }
         //}
 
         //TextView title = findViewById(R.id.toolbar_title);
@@ -42,6 +53,18 @@ public class AuthActivity extends BaseActivity<ActivityViewModel> {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+
+    /**
+     * restart the app by crashing it
+     */
+    private void forceCrashAndRestart() {
+        Intent intent = new Intent(this, AuthActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager) AuthActivity.this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pendingIntent);
+        this.finish();
+        System.exit(2);
     }
 
     @Override
