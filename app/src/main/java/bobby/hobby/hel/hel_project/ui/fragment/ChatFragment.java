@@ -2,6 +2,7 @@ package bobby.hobby.hel.hel_project.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +40,12 @@ import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
+/**
+ * Description: Implementation of chat functionality from base class
+ * Features:
+ * - Creates viewholders for sent and received messages
+ * - Handles user input for chat messaging
+ */
 public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
     private List<ChatText> messages;
@@ -59,6 +66,11 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
         changeEditTextSize();
     }
 
+    private void editTextClearFocus() {
+        message_edittext.clearFocus();
+        Util.hideKeyboard(getActivity(),message_edittext);
+    };
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -71,6 +83,9 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
         message_edittext.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
 
+        /**
+         * Recognises soft keyboard ime type to send message directly
+         */
         message_edittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -83,11 +98,31 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             }
         });
 
+        /**
+         * dirty temporary fix for scroll position
+         */
+        message_edittext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollToBottom();
+                    }
+                }, 300);
+            }
+        });
+
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextClearFocus();
+            }
+        });
 
         message_edittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             // TODO: hehe fix later
@@ -112,6 +147,9 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             }
         });
 
+        /**
+         * to make sure chat wont scroll to bottom if you're browsin older messages while a message is received
+         */
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -127,6 +165,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
         //mViewModel.chatMessageList.setValue(messages);
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -158,6 +197,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             @Override
             public void onClick(View v, int position) {
                 Log.d("asd", "kliketiklak");
+                editTextClearFocus();
             }
         });
 
@@ -245,7 +285,9 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
     }
     private void scrollToBottom() {
         if (adapter != null) {
-            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+            if (adapter.getItemCount() > 0) {
+                recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+            }
         }
     }
     private void changeEditTextSize() {

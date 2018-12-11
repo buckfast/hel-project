@@ -14,7 +14,11 @@ import android.widget.TextView;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
-
+/**
+ * Description: Dialog class for creating simple dialogs
+ * Features:
+ * - Accepts message text and positive button text for setting up the dialog
+ */
 public class DialoggFragment extends DialogFragment {
 
     private Activity a;
@@ -45,7 +49,7 @@ public class DialoggFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
+        //use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
         builder.setMessage(message)
                 .setPositiveButton(positive, new DialogInterface.OnClickListener() {
