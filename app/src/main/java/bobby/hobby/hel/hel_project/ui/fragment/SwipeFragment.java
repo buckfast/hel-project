@@ -1,20 +1,14 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
-import bobby.hobby.hel.hel_project.R;
-
 import android.arch.lifecycle.Observer;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
@@ -35,7 +30,7 @@ import swipeable.com.layoutmanager.OnItemSwiped;
 import swipeable.com.layoutmanager.SwipeableLayoutManager;
 import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
-public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
+public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour {
 
     private int pos = 0;
     private List<String> likedHobbies;
@@ -44,38 +39,15 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         DialoggFragment dialog = new DialoggFragment();
-        dialog.setup(getActivity(),getResources().getString(R.string.swipe_message), "got it");
+        dialog.setup(getActivity(), getResources().getString(R.string.swipe_message), "got it");
         dialog.show(getActivity().getSupportFragmentManager(), "DialogFragment");
 
-        /*
-        final float[] xCoord = new float[1];
-        final float[] yCoord = new float[1];
-        r.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                final int action = event.getAction();
-                switch (action & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_DOWN: {
-                        xCoord[0] = event.getX();
-                        yCoord[0] = event.getY();
-                        break;
-                    }
-                    case MotionEvent.ACTION_MOVE:{
-                        xCoord[0] = event.getX();
-                        yCoord[0] = event.getY();
-                        Log.d("asd", "x: "+xCoord[0]+"\t y: "+yCoord[0]);
-                        break;
-                    }
-                }
-                return true;
-            }
-
-        });*/
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_swipe,container,false);
+        View v = inflater.inflate(R.layout.fragment_swipe, container, false);
         return v;
     }
 
@@ -134,10 +106,10 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
     public SwipeableLayoutManager returnSwipeableLayoutManager() {
         SwipeableLayoutManager layoutManager = new SwipeableLayoutManager();
         layoutManager.setAngle(0)
-                     .setAnimationDuratuion(100)
-                     .setMaxShowCount(3)
-                     .setScaleGap(0.1f)
-                     .setTransYGap(1);
+                .setAnimationDuratuion(100)
+                .setMaxShowCount(3)
+                .setScaleGap(0.1f)
+                .setTransYGap(1);
 
         return layoutManager;
     }
@@ -153,7 +125,7 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
         SwipeAdapter adapter = new SwipeAdapter(new OnAdapterItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-            Log.d("asd", "lkkikked");
+                Log.d("asd", "lkkikked");
             }
         });
 
@@ -180,7 +152,7 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
 
     @Override
     public int returnAllowDirectionFlags() {
-        return ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT ;
+        return ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT;
     }
 
     @Override
@@ -207,13 +179,13 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
         @NonNull
         @Override
         public SwipeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new SwipeHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_swipe_item, parent,false), mListener);
+            return new SwipeHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_swipe_item, parent, false), mListener);
         }
 
         @Override
         public void onBindViewHolder(@NonNull SwipeHolder holder, int position) {
             holder.item_title.setText(list.get(position).getText());
-            GlideApp.with(getContext()).load("https://"+list.get(position).getImageUrl()).into(holder.item_image);
+            GlideApp.with(getContext()).load("https://" + list.get(position).getImageUrl()).into(holder.item_image);
         }
     }
 

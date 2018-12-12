@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -31,14 +30,12 @@ import java.net.URL;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
-import bobby.hobby.hel.hel_project.base.view.fragment.BaseProgressBarFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseTabChildFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapterViewHolder;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 import bobby.hobby.hel.hel_project.ui.GlideApp;
 import bobby.hobby.hel.hel_project.ui.intterfase.AsyncListener;
-import bobby.hobby.hel.hel_project.ui.intterfase.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
@@ -129,18 +126,18 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         }*/
 
 
-        adapter = new EventAdapter(this,eventList, this);
+        adapter = new EventAdapter(this, eventList, this);
 
         adapter.setHasStableIds(true);
 
         //((EventAdapter)adapter).refreshData(mFragmentsViewModel.linkedEvents.getValue());
-        mFragmentsViewModel.linkedEvents.observe(getActivity(), data ->{
-           // Log.d("asd", "tabeventsfragment linkedevets observer::reefreh");
+        mFragmentsViewModel.linkedEvents.observe(getActivity(), data -> {
+            // Log.d("asd", "tabeventsfragment linkedevets observer::reefreh");
             mFragmentsViewModel.title.setValue(mFragmentsViewModel.getTitle(mFragmentsViewModel.getCurrentPositionDrawer()));
             isExpanded = false;
             currExpanded = -1;
             prevExpanded = -1;
-            ((EventAdapter)adapter).refreshData(data);
+            ((EventAdapter) adapter).refreshData(data);
             if (swipeRefreshLayout != null) {
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -195,11 +192,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         }
 
 
-
-
-
-
-
         //Log.d("asd", "curexapanded: "+currExpanded+",  "+"prevExapande: "+prevExpanded+",   "+"isexnapde: "+isExpanded);
         /*if (v.isActivated()) {
             Animation anim = new SlideAnim(
@@ -242,7 +234,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
     @Override
     public void refresh(SwipeRefreshLayout layout) {
-        if(layoutManager.findFirstCompletelyVisibleItemPosition()==0) {
+        if (layoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
             mFragmentsViewModel.searchLinkedEvents(mFragmentsViewModel.getHobbyByPosition(mFragmentsViewModel.getCurrentPositionDrawer()));
         }
 
@@ -326,7 +318,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 details_container = view.findViewById(R.id.event_details);
                 top_container = view.findViewById(R.id.event_top_container);
                 info = view.findViewById(R.id.event_details_info);
-               // view.setOnClickListener(this);
+                // view.setOnClickListener(this);
             }
 
             /*@Override
@@ -338,7 +330,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
 
         @Override
-       // public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         public EventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.fragment_tab_events_list_item, parent, false);
@@ -351,17 +343,17 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         public void onBindViewHolder(final ViewHolder holder, int position) {
             Event event = eventList.getEvents().get(position);
             holder.title.setText(event.getName().getFi());
-            String timestamp = " — "+"<font color=\"#bfbfbf\">"+Util.formatTime(event.getStartTime(), "yyyy-MM-dd", "dd.MM.yyyy")+"</font>";
+            String timestamp = " — " + "<font color=\"#bfbfbf\">" + Util.formatTime(event.getStartTime(), "yyyy-MM-dd", "dd.MM.yyyy") + "</font>";
 
 
             if (event.getSDesc() != null && event.getSDesc().getFi() != null) {
                 //Log.d("asd", "sdesc: "+position+": "+event.getSDesc().getFi());
-                Spanned text = Html.fromHtml(event.getSDesc().getFi()+timestamp, 0);
+                Spanned text = Html.fromHtml(event.getSDesc().getFi() + timestamp, 0);
                 holder.short_desc.setText(text);
                 holder.short_desc_real.setText(text);
             } else {
                 if (event.getName().getFi() != null) {
-                    Spanned text = Html.fromHtml(event.getName().getFi()+timestamp, 0);
+                    Spanned text = Html.fromHtml(event.getName().getFi() + timestamp, 0);
                     holder.short_desc.setText(text);
                     holder.short_desc_real.setText(text);
                 }
@@ -376,10 +368,10 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
             if (event.getInfo() != null) {
                 holder.info.setVisibility(View.VISIBLE);
-                final Spanned text = Html.fromHtml("<a href='" + event.getInfo().getFi()+"'>LISÄTIETOJA</a>", 0);
+                final Spanned text = Html.fromHtml("<a href='" + event.getInfo().getFi() + "'>LISÄTIETOJA</a>", 0);
                 holder.info.setMovementMethod(LinkMovementMethod.getInstance());
                 holder.info.setText(text);
-                holder.info.setLinkTextColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
+                holder.info.setLinkTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             } else {
                 holder.info.setVisibility(View.GONE);
             }
@@ -398,7 +390,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 */
                 GlideApp.with(getContext()).load(event.getImages().get(0).getUrl()).into(holder.image);
             } else {
-                holder.image.setBackgroundResource(backgrounds[position%3]);
+                holder.image.setBackgroundResource(backgrounds[position % 3]);
             }
 
 
@@ -413,7 +405,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
              */
 
 
-            isExpanded = position==currExpanded;
+            isExpanded = position == currExpanded;
             if (again == 1) {
                 isExpanded = false;
                 currExpanded = -1;
@@ -437,7 +429,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         @Override
         public long getItemId(int position) {
-           //return Long.parseLong(eventList.getEvents().get(position).getId().replace("helmet:", ""));
+            //return Long.parseLong(eventList.getEvents().get(position).getId().replace("helmet:", ""));
             return position; // TODO: 29.10.2018 get unique long id somewhere some day 
         }
 
@@ -470,8 +462,8 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 Bitmap image = BitmapFactory.decodeStream(input);
                 return image;
 
-            }catch (Exception e){
-                Log.d("asd",e.getMessage());
+            } catch (Exception e) {
+                Log.d("asd", e.getMessage());
             }
             return null;
         }

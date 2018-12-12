@@ -1,10 +1,7 @@
 package bobby.hobby.hel.hel_project.ui.viewmodel;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,14 +10,10 @@ import android.view.View;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,13 +29,10 @@ import bobby.hobby.hel.hel_project.repository.internal.model.Hobby;
 import bobby.hobby.hel.hel_project.repository.internal.model.HobbyList;
 import bobby.hobby.hel.hel_project.repository.internal.model.Message;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
-import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.Event;
 import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
-import bobby.hobby.hel.hel_project.ui.intterfase.SocketConnectListener;
 import bobby.hobby.hel.hel_project.ui.model.ChatMessage;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
-import bobby.hobby.hel.hel_project.ui.model.SwipeItem;
 import okhttp3.ResponseBody;
 
 public class FragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
@@ -136,12 +126,12 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     public Map<String, Emitter.Listener> returnListeners() {
         Map<String, Emitter.Listener> map = new HashMap<>();
         map.put(Socket.EVENT_CONNECT, args -> {
-            Log.d("asd", "add user !!!!!!!!!! "+currentUser.getValue().getName());
+            Log.d("asd", "add user !!!!!!!!!! " + currentUser.getValue().getName());
 
             mRepository.getSocket().emit("add user", currentUser.getValue().getName()); // TODO: fix name bug
             //mRepository.getSocket().emit("asd", )
 
-            Log.d("asd","event connect docketio");
+            Log.d("asd", "event connect docketio");
 
         });
         map.put("new message", args -> {
@@ -153,7 +143,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 message = data.getString("message");
                 ChatMessage msg = new ChatMessage(message, true, Util.getTime(), username);
                 addMessage(msg);
-               // Log.d("asd", username+message);
+                // Log.d("asd", username+message);
             } catch (JSONException e) {
                 Log.e("Error", e.getMessage());
             }
@@ -171,21 +161,24 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         }
         mRepository.getSocket().emit("new message", text);
     }
+
     public void emitJoinRoom(String room) {
-        if (mRepository.getSocket() != null ) {
+        if (mRepository.getSocket() != null) {
             mRepository.getSocket().emit("join room", room);
         } else {
             //Log.d("asd", "error: socket null");
         }
     }
+
     public void emitAddUser(String name) {
         mRepository.getSocket().emit("add user", name);
     }
+
     public void emitDisconnect() {
         mRepository.getSocket().emit("disconnect");
     }
 
-    public void signup (User user) {
+    public void signup(User user) {
         Log.d("asd", String.valueOf(user));
         mRepository.signup(user, new BaseClient.Handler<User>() {
             @Override
@@ -204,6 +197,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 // TODO: 14.11.2018 hiigaegijafd 
                 //emitAddUser(response.getName());
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "signup error: "+code);
@@ -212,7 +206,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         });
     }
 
-    public void login (User user) {
+    public void login(User user) {
         mRepository.login(user, new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
@@ -226,9 +220,10 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 //fillHobbyList(response.getHobbies());
                 //emitAddUser(response.getName());
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-               // Log.d("asd", String.valueOf(code));
+                // Log.d("asd", String.valueOf(code));
                 postRunningLongTaskFlag(false);
                 authError.setValue(1);
             }
@@ -259,6 +254,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 linkedEvents.postValue(response);
                 postRunningLongTaskFlag(false);
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "linked events error: resp: "+String.valueOf(body));
@@ -276,6 +272,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 foundLinkedEvents.postValue(response);
                 postRunningLongTaskFlag(false);
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 foundLinkedEvents.postValue(null);
@@ -295,6 +292,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 signedup.setValue(true);
 
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 Log.d("asd", "no");
@@ -307,12 +305,13 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             @Override
             public void onSuccess(@NonNull HobbyList response, int code) {
                 List<Hobby> hobbies = new ArrayList<>();
-                for (int i=0; i<amount; i++) {
+                for (int i = 0; i < amount; i++) {
                     hobbies.add(response.getHobbies().get(i));
                 }
                 swipeHobbyList.postValue(hobbies);
                 postRunningLongTaskFlag(false);
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "hobbulist: "+code);
@@ -335,7 +334,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
                 List<ChatLog> log = response.getChatLogs();
                 List<ChatText> chatMessages = new ArrayList<>();
                 ChatMessage chatMessage;
-                for (int i=log.size()-1; i>=0; i--) {
+                for (int i = log.size() - 1; i >= 0; i--) {
                     ChatLog chatLog = log.get(i);
                     chatMessage = new ChatMessage(
                             chatLog.getMessage(),
@@ -356,7 +355,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public void addUserHobby(String hobby) {
-        Log.d("asd", "hobbu to add: "+hobby);
+        Log.d("asd", "hobbu to add: " + hobby);
         List newHobbies = currentUser.getValue().getHobbies();
         newHobbies.add(hobby);
         currentUser.getValue().setHobbies(newHobbies);
@@ -365,13 +364,13 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
             public void onSuccess(@NonNull Message response, int code) {
 
                 hobbyList.setValue(newHobbies);
-                Log.d("asd", "newhobbylist: "+hobbyList.getValue());
+                Log.d("asd", "newhobbylist: " + hobbyList.getValue());
 
             }
 
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-                Log.d("asd", "error add hobbies code: "+code);
+                Log.d("asd", "error add hobbies code: " + code);
             }
         });
     }

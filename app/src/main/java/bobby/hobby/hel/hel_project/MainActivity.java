@@ -94,7 +94,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
     private void logout() {
         mViewModel.logout();
         Intent intent = new Intent(this, AuthActivity.class);
-        intent.putExtra("logout", true);
+        //intent.putExtra("logout", true);
         startActivity(intent);
 
 

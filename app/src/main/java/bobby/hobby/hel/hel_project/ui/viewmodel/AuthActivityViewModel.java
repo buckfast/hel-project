@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
 import bobby.hobby.hel.hel_project.repository.internal.SocketClient;
 
+/**
+ * copypasted for future use
+ */
 public class AuthActivityViewModel extends BaseViewModel {
     public MutableLiveData<String> title = new MutableLiveData<>();
     public MutableLiveData<Integer> accountButtonClick = new MutableLiveData<>();

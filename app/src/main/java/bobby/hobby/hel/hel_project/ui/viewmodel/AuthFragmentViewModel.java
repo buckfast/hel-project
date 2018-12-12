@@ -7,18 +7,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Socket;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.API.BaseClient;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.ChatText;
 import bobby.hobby.hel.hel_project.base.viewmodel.BaseViewModel;
@@ -34,6 +28,9 @@ import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import okhttp3.ResponseBody;
 
+/**
+ * copypasted for future use
+ */
 public class AuthFragmentViewModel extends BaseViewModel {
     public MutableLiveData<View> lastView = new MutableLiveData<>();
     //MutableLiveData<Integer> lastPosition = new MutableLiveData<>();
@@ -121,7 +118,6 @@ public class AuthFragmentViewModel extends BaseViewModel {
     }
 
 
-
     public void emitMessage(String text) {
         JSONObject obj = new JSONObject();
         try {
@@ -132,21 +128,24 @@ public class AuthFragmentViewModel extends BaseViewModel {
         }
         mRepository.getSocket().emit("new message", text);
     }
+
     public void emitJoinRoom(String room) {
-        if (mRepository.getSocket() != null ) {
+        if (mRepository.getSocket() != null) {
             mRepository.getSocket().emit("join room", room);
         } else {
             //Log.d("asd", "error: socket null");
         }
     }
+
     public void emitAddUser(String name) {
         mRepository.getSocket().emit("add user", name);
     }
+
     public void emitDisconnect() {
         mRepository.getSocket().emit("disconnect");
     }
 
-    public void signup (User user) {
+    public void signup(User user) {
         Log.d("asd", String.valueOf(user));
         mRepository.signup(user, new BaseClient.Handler<User>() {
             @Override
@@ -165,6 +164,7 @@ public class AuthFragmentViewModel extends BaseViewModel {
                 // TODO: 14.11.2018 hiigaegijafd 
                 //emitAddUser(response.getName());
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "signup error: "+code);
@@ -173,7 +173,7 @@ public class AuthFragmentViewModel extends BaseViewModel {
         });
     }
 
-    public void login (User user) {
+    public void login(User user) {
         mRepository.login(user, new BaseClient.Handler<User>() {
             @Override
             public void onSuccess(@NonNull User response, int code) {
@@ -187,9 +187,10 @@ public class AuthFragmentViewModel extends BaseViewModel {
                 //fillHobbyList(response.getHobbies());
                 //emitAddUser(response.getName());
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
-               // Log.d("asd", String.valueOf(code));
+                // Log.d("asd", String.valueOf(code));
                 postRunningLongTaskFlag(false);
                 authError.setValue(1);
             }
@@ -220,6 +221,7 @@ public class AuthFragmentViewModel extends BaseViewModel {
                 linkedEvents.postValue(response);
                 postRunningLongTaskFlag(false);
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "linked events error: resp: "+String.valueOf(body));
@@ -237,6 +239,7 @@ public class AuthFragmentViewModel extends BaseViewModel {
                 foundLinkedEvents.postValue(response);
                 postRunningLongTaskFlag(false);
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 foundLinkedEvents.postValue(null);
@@ -256,6 +259,7 @@ public class AuthFragmentViewModel extends BaseViewModel {
                 signedup.setValue(true);
 
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 Log.d("asd", "no");
@@ -268,11 +272,12 @@ public class AuthFragmentViewModel extends BaseViewModel {
             @Override
             public void onSuccess(@NonNull HobbyList response, int code) {
                 List<Hobby> hobbies = new ArrayList<>();
-                for (int i=0; i<amount; i++) {
+                for (int i = 0; i < amount; i++) {
                     hobbies.add(response.getHobbies().get(i));
                 }
                 swipeHobbyList.postValue(hobbies);
             }
+
             @Override
             public void onError(@Nullable ResponseBody body, int code) {
                 //Log.d("asd", "hobbulist: "+code);
@@ -293,14 +298,14 @@ public class AuthFragmentViewModel extends BaseViewModel {
                 List<ChatLog> log = response.getChatLogs();
                 List<ChatText> chatMessages = new ArrayList<>();
                 ChatMessage chatMessage;
-                for (int i=0; i<log.size(); i++) {
+                for (int i = 0; i < log.size(); i++) {
                     ChatLog chatLog = log.get(i);
                     chatMessage = new ChatMessage(
                             chatLog.getMessage(),
                             !currentUser.getValue().getName().equals(chatLog.getUser()),
                             chatLog.getDate(),
                             chatLog.getUser());
-                    chatMessages.add(0,chatMessage);
+                    chatMessages.add(0, chatMessage);
                 }
                 chatMessageList.postValue(chatMessages);
             }

@@ -2,42 +2,31 @@ package bobby.hobby.hel.hel_project;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public final class Util {
     public static void changeBgColor(Context c, View v, int color) {
@@ -57,6 +46,7 @@ public final class Util {
     public static void changeViewHeight(Context c, View v, int resId) {
         v.getLayoutParams().height = (int) c.getResources().getDimension(resId);
     }
+
     public static void resetViewDrawable(View v) {
         v.setBackgroundResource(0);
     }
@@ -82,6 +72,7 @@ public final class Util {
         a.setDuration(duration);
         return a;
     }
+
     public static void hideKeyboard(Activity activity, View v) {
         if (v != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -125,7 +116,7 @@ public final class Util {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-         DateFormat format = new SimpleDateFormat(returnPattern);
+        DateFormat format = new SimpleDateFormat(returnPattern);
         //date = DateUtils.addHours(date, 7);
         return format.format(date);
         //return "12.12.2015";
