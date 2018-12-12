@@ -2,12 +2,14 @@ package bobby.hobby.hel.hel_project;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -15,6 +17,7 @@ import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -120,6 +123,21 @@ public final class Util {
         //date = DateUtils.addHours(date, 7);
         return format.format(date);
         //return "12.12.2015";
+    }
+
+    public static void toast(Context c, String text, int length, int textColor, int bgColor, int resImageId) {
+        Toast toast = Toast.makeText(c, text, length);
+        View view = toast.getView();
+
+        TextView toastMessage = (TextView) view.findViewById(android.R.id.message);
+        toastMessage.setTextSize(20);
+        toastMessage.setTextColor(textColor);
+        //toastMessage.setShadowLayer(5.0f,1.0f,1.0f, R.color.black);
+        toastMessage.setCompoundDrawablesWithIntrinsicBounds(resImageId, 0, 0, 0);
+        toastMessage.setGravity(Gravity.CENTER);
+        //view.setBackgroundColor(bgColor);
+        //view.getBackground().setColorFilter(bgColor, PorterDuff.Mode.SRC_ATOP);
+        toast.show();
     }
 
 }

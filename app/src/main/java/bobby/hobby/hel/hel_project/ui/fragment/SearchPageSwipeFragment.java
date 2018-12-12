@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
@@ -71,6 +73,14 @@ public class SearchPageSwipeFragment extends BaseSwipeFragment<FragmentViewModel
 
             @Override
             public void onItemSwipedRight() {
+                Util.toast(
+                        getActivity(),
+                        "  Liked "+mViewModel.getSwipeHobbyList().get(pos).getName().toLowerCase(),
+                        Toast.LENGTH_SHORT,
+                        R.color.black,
+                        R.color.colorWhite,
+                        R.drawable.heart
+                );
                 mViewModel.addUserHobby(list.get(pos).getText());
                 adapter.removeTopItem();
                 pos++;

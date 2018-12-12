@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
+import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseSwipeFragment;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.BaseAdapter;
@@ -73,10 +75,17 @@ public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implemen
 
             @Override
             public void onItemSwipedRight() {
+                Util.toast(
+                        getActivity(),
+                        "  Liked "+mViewModel.getSwipeHobbyList().get(pos).getName().toLowerCase(),
+                        Toast.LENGTH_SHORT,
+                        R.color.black,
+                        R.color.colorWhite,
+                        R.drawable.heart
+                );
                 mViewModel.signupLikedHobbies.add(mViewModel.getSwipeHobbyList().get(pos).getName());
                 adapter.removeTopItem();
                 pos++;
-
                 checkIfEndOfList();
             }
 
