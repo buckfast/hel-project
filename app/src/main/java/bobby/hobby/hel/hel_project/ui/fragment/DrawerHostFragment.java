@@ -4,11 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-
-import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
@@ -76,7 +72,7 @@ public class DrawerHostFragment extends BaseNavViewListHostFragment<FragmentView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFragmentsViewModel.listPosition.observe(this, pos -> {
-                mViewModel.title.setValue(mFragmentsViewModel.getTitle(pos));
+            mViewModel.title.setValue(mFragmentsViewModel.getTitle(pos));
         });
 
         mViewModel.hostViewCreated.setValue(true);

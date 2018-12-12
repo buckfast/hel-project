@@ -1,16 +1,12 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
-import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,19 +18,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Objects;
-
 import bobby.hobby.hel.hel_project.MainActivity;
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.activity.BaseActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
-import bobby.hobby.hel.hel_project.base.view.fragment.BaseProgressBarFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-
-public class RegisterFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
+/**
+ * Description: Register fragment
+ * Features:
+ * - holds views for register page layout and connects to base net code via viewmodel
+ */
+public class RegisterFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour {
 
     private EditText nickname, password, email;
     private Button signupButton;
@@ -62,7 +59,6 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> implements
         email = view.findViewById(R.id.email);
         nickname = view.findViewById(R.id.nickname);
         signupButton = view.findViewById(R.id.signup_button);
-
 
 
         signupButton.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +92,9 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> implements
 
         mViewModel.clearTitle.setValue(!mViewModel.clearTitle.getValue());
 
+        /**
+         * observer for listening to auth error messages from server
+         */
         mViewModel.authError.observe(getActivity(), new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
@@ -106,16 +105,19 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> implements
             }
         });
 
+        /**
+         * observes userdata. launches the main activity after register is successful and user data is fully fetched
+         */
         mViewModel.currentUserRegister.observe(getActivity(), new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
-                Log.d("asd", "from register::"+String.valueOf(user));
+                Log.d("asd", "from register::" + String.valueOf(user));
                 mViewModel.currentUserRegister.removeObservers(context);
                 //if (signedup) {
-                 Intent intent = new Intent(context, MainActivity.class);
-                 intent.putExtra("token", mViewModel.token);
-                 intent.putExtra("user", user);
-                 startActivity(intent);
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("token", mViewModel.token);
+                intent.putExtra("user", user);
+                startActivity(intent);
                 //getActivity().finish();
 
                 //}
@@ -153,6 +155,7 @@ public class RegisterFragment extends BaseFragment<FragmentViewModel> implements
     public Fragment returnProgressBarFragment() {
         return new ProgressBarFragment();
     }
+
     @Override
     protected LongRunningTaskBehaviour returnLongRunningTaskBehaviour() {
         return this;

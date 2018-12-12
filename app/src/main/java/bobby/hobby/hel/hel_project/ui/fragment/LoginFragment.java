@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +28,12 @@ import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-public class LoginFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
+/**
+ * Description: Login fragment
+ * Features:
+ * - holds views for login layout and connects to base net code via viewmodel
+ */
+public class LoginFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour {
     private TextView newAccount;
     private TextInputEditText password;
     private EditText email;
@@ -108,21 +110,24 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
             }
         });
 
+        /**
+         * observes userdata. launches the main activity after login is successful and user data is fully fetched
+         */
         mViewModel.currentUser.observe(getActivity(), new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
                 mViewModel.currentUser.removeObservers(context);
                 //if (loggedin == true) {
 
-               // Log.d("asd", "from login fargment: cughh");
-                    //mViewModel.loggedIn.removeObserver(this);
-                    Intent intent = new Intent(context, MainActivity.class);
-                    //Log.d("asd", "log in fargment, token: "+String.valueOf(mViewModel.token));
-                    intent.putExtra("token", mViewModel.token);
-                    intent.putExtra("user", user);
-                    startActivity(intent);
-                    //getActivity().finish();
-                    //context.getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
+                // Log.d("asd", "from login fargment: cughh");
+                //mViewModel.loggedIn.removeObserver(this);
+                Intent intent = new Intent(context, MainActivity.class);
+                //Log.d("asd", "log in fargment, token: "+String.valueOf(mViewModel.token));
+                intent.putExtra("token", mViewModel.token);
+                intent.putExtra("user", user);
+                startActivity(intent);
+                //getActivity().finish();
+                //context.getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
                 //}
             }
         });
@@ -160,6 +165,9 @@ public class LoginFragment extends BaseFragment<FragmentViewModel> implements Ba
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
+    /**
+     * connects to server via base net code using the viewmodel
+     */
     private void attemptLogin() {
         User user = new User();
         user.setEmail(email.getText().toString());

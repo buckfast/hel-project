@@ -141,7 +141,7 @@
             android:layout_alignBottom="@id/login_button"
             android:textSize="20sp"
             android:padding="10dp"
-            android:shadowColor="@color/black"
+            android:shadowColor="@color/colorAccent"
             android:shadowRadius="5.0"
             android:textAlignment="center"
             android:text="@string/orregister"

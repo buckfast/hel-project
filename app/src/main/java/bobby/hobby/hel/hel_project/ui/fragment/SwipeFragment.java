@@ -30,6 +30,11 @@ import swipeable.com.layoutmanager.OnItemSwiped;
 import swipeable.com.layoutmanager.SwipeableLayoutManager;
 import swipeable.com.layoutmanager.touchelper.ItemTouchHelper;
 
+/**
+ * Description: Implementation of BaseSwipeFragment
+ * Features:
+ * - Allows user to swipe hobbies fetched from the server and subscribe to them on register phase
+ */
 public class SwipeFragment extends BaseSwipeFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour {
 
     private int pos = 0;

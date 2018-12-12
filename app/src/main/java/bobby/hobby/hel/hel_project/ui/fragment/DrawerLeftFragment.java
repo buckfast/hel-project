@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,13 +19,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.base.view.fragment.detail.BaseNavViewListChildFragment;
 import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
+
 /**
  * Description: Left side child fragment in host drawer fragment
  * Features:
@@ -37,6 +36,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
     private TypedArray colors;
     private BaseDrawerActivity context;
     private int i;
+
     @Override
     protected Class<FragmentViewModel> returnFragmentsViewModel() {
         return FragmentViewModel.class;
@@ -80,9 +80,9 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
         mFragmentsViewModel.hobbyList.observe(context, new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable List<String> strings) {
-                Log.d("asd", "drawerleft hobbilist changed, new: "+strings);
+                Log.d("asd", "drawerleft hobbilist changed, new: " + strings);
                 List<DrawerListItem> newHobbyList = new ArrayList<>();
-                for (int i=0; i<strings.size(); i++) {
+                for (int i = 0; i < strings.size(); i++) {
                     //Log.d("asd", "user hobby: "+strings.get(i));
                     newHobbyList.add(new DrawerListItem(strings.get(i), "@mipmap/ic_launcher_round"));
                 }
@@ -183,7 +183,7 @@ public class DrawerLeftFragment extends BaseNavViewListChildFragment<FragmentVie
             holder.textView.setText(listData.get(position).tv);
             holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
             Util.changeBgColor(getContext(), holder.marginRight, R.color.colorAccentDarker);
-            Util.setTintMode(getContext(),holder.imageView, PorterDuff.Mode.MULTIPLY, R.color.colorGray);
+            Util.setTintMode(getContext(), holder.imageView, PorterDuff.Mode.MULTIPLY, R.color.colorGray);
 
             //holder.imageButton.setImageResource(mData.get(position).ib);
         }

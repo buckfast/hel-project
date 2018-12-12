@@ -1,16 +1,11 @@
 package bobby.hobby.hel.hel_project;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.util.Log;
@@ -25,15 +20,13 @@ import android.widget.Toast;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
-
 import bobby.hobby.hel.hel_project.base.view.activity.BaseDrawerActivity;
 import bobby.hobby.hel.hel_project.repository.internal.model.User;
 import bobby.hobby.hel.hel_project.ui.AuthActivity;
-import bobby.hobby.hel.hel_project.ui.fragment.LoginFragment;
+import bobby.hobby.hel.hel_project.ui.fragment.DrawerHostFragment;
 import bobby.hobby.hel.hel_project.ui.fragment.SearchFragment;
 import bobby.hobby.hel.hel_project.ui.fragment.TabHostFragment;
 import bobby.hobby.hel.hel_project.ui.viewmodel.ActivityViewModel;
-import bobby.hobby.hel.hel_project.ui.fragment.DrawerHostFragment;
 
 public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
@@ -50,7 +43,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
         Observer userObserver = new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
-                Log.d("asd", "mainactivity: currentuser:"+user.getName());
+                Log.d("asd", "mainactivity: currentuser:" + user.getName());
                 top.setTitle(user.getName());
             }
         };
@@ -78,17 +71,16 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
             case android.R.id.home:
                 Fragment f = getSupportFragmentManager().findFragmentByTag("search_fragment");
                 if (f != null) {
-                    Log.d("asd","search fragment visible");
+                    Log.d("asd", "search fragment visible");
                 } else {
                     openDrawer();
-                    Util.hideKeyboard(this,null);
+                    Util.hideKeyboard(this, null);
                 }
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
-
 
 
     private void logout() {
@@ -163,7 +155,7 @@ public class MainActivity extends BaseDrawerActivity<ActivityViewModel> {
 
         //invalidateOptionsMenu();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new TabHostFragment()).commit();
-       //getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).commit();
 
         TextView title = findViewById(R.id.toolbar_title);
         mViewModel.getTitle().observe(this, new Observer<String>() {

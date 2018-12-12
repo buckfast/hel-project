@@ -1,11 +1,9 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,24 +13,18 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import bobby.hobby.hel.hel_project.R;
 import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseChatFragment;
-
 import bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.BaseChatAdapter;
 import bobby.hobby.hel.hel_project.base.view.recyclerview.chat.BaseChatAdapterViewHolder;
@@ -46,7 +38,7 @@ import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
  * - Creates viewholders for sent and received messages
  * - Handles user input for chat messaging
  */
-public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
+public class ChatFragment extends BaseChatFragment<FragmentViewModel> {
 
     private List<ChatText> messages;
     private Boolean scrollAtBottom = false;
@@ -68,8 +60,10 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
 
     private void editTextClearFocus() {
         message_edittext.clearFocus();
-        Util.hideKeyboard(getActivity(),message_edittext);
-    };
+        Util.hideKeyboard(getActivity(), message_edittext);
+    }
+
+    ;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -125,7 +119,6 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
 
-            // TODO: hehe fix later
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 changeEditTextSize();
@@ -148,12 +141,12 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
         });
 
         /**
-         * to make sure chat wont scroll to bottom if you're browsin older messages while a message is received
+         * to make sure chat wont scroll to bottom if you're browsing older messages while a message is received
          */
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (((LinearLayoutManager)recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition() == recyclerView.getLayoutManager().getItemCount()-1) {
+                if (((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition() == recyclerView.getLayoutManager().getItemCount() - 1) {
                     scrollAtBottom = true;
                 } else {
                     scrollAtBottom = false;
@@ -205,13 +198,12 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             scrollToBottom();
         });
 
-        mViewModel.chatMessageList.observe(getActivity(), data ->{
+        mViewModel.chatMessageList.observe(getActivity(), data -> {
             adap.refreshData(data);
             if (scrollAtBottom) {
                 scrollToBottom();
             }
         });
-
 
 
         return adap;
@@ -283,6 +275,7 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             this.timestamp.setText(((ChatMessage) data).getTime());
         }
     }
+
     private void scrollToBottom() {
         if (adapter != null) {
             if (adapter.getItemCount() > 0) {
@@ -290,11 +283,16 @@ public class ChatFragment extends BaseChatFragment<FragmentViewModel>{
             }
         }
     }
+
+    /**
+     * dynamically change message box layout according to line count
+     */
+    // TODO: optimise
     private void changeEditTextSize() {
         if (message_edittext.getLineCount() == 2) {
-            message_edittext.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.chat_edittext_multirow_bg));
+            message_edittext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.chat_edittext_multirow_bg));
         } else if (message_edittext.getLineCount() > 2) {
-            message_edittext.setBackground(ContextCompat.getDrawable(getActivity(),R.drawable.chat_edittext_multirow_bg2));
+            message_edittext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.chat_edittext_multirow_bg2));
         } else {
             message_edittext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.chat_edittext_bg));
         }

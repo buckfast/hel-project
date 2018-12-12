@@ -71,6 +71,9 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * when registering or logging in, user data is provided by the last activity and used here through intent
+     */
     public void populateFromIntent() {
         Intent intent = getActivity().getIntent();
         String s = ((User)intent.getSerializableExtra("user")).getName();
@@ -140,6 +143,10 @@ public class TabHostFragment extends BaseTabHostFragment<FragmentViewModel, Acti
             }
         });
 
+        /**
+         * observe the selected position of hobby from subscribed hobby list (in side drawer)
+         * and update chat/events tabs according to clicked hobby (new events, right chat logs)
+         */
         mFragmentsViewModel.listPosition.observe(getActivity(), pos -> {
            // Log.d("asd", "intabostfrafme "+String.valueOf(mFragmentsViewModel.hobbyList.getValue()));
 

@@ -35,6 +35,13 @@ import bobby.hobby.hel.hel_project.ui.model.DrawerListItem;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import okhttp3.ResponseBody;
 
+/**
+ * Description: The main communication viewmodel for fragments of the app
+ * Features:
+ * - Holds main application wide data that is used after authentication
+ * - implements connection to socket.io chat server
+ * - implements connection to REST
+ */
 public class FragmentViewModel extends BaseViewModel implements SocketClient.EventListener {
     public MutableLiveData<View> lastView = new MutableLiveData<>();
     //MutableLiveData<Integer> lastPosition = new MutableLiveData<>();
@@ -84,6 +91,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         authError.setValue(-1);
     }
 
+    /**
+     * get hobby name as string from drawer list
+     */
     public String getTitle(int pos) {
         if (this.drawerList.getValue() != null && this.drawerList.getValue().size() > 0) {
             return this.drawerList.getValue().get(pos).tv;
@@ -91,11 +101,16 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         return "";
     }
 
+    /**
+     * for disabling or enabling progressbar
+     */
     public void longRunningTask(Boolean b) {
         setRunningLongTaskFlag(b);
     }
 
-
+    /**
+     * adds a chat message to local message list
+     */
     public void addMessage(ChatMessage msg) {
         List<ChatText> msgList = chatMessageList.getValue();
         msgList.add(msg);
@@ -113,6 +128,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         return null;
     }
 
+    /**
+     * get hobbies for swipe cards
+     */
     public List<Hobby> getSwipeHobbyList() {
         return this.swipeHobbyList.getValue();
     }
@@ -122,16 +140,16 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         return this;
     }
 
+    /**
+     * returns all needed socket event listeners to base
+     */
     @Override
     public Map<String, Emitter.Listener> returnListeners() {
         Map<String, Emitter.Listener> map = new HashMap<>();
         map.put(Socket.EVENT_CONNECT, args -> {
-            Log.d("asd", "add user !!!!!!!!!! " + currentUser.getValue().getName());
+            Log.d("asd", "add user " + currentUser.getValue().getName());
 
             mRepository.getSocket().emit("add user", currentUser.getValue().getName()); // TODO: fix name bug
-            //mRepository.getSocket().emit("asd", )
-
-            Log.d("asd", "event connect docketio");
 
         });
         map.put("new message", args -> {
@@ -152,13 +170,7 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
     }
 
     public void emitMessage(String text) {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("data", text);
-            obj.put("username", currentUser.getValue().getName());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
         mRepository.getSocket().emit("new message", text);
     }
 
@@ -243,6 +255,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         listPosition.setValue(0);
     }
 
+    /**
+     * search and populate events
+     */
     public void searchLinkedEvents(String keyword) {
         //Log.d("asd", "serdhclined keyworkd "+keyword);
         mRepository.getEventList(keyword, new BaseClient.Handler<EventList>() {
@@ -265,6 +280,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         });
     }
 
+    /**
+     * for searching hobbies through search page (not in use)
+     */
     public void checkLinkedEvents(String keyword) {
         mRepository.getEventList(keyword, new BaseClient.Handler<EventList>() {
             @Override
@@ -281,6 +299,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         });
     }
 
+    /**
+     * fetch current user data
+     */
     public void getUser() {
         mRepository.getUser(new BaseClient.Handler<User>() {
             @Override
@@ -300,6 +321,10 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         });
     }
 
+
+    /**
+     * fetch hobbies (name and image) used in swipe cards
+     */
     public void fetchHobbies(int amount) {
         mRepository.getHobbyList(new BaseClient.Handler<HobbyList>() {
             @Override
@@ -354,6 +379,9 @@ public class FragmentViewModel extends BaseViewModel implements SocketClient.Eve
         });
     }
 
+    /**
+     * update user locally and server side when new hobby is subscribed
+     */
     public void addUserHobby(String hobby) {
         Log.d("asd", "hobbu to add: " + hobby);
         List newHobbies = currentUser.getValue().getHobbies();

@@ -1,27 +1,26 @@
 package bobby.hobby.hel.hel_project.ui.fragment;
 
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.SearchView;
-import android.widget.TextView;
 
 import java.util.Objects;
 
 import bobby.hobby.hel.hel_project.R;
-import bobby.hobby.hel.hel_project.Util;
 import bobby.hobby.hel.hel_project.base.view.fragment.BaseFragment;
-import bobby.hobby.hel.hel_project.repository.internal.model.eventlist.EventList;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
-public class SearchFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour{
+/**
+ * Description: Fragment for adding more hobbies to account
+ * Features:
+ * - Hold searchview for searching hobbies (not in use)
+ * - Creates swipe cards for searching more hobbies
+ */
+public class SearchFragment extends BaseFragment<FragmentViewModel> implements BaseFragment.LongRunningTaskBehaviour {
     private android.support.v7.widget.SearchView searchView;
     private String lastKeyword;
 

@@ -3,17 +3,13 @@ package bobby.hobby.hel.hel_project.ui.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import bobby.hobby.hel.hel_project.R;
-import bobby.hobby.hel.hel_project.Util;
+
 /**
  * Description: Dialog class for creating simple dialogs
  * Features:
@@ -23,6 +19,7 @@ public class DialoggFragment extends DialogFragment {
 
     private Activity a;
     private String message, positive;
+
     public DialoggFragment() {
 
     }
@@ -39,12 +36,13 @@ public class DialoggFragment extends DialogFragment {
         this.message = message;
         this.positive = positive;
     }
+
     @Override
     public void onStart() {
         super.onStart();
         //View view = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
         //Util.changeBgColor(a,view,R.color.colorAccent);
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent,null));
+        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent, null));
     }
 
     @Override

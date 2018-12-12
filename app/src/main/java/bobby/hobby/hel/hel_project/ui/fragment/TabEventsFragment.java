@@ -39,6 +39,13 @@ import bobby.hobby.hel.hel_project.ui.intterfase.AsyncListener;
 import bobby.hobby.hel.hel_project.ui.model.EventItem;
 import bobby.hobby.hel.hel_project.ui.viewmodel.FragmentViewModel;
 
+/**
+ * Description: Events tab implemented from base child tab
+ * Features:
+ * - Holds view and inflates layout for events tab
+ * - Handles expansion and closing event details
+ * - Parses html and creates links for text fetched from the server
+ */
 public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> implements bobby.hobby.hel.hel_project.base.view.recyclerview.OnAdapterItemClickListener, BaseFragment.LongRunningTaskBehaviour, BaseFragment.SwipeToRefreshBehaviour {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -62,15 +69,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TabEventsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static TabEventsFragment newInstance(String param1, String param2) {
         TabEventsFragment fragment = new TabEventsFragment();
         Bundle args = new Bundle();
@@ -93,9 +91,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        /*mFragmentsViewModel.currentUser.observe(this, u -> {
-            Log.d("asd", u.getToken());
-        });*/
     }
 
     @Override
@@ -146,20 +141,6 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-
-        //mFragmentsViewModel.getHobbyByPosition(mFragmentsViewModel.getCurrentPositionDrawer());
-        //mFragmentsViewModel.searchLinkedEvents("jalkapallo");
-
-        /*eventList.add(new EventItem("Jalkkis", R.drawable.a342_sahly_2, "hyvä tapahtuma kannattaa tulla"));
-        eventList.add(new EventItem("hands :)", R.drawable.a74_muut8,"abcdefg" ));
-        eventList.add(new EventItem("Cool event", R.drawable.aaaa, "nice event, cool"));
-        eventList.add(new EventItem("esfjk fe", R.drawable.a74_muut8, "fekfj"));
-        eventList.add(new EventItem("sfe kejfjk s fkjs", R.drawable.a74_muut8, "kjef fj kejk skj"));
-        eventList.add(new EventItem("asda", R.drawable.a342_sahly_2,"asdasdadsa"));
-        eventList.add(new EventItem("asdaasd", R.drawable.aaaa, "gdthbt"));
-        mFragmentsViewModel.eventList.setValue(eventList);
-        */
-
 
     }
 
@@ -345,7 +326,10 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
             holder.title.setText(event.getName().getFi());
             String timestamp = " — " + "<font color=\"#bfbfbf\">" + Util.formatTime(event.getStartTime(), "yyyy-MM-dd", "dd.MM.yyyy") + "</font>";
 
-
+            /**
+             * Parses html to formatted text and links
+             * include funny hack solution for getting short description to the bottom of preview
+             */
             if (event.getSDesc() != null && event.getSDesc().getFi() != null) {
                 //Log.d("asd", "sdesc: "+position+": "+event.getSDesc().getFi());
                 Spanned text = Html.fromHtml(event.getSDesc().getFi() + timestamp, 0);
@@ -366,6 +350,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 holder.desc.setLinkTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             }
 
+            /**
+             * show link for additional information if server is providing any
+             */
             if (event.getInfo() != null) {
                 holder.info.setVisibility(View.VISIBLE);
                 final Spanned text = Html.fromHtml("<a href='" + event.getInfo().getFi() + "'>LISÄTIETOJA</a>", 0);
@@ -404,7 +391,9 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
                 }
              */
 
-
+            /**
+             * Handle expansion of items: only single item can be expanded at once
+             */
             isExpanded = position == currExpanded;
             if (again == 1) {
                 isExpanded = false;
@@ -429,8 +418,7 @@ public class TabEventsFragment extends BaseTabChildFragment<FragmentViewModel> i
 
         @Override
         public long getItemId(int position) {
-            //return Long.parseLong(eventList.getEvents().get(position).getId().replace("helmet:", ""));
-            return position; // TODO: 29.10.2018 get unique long id somewhere some day 
+            return position; // TODO: 29.10.2018 get unique long id somewhere some day
         }
 
         @Override
